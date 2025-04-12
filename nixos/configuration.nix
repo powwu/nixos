@@ -23,8 +23,11 @@
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
   ];
+  boot.loader.systemd-boot.enable = false;
   boot.loader.grub.enable = true;
-  boot.loader.grub.devices = [ "/dev/vda" ];
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.grub.efiSupport = true;
+  boot.loader.grub.device = "nodev";
   boot.loader.timeout = 1;
   nixpkgs = {
     # You can add overlays here
@@ -52,14 +55,21 @@
   };
 
   environment.systemPackages = with pkgs; [
-    virtiofsd
+    bash
+    dxvk
+    mesa
     neovim
-    zsh
-    rtkit
+    networkmanager
     pipewire
-    doas
+    python3
+    python3Packages.pyyaml
+    rtkit
+    sunshine
+    vim
+    virtiofsd
+    zerotierone
+    zsh
   ];
-
 
   # Make Firefox use the KDE file picker.
   # Preferences source: https://wiki.archlinux.org/title/firefox#KDE_integration
@@ -70,13 +80,35 @@
     };
   };
 
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true;
+    openFirewall = true;
+
+  };
+
+  services.zerotierone = {
+    enable = true;
+    joinNetworks = [
+      "52b337794fcb739b"
+    ];
+  };
+
+
+
   programs.dconf.enable = true;
   programs.hyprland.enable = true;
   programs.zsh.enable = true;
+  networking.networkmanager.enable = true;
+  services.automatic-timezoned.enable = true;
+  services.ntp.enable = true;
   services.xserver.enable = true;
   services.xserver.displayManager.lightdm.enable = true;
   services.displayManager.autoLogin.user = "james";
   services.displayManager.autoLogin.enable = true;
+
+  hardware.graphics.enable32Bit = true;
 
   nix = let
     flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
@@ -104,6 +136,13 @@
     pulse.enable = true;
     jack.enable = true;
   };
+
+
+  programs.neovim = {
+    viAlias = true;
+    vimAlias = true;
+  };
+
 
   # TODO: Set your hostname
   networking.hostName = "powwuinator";

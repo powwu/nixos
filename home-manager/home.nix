@@ -58,34 +58,46 @@
   #       #   #  #     # #     #
   #       #    #  #####   #####
   home.packages = with pkgs; [
-    alacritty
-    firefox
-    font-awesome
-    hyprland
-    swww
-    thunderbird
-    waybar
-    rofi
-    wlroots
-    pywal
-    pywalfox-native
-    xorg.xeyes
-    mako
-    steam
-    lutris
-    pavucontrol
-    easyeffects
-    vesktop
-    sunshine
-    spotify
-    telegram-desktop
-    lightdm
     adwaita-icon-theme
     adwaita-icon-theme-legacy
+    alacritty
+    amdgpu_top
+    btop
+    easyeffects
+    eza
+    firefox
+    font-awesome
+    gh
+    gimp-with-plugins
+    hyprland
+    hyprshot
+    lightdm
+    lutris
+    lxappearance
+    mako
+    moonlight-qt
     nemo
     p7zip
-    lxappearance
-    eza
+    pavucontrol
+    pycritty
+    pywal
+    pywalfox-native
+    rofi
+    source-code-pro
+    spotify
+    steam
+    swww
+    telegram-desktop
+    thunderbird
+    tuxclocker
+    vesktop
+    waybar
+    wine
+    wlroots
+    wowup-cf
+    wtype
+    xclicker
+    xorg.xeyes
   ];
 
   # Nicely reload system units when changing configs
@@ -100,16 +112,20 @@
   wayland.windowManager.hyprland.enable = true; # enable Hyprland
   programs.waybar.enable = true;
 
-  programs.firefox = {
-    enable = true;
-    preferences = {
-      "widget.use-xdg-desktop-portal.file-picker" = 1;
-      "widget.use-xdg-desktop-portal.mime-handler" = 1;
-    };
+  # programs.firefox = {
+  #  enable = true;
+  #  preferences = {
+  #    "widget.use-xdg-desktop-portal.file-picker" = 1;
+  #    "widget.use-xdg-desktop-portal.mime-handler" = 1;
+  #  };
+  #};
+
+  programs.neovim = {
+    viAlias = true;
+    vimAlias = true;
   };
 
-
-/*
+  /*
   ​ #######   #####   #     #
    ​     #   #     #  #     #
     ​   #    #        #     #
@@ -133,7 +149,7 @@
       nxe = "sudo nixos-rebuild switch --flake /etc/nixos#powwuinator; home-manager switch -b backup --flake /etc/nixos#james@powwuinator";
       nxen = "sudo nixos-rebuild switch --flake /etc/nixos#powwuinator";
       nxeh = "home-manager switch -b backup --flake /etc/nixos#james@powwuinator";
-      ls = "eza";
+      ls = "eza -a";
     };
     history.size = 1000000;
     # history.file = "~/.histfile";
@@ -154,6 +170,8 @@
     enable = true;
     package = pkgs.emacs-pgtk;
   };
+
+  services.emacs.defaultEditor = true;
 
   home.file.".emacs.d" = {
     recursive = true;
@@ -179,6 +197,7 @@
     monitor = [
       "DP-4,1920x1080@120,auto-left,1"
       "eDP-1,2256x1504@60,auto,1.8"
+      "HDMI-A-1,1920x1080@120,auto,1"
     ];
 
     env = [
@@ -299,8 +318,6 @@
       "workspace name:mail silent,class:(thunderbird)"
       "workspace name:gpu silent,class:(amdgpu_top)"
       "move onscreen cursor -20% -20%,title:(glxgears)"
-      "move onscreen cursor -10% -10%,class:(REAPER)"
-      "stayfocused,class:(REAPER)"
       "stayfocused,class:(Rofi)"
       "center,class:(Rofi)"
       "dimaround,class:(Rofi)"
