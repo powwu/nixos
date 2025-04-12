@@ -68,6 +68,7 @@
     firefox
     font-awesome
     gh
+    git
     gimp-with-plugins
     hyprland
     hyprshot
@@ -108,7 +109,6 @@
 
   # Enable programs
   programs.home-manager.enable = true;
-  programs.git.enable = true;
   wayland.windowManager.hyprland.enable = true; # enable Hyprland
   programs.waybar.enable = true;
 
@@ -121,6 +121,7 @@
   #};
 
   programs.neovim = {
+    enable = true;
     viAlias = true;
     vimAlias = true;
   };

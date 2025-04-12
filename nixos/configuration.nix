@@ -65,7 +65,7 @@
     python3Packages.pyyaml
     rtkit
     sunshine
-    vim
+    # vim
     virtiofsd
     zerotierone
     zsh
@@ -136,13 +136,6 @@
     pulse.enable = true;
     jack.enable = true;
   };
-
-
-  programs.neovim = {
-    viAlias = true;
-    vimAlias = true;
-  };
-
 
   # TODO: Set your hostname
   networking.hostName = "powwuinator";
