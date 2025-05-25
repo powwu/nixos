@@ -1,0 +1,15 @@
+[Unit]
+Description=Self-hosted game stream host for Moonlight
+StartLimitIntervalSec=500
+StartLimitBurst=5
+
+[Service]
+# Avoid starting Sunshine before the desktop is fully initialized.
+ExecStartPre=/nix/store/yh6qg1nsi5h2xblcr67030pz58fsaxx3-coreutils-9.6/bin/sleep 5
+ExecStart=sunshine
+
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=xdg-desktop-autostart.target

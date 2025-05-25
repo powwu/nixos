@@ -7,38 +7,18 @@
   config,
   pkgs,
   ...
-}: {
-  # You can import other home-manager modules here
-  imports = [
-    # If you want to use modules your own flake exports (from modules/home-manager):
-    # outputs.homeManagerModules.example
-
-    # Or modules exported from other flakes (such as nix-colors):
-    # inputs.nix-colors.homeManagerModules.default
-
-    # You can also split up your configuration and import pieces of it here:
-    # ./nvim.nix
-  ];
+}: let
+  spotify-80 = pkgs.unstable.callPackage ../pkgs/spotify/default.nix {};
+in {
+  home.enableNixpkgsReleaseCheck = false; # Remove once back on stable
+  imports = [];
 
   nixpkgs = {
-    # You can add overlays here
     overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
-
-      # You can also add overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
     ];
-    # Configure your nixpkgs instance
     config = {
       allowUnfree = true;
     };
@@ -47,9 +27,9 @@
   home = {
     username = "james";
     homeDirectory = "/home/james";
-
   };
 
+  /*
   ######  #    #  #####   #####
   #     # #   #  #     # #     #
   #     # #  #   #       #
@@ -57,68 +37,67 @@
   #       #  #   #     #       #
   #       #   #  #     # #     #
   #       #    #  #####   #####
+  */
+  # SEE ALSO: extra.nix
   home.packages = with pkgs; [
     adwaita-icon-theme
     adwaita-icon-theme-legacy
     alacritty
     amdgpu_top
     btop
-    easyeffects
     eza
+    fastfetch
+    feh
     firefox
     font-awesome
+    flex
+    gcc
     gh
-    git
-    gimp-with-plugins
+    gnumake
+    go
+    gdb
+    gpp
     hyprland
     hyprshot
-    lightdm
+    imagemagick
+    inputs.themecord.packages.x86_64-linux.default
     lutris
     lxappearance
+    magic-wormhole
     mako
-    moonlight-qt
-    nemo
+    mpv
+    nemo-with-extensions
     p7zip
     pavucontrol
+    python3Packages.pyyaml
+    python3Packages.psutil
+    python3Packages.protobuf
     pycritty
     pywal
     pywalfox-native
     rofi
-    source-code-pro
-    spotify
-    steam
+    spicetify-cli
     swww
     telegram-desktop
     thunderbird
-    tuxclocker
+    unstable.hellwal
     vesktop
+    vlang
     waybar
-    wine
+    wl-clipboard
     wlroots
-    wowup-cf
     wtype
     xclicker
     xorg.xeyes
+    xorg.xrdb
   ];
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 
-  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  home.stateVersion = "23.05";
-
-  # Enable programs
   programs.home-manager.enable = true;
-  wayland.windowManager.hyprland.enable = true; # enable Hyprland
+  wayland.windowManager.hyprland.enable = true;
   programs.waybar.enable = true;
-
-  # programs.firefox = {
-  #  enable = true;
-  #  preferences = {
-  #    "widget.use-xdg-desktop-portal.file-picker" = 1;
-  #    "widget.use-xdg-desktop-portal.mime-handler" = 1;
-  #  };
-  #};
 
   programs.neovim = {
     enable = true;
@@ -126,39 +105,148 @@
     vimAlias = true;
   };
 
+  services.udiskie = {
+    enable = true;
+    settings = {
+      program_options = {
+        file_manager = "${pkgs.nemo-with-extensions}/bin/nemo";
+      };
+    };
+  };
+
   /*
-  ​ #######   #####   #     #
-   ​     #   #     #  #     #
-    ​   #    #        #     #
-  ​   #       #####   #######
-  ​  #             #  #     #
-  ​ #        #     #  #     #
-  ​ #######   #####   #     #
-*/
+  #######   #####    #     #
+       #   #     #   #     #
+   ​   #    #         #     #
+     #      #####    #######
+    #            #   #     #
+   #       #     #   #     #
+  #######   #####    #     #
+  */
   programs.zsh = {
     enable = true;
     enableCompletion = true;
     syntaxHighlighting.enable = true;
 
     localVariables = {
-      PROMPT="%m%F{green}%B%(?.%#.%F{red}!)%b%F{green} ";
-      RPROMPT=" %F{red}%=%(?..%?)%b";
+      PROMPT = "%m%F{green}%B%(?.%#.%F{red}!)%b%F{green} ";
+      RPROMPT = " %F{red}%=%(?..%?)%b";
       PATH = "$PATH:/run/current-system/sw/bin/";
     };
 
     shellAliases = {
-      nxe = "sudo nixos-rebuild switch --flake /etc/nixos#powwuinator; home-manager switch -b backup --flake /etc/nixos#james@powwuinator";
-      nxen = "sudo nixos-rebuild switch --flake /etc/nixos#powwuinator";
-      nxeh = "home-manager switch -b backup --flake /etc/nixos#james@powwuinator";
+      cls = "clear";
+      ew = "emacs -nw";
+      fav = "cat ~/.current-wallpaper | xargs cp -t ~/Wallpapers/wallpapers/favorites";
       ls = "eza -a";
+      nxe = "sudo nixos-rebuild switch --flake /etc/nixos#powwuinator && home-manager switch -b backup --flake /etc/nixos#james@powwuinator";
+      nxeh = "home-manager switch -b backup --flake /etc/nixos#james@powwuinator";
+      nxen = "sudo nixos-rebuild switch --flake /etc/nixos#powwuinator";
+      repl = "nix repl /etc/nixos";
+      shiny = "pkill sunshine && sleep 10; flatpak run dev.lizardbyte.app.Sunshine";
+      unfav = "cat ~/.current-wallpaper | rev | cut -d '/' -f 1 | rev | xargs -I {} rm ~/Wallpapers/wallpapers/favorites/{}";
+      spotify = "spicetify watch -s";
     };
     history.size = 1000000;
-    # history.file = "~/.histfile";
+    history.path = "/home/james/.histfile";
+
+    # fix for strange directory issue
+    initContent = "cd ~";
   };
 
+  /*
+   #####   ######   #######  #######  ###  #######  #     #
+  #     #  #     #  #     #     #      #   #         #   #
+  #        #     #  #     #     #      #   #          # #
+   #####   ######   #     #     #      #   #####       #
+        #  #        #     #     #      #   #           #
+  #     #  #        #     #     #      #   #           #
+   #####   #        #######     #     ###  #           #
+  */
+  home.file.".config/spicetify" = {
+    recursive = true;
+    source = pkgs.fetchFromGitHub {
+      owner = "powwu";
+      repo = "spicetify";
+      rev = "fe24be93eef748c370f8948643ce2939970923b9";
+      sha256 = "GXmth7wJb0EKRctOcM5tZIw6VjhAb19Wb1AGBDj7vCU=";
+    };
+  };
+  home.file.".spotify-80" = {
+    recursive = true;
+    source = spotify-80.outPath;
+  };
+  home.activation = {
+    fixSpotify = lib.hm.dag.entryAfter ["onFilesChange"] ''
+      mkdir $HOME/spotify 2> /dev/null && cp -rL $HOME/.spotify-80/* $HOME/spotify
+      rm -f $HOME/spotify/bin/spotify
+      ln -s $HOME/spotify/share/spotify/spotify $HOME/spotify/bin/spotify
+      chmod -R 774 $HOME/spotify/
+      chmod +x $HOME/spotify/share/spotify/spotify $HOME/spotify/share/spotify/.spotify-wrapped
+      export OLDPATH=$(echo ${spotify-80.outPath} | sed 's/\//\\\//g')
+      export NEWPATH=$(echo $HOME/spotify | sed 's/\//\\\//g')
+      sed -i "s/$OLDPATH/$NEWPATH/g" $HOME/spotify/share/spotify/spotify
+    '';
+  };
 
+  /*
+  ######   #######  #######  ###
+  #     #  #     #  #         #
+  #     #  #     #  #         #
+  ######   #     #  #####     #
+  #   #    #     #  #         #
+  #    #   #     #  #         #
+  #     #  #######  #        ###
+  */
+  home.file.".config/rofi/config.rasi".text = ''
+    @theme "~/.cache/wal/colors-rofi-dark.rasi"
+  '';
 
+  /*
+  #     #     #     #
+  #  #  #    # #    #
+  #  #  #   #   #   #
+  #  #  #  #     #  #
+  #  #  #  #######  #
+  #  #  #  #     #  #
+   ## ##   #     #  #######
+  */
+  home.file.".config/wal" = {
+    recursive = true;
+    source = pkgs.fetchFromGitHub {
+      owner = "powwu";
+      repo = "wal";
+      rev = "99c30689dffc6ba8f8c1f06ea22e726064c6f17e";
+      sha256 = "sha256-SgpInaY4BCSViAaZg+KLbyCV2pYBY3QjGGNLqmL77KY=";
+    };
+  };
 
+  /*
+  #     #  #######   #####   #    #  #######  #######  ######
+  #     #  #        #     #  #   #      #     #     #  #     #
+  #     #  #        #        #  #       #     #     #  #     #
+  #     #  #####     #####   ###        #     #     #  ######
+   #   #   #              #  #  #       #     #     #  #
+    # #    #        #     #  #   #      #     #     #  #
+     #     #######   #####   #    #     #     #######  #
+  */
+  home.file.".config/vesktop" = {
+    recursive = true;
+    source = pkgs.fetchFromGitHub {
+      owner = "powwu";
+      repo = "vesktop";
+      rev = "97587a215c188efa36fddfd20ae9509b0beb60c5";
+      sha256 = "sha256-4Paxa4GdA7EqwgAqL6zZMjGxriD9VfKggnjcQ7UF2AY=";
+    };
+  };
+  home.activation = {
+    fixVesktop = lib.hm.dag.entryAfter ["onFilesChange"] ''
+               ls ~/.config/vesktop/themes/Themecord.css || cp -L ~/.config/vesktop/themes/Themecord-tmp.css ~/.config/vesktop/themes/Themecord.css
+               chmod 777 ~/.config/vesktop/themes/Themecord.css
+    '';
+  };
+
+  /*
   #######  #     #     #      #####    #####
   #        ##   ##    # #    #     #  #     #
   #        # # # #   #   #   #        #
@@ -166,14 +254,14 @@
   #        #     #  #######  #              #
   #        #     #  #     #  #     #  #     #
   #######  #     #  #     #   #####    #####
-  # Unfortunately, we can only deal with installation for now, until someone makes a spacemacs overlay for nixos (which I honestly don't care enough to do)
+  */
+  # Unfortunately, we can only deal with installation for now, until someone makes a spacemacs overlay for nixos (which I honestly don't care enough to do). `.spacemacs` is already a declarative configuration for emacs, just like home-manager would provide
   programs.emacs = {
     enable = true;
     package = pkgs.emacs-pgtk;
   };
 
   services.emacs.defaultEditor = true;
-
   home.file.".emacs.d" = {
     recursive = true;
     source = pkgs.fetchFromGitHub {
@@ -184,6 +272,20 @@
     };
   };
 
+  # ordinarily would be a cause for concern. however, home-manager makes sure that any backups are not overwritten, and will refuse to continue if that's not the case
+  home.file.".spacemacs".source = pkgs.fetchurl {
+    url = "https://raw.githubusercontent.com/powwu/dotspacemacs/refs/heads/main/.spacemacs";
+    hash = "sha256-BdeUcLRGrBaTXy/g1FwGOpoUhXlRwMaTj2Fw3iF2ooc=";
+  };
+
+  home.activation = {
+    fixSpacemacs = lib.hm.dag.entryAfter ["onFilesChange"] ''
+      find $HOME/.spacemacs -type l > /dev/null && cp --remove-destination `readlink $(readlink $HOME/.spacemacs)` .spacemacs
+      chmod 664 $HOME/.spacemacs
+    '';
+  };
+
+  /*
   #     # #     # ######  ######  #          #    #     # ######
   #     #  #   #  #     # #     # #         # #   ##    # #     #
   #     #   # #   #     # #     # #        #   #  # #   # #     #
@@ -191,14 +293,23 @@
   #     #    #    #       #   #   #       ####### #   # # #     #
   #     #    #    #       #    #  #       #     # #    ## #     #
   #     #    #    #       #     # ####### #     # #     # ######
+  */
   wayland.windowManager.hyprland.settings = {
-    exec-once = "swww-daemon & ~/Wallpapers/bin/wallpaper ~/Wallpapers/wallpapers/favorites & waybar & mako --default-timeout=15000 --layer=overlay & lxpolkit & sleep 2; thunderbird & pw-metadata -n settings 0 clock.force-quantum 0 & amdgpu_top --gui & sudo ntpd";
+    exec-once = [
+      "swww-daemon & \\"
+      "waybar & \\"
+      "lxpolkit & \\"
+      "sleep 1; ~/Wallpapers/bin/wallpaper ~/Wallpapers/wallpapers/favorites & \\"
+      "sleep 4; mako --default-timeout=15000 --layer=overlay & \\"
+      "sleep 2; thunderbird & \\"
+      "pw-metadata -n settings 0 clock.force-quantum 0"
+    ];
     # exec-once = "wl-paste -t text -w sh -c 'xclip -selection clipboard -o > /dev/null 2> /dev/null || xclip -selection clipboard'";
 
     monitor = [
-      "DP-4,1920x1080@120,auto-left,1"
-      "eDP-1,2256x1504@60,auto,1.8"
-      "HDMI-A-1,1920x1080@120,auto,1"
+      "DP-4,1920x1080@120,auto-left,1,vrr,0"
+      "eDP-1,2256x1504@60,auto,1.566663"
+      "HDMI-A-1,1920x1080@60,auto,1"
     ];
 
     env = [
@@ -212,7 +323,6 @@
     input = {
       kb_layout = "us";
       kb_options = "ctrl:nocaps";
-
 
       follow_mouse = 1;
 
@@ -301,43 +411,83 @@
     windowrulev2 = [
       "noanim,class:(flameshot)"
       "move 0 0,class:(flameshot)"
+
       "noanim,class:(swww)"
-      "move 0 0,class:(archlinux-logout.py)"
-      "float,class:(archlinux-logout.py)"
+
       "tile,title:(.*Battle\.net.*)"
-      "workspace 6,title:(.*Battle\.net.*)"
       "tile,class:(wow.exe)"
       "fullscreen,class:(wow.exe)"
+
+      "fullscreen,class:(^steam_app.*)"
+      "fullscreen,title:(Steam Big Picture Mode)"
+      # "fullscreen,class:(Ryujinx)"
+
+      "fullscreen,class:(^com.moonlight_stream.Moonlight$)"
+
+      # Workspace 6
       "workspace 6,class:(wow.exe)"
       "workspace 6,class:(lutris)"
+      "workspace 6,title:(.*Battle\.net.*)"
+
+      # archlinux-logout
       "animation slidefadevert,1,10,linear,class:(archlinux-logout.py)"
+      "move 0 0,class:(archlinux-logout.py)"
+      "float,class:(archlinux-logout.py)"
+
+      # Workspace 2
       "workspace 2,class:(firefox)"
+
+      # Workspace 3
       "workspace 3,class:(discord)"
       "workspace 3,class:(vesktop)"
       "workspace 3,class:(org.telegram.desktop)"
+
+      # Workspace 5
       "workspace 5,class:(Spotify)"
+
+      # Workspace mail
       "workspace name:mail silent,class:(thunderbird)"
+
+      # Workspace gpu
       "workspace name:gpu silent,class:(amdgpu_top)"
+
+      # glxgears
       "move onscreen cursor -20% -20%,title:(glxgears)"
+
+      # Rofi
       "stayfocused,class:(Rofi)"
       "center,class:(Rofi)"
       "dimaround,class:(Rofi)"
+
+      # MATLAB
       "move cursor -10% -10%,class:(^MATLAB.*)"
+
+      # osu!
       "noanim,class:(osu)"
       "noblur,class:(osu)"
       "nodim,class:(osu)"
       "noborder,class:(osu)"
       "noshadow,class:(osu)"
+
+      # Ghidra
+      "stayfocused,title:(^win.*),class:(ghidra-Ghidra)"
+      "move onscreen cursor -10% -10%,title:(^win.*),class:(ghidra-Ghidra)"
+      "tile,title:(^Ghidra.*),class:(ghidra-Ghidra)"
+      "tile,title:(^CodeBrowser.*),class:(ghidra-Ghidra)"
+      "tile,title:(^Debugger.*),class:(ghidra-Ghidra)"
+      "tile,title:(^Emulator.*),class:(ghidra-Ghidra)"
+      "tile,title:(^Version Tracking.*),class:(ghidra-Ghidra)"
     ];
 
     "$mainMod" = "SUPER";
     bind = [
       ", code:124, exec, archlinux-logout"
-      ", code:123, exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
-      ", code:122, exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
-      ", code:121, exec, pactl set-sink-mute @DEFAULT_SINK@ toggle"
-      ", code:232, exec, xbacklight -dec 5"
-      ", code:233, exec, xbacklight -inc 5"
+      ", code:123, exec, wpctl set-volume @DEFAULT_SINK@ 5%+"
+      ", code:122, exec, wpctl set-volume @DEFAULT_SINK@ 5%-"
+      ", code:121, exec, wpctl set-mute @DEFAULT_SINK@ toggle"
+      ", code:232, exec, sudo xbacklight -dec 5"
+      ", code:233, exec, sudo xbacklight -inc 5"
+      ", code:255, exec, true" # inhibit XF86RFKill
       "$mainMod, O, movecurrentworkspacetomonitor, 1"
       "$mainMod, P, movecurrentworkspacetomonitor, 0"
       "$mainMod, RETURN, exec, alacritty"
@@ -376,7 +526,6 @@
       "$mainMod SHIFT, right, movewindoworgroup, r"
       "$mainMod SHIFT, up, movewindoworgroup, u"
       "$mainMod SHIFT, down, movewindoworgroup, d"
-
 
       # Switch workspaces with mainMod + [0-9]
       "$mainMod, 1, workspace, 1"
@@ -418,13 +567,15 @@
 
   gtk.cursorTheme = "Adwaita";
 
+  /*
   #     #    #    #     # ######     #    ######
   #  #  #   # #    #   #  #     #   # #   #     #
   #  #  #  #   #    # #   #     #  #   #  #     #
   #  #  # #     #    #    ######  #     # ######
   #  #  # #######    #    #     # ####### #   #
   #  #  # #     #    #    #     # #     # #    #
-  ### ##  #     #    #    ######  #     # #     #
+   ## ##  #     #    #    ######  #     # #     #
+  */
   programs.waybar = {
     settings = {
       mainBar = {
@@ -511,7 +662,7 @@
         };
         pulseaudio = {
           format = "{volume}% {icon}";
-          format-bluetooth= "{volume}% {icon}";
+          format-bluetooth = "{volume}% {icon}";
           format-muted = "";
           format-icons = {
             "headphones" = "";
@@ -540,114 +691,116 @@
           interval = 300;
           exec = "curl -Ss 'https:#wttr.in?0&T&Q' 2> /dev/null | cut -c 16- | head -2 | tr '\n' ' ' | awk '{$1=$1};1'";
         };
-
       };
     };
     style = lib.strings.concatStrings [
       ''
-  * {
-      border: none;
-      border-radius: 0;
-      font-family: "Ubuntu Nerd Font";
-      font-size: 12px;
-      min-height: 0;
-  }
+        * {
+            border: none;
+            border-radius: 0;
+            font-family: "Ubuntu Nerd Font";
+            font-size: 12px;
+            min-height: 0;
+        }
 
-  window#waybar {
-      background-color: rgba(0, 0, 0, 0.7);
-      color: white;
-  }
+        window#waybar {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+        }
 
-  #window {
-      font-weight: bold;
-      font-family: "Ubuntu";
-  }
-  /*
-  #workspaces {
-      padding: 0 5px;
-  }
-  */
+        #window {
+            font-weight: bold;
+            font-family: "Ubuntu";
+        }
+        /*
+        #workspaces {
+            padding: 0 5px;
+        }
+        */
 
-  #workspaces button {
-      padding: 0 5px;
-      background: transparent;
-      color: white;
-      border-top: 2px solid transparent;
-  }
+        #workspaces button {
+            padding: 0 5px;
+            background: transparent;
+            color: white;
+            border-top: 2px solid transparent;
+        }
 
-  #workspaces button.focused {
-      color: #c9545d;
-      border-top: 2px solid #c9545d;
-  }
+        #workspaces button.focused {
+            color: #c9545d;
+            border-top: 2px solid #c9545d;
+        }
 
-  #mode {
-      background: #64727D;
-      border-bottom: 3px solid white;
-  }
+        #mode {
+            background: #64727D;
+            border-bottom: 3px solid white;
+        }
 
-  #clock, #battery, #cpu, #memory, #network, #pulseaudio, #custom-spotify, #tray, #mode {
-      padding: 0 3px;
-      margin: 0 2px;
-  }
+        #clock, #battery, #cpu, #memory, #network, #pulseaudio, #custom-spotify, #tray, #mode {
+            padding: 0 3px;
+            margin: 0 2px;
+        }
 
-  #clock {
-      font-weight: bold;
-  }
+        #clock {
+            font-weight: bold;
+        }
 
-  #battery {
-  }
+        #battery {
+        }
 
-  #battery icon {
-      color: red;
-  }
+        #battery icon {
+            color: red;
+        }
 
-  #battery.charging {
-  }
+        #battery.charging {
+        }
 
-  @keyframes blink {
-      to {
-          background-color: #ffffff;
-          color: black;
-      }
-  }
+        @keyframes blink {
+            to {
+                background-color: #ffffff;
+                color: black;
+            }
+        }
 
-  #battery.warning:not(.charging) {
-      color: white;
-      animation-name: blink;
-      animation-duration: 0.5s;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-      animation-direction: alternate;
-  }
+        #battery.warning:not(.charging) {
+            color: white;
+            animation-name: blink;
+            animation-duration: 0.5s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+        }
 
-  #cpu {
-  }
+        #cpu {
+        }
 
-  #memory {
-  }
+        #memory {
+        }
 
-  #network {
-  }
+        #network {
+        }
 
-  #network.disconnected {
-      background: #f53c3c;
-  }
+        #network.disconnected {
+            background: #f53c3c;
+        }
 
-  #pulseaudio {
-  }
+        #pulseaudio {
+        }
 
-  #pulseaudio.muted {
-  }
+        #pulseaudio.muted {
+        }
 
-  #custom-spotify {
-      color: rgb(102, 220, 105);
-  }
+        #custom-spotify {
+            color: rgb(102, 220, 105);
+        }
 
-  #tray {
-  }
+        #tray {
+        }
 
 
-  ''
+      ''
     ];
   };
+
+  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+  home.stateVersion = "25.05";
 }
