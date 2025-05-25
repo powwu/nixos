@@ -1,5 +1,4 @@
-# This is your system's configuration file.
-# Use this to configure your system environment (it replaces /etc/nixos/configuration.nix)
+# This is your systYour new nix configis to configure your system environment (it replaces /etc/nixos/configuration.nix)
 {
   inputs,
   outputs,
@@ -7,77 +6,127 @@
   config,
   pkgs,
   ...
-}: {
-  # You can import other NixOS modules here
+}: let
+  sunshine-2025414181259 = pkgs.unstable.callPackage ../pkgs/sunshine-2025.414.181259/package.nix {libgbm = pkgs.unstable.libgbm;};
+in {
   imports = [
-    # If you want to use modules your own flake exports (from modules/nixos):
-    # outputs.nixosModules.example
-
-    # Or modules from other flakes (such as nixos-hardware):
-    # inputs.hardware.nixosModules.common-cpu-amd
-    # inputs.hardware.nixosModules.common-ssd
-
-    # You can also split up your configuration and import pieces of it here:
-    # ./users.nix
-
-    # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
   ];
+  boot.kernelPackages = pkgs.linuxPackages;
+  # boot.extraModulePackages = [inputs.mt7601u-access-point.packages.x86_64-linux.default];
+  boot.extraModulePackages = [config.boot.kernelPackages.rtl8852bu];
+  boot.kernelParams = [
+    "quiet"
+    "splash"
+    "coherent_pool=4M"
+  ];
+
   boot.loader.systemd-boot.enable = false;
+
   boot.loader.grub.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.efiSupport = true;
-  boot.loader.grub.device = "nodev";
-  boot.loader.timeout = 1;
+  boot.loader.grub.device = "nodev"; # seems strange but recommended for EFI setups
+  boot.loader.grub.extraConfig = ''
+    if keystatus --shift ; then
+        set timeout=-1
+    else
+        set timeout=0
+    fi
+  '';
+  boot.loader.timeout = 0;
   nixpkgs = {
-    # You can add overlays here
     overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
-
-      # You can also add overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
     ];
-    # Configure your nixpkgs instance
     config = {
-      # Disable if you don't want unfree packages
       allowUnfree = true;
     };
   };
 
+  hardware = {
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
+
+    amdgpu.amdvlk = {
+      enable = true;
+      support32Bit.enable = true;
+    };
+  };
+
   environment.systemPackages = with pkgs; [
+    acpilight
     bash
     dxvk
+    git
+    git-lfs
+    file
+    gutenprint
+    icewm
+    virtiofsd
+    gdk-pixbuf
+    OVMFFull
+    libva
+    libva-utils
+    lxde.lxsession
     mesa
+    mesa-gl-headers
     neovim
     networkmanager
+    openvr
     pipewire
     python3
-    python3Packages.pyyaml
+    qemu
     rtkit
-    sunshine
-    # vim
-    virtiofsd
+    usbutils
+    vulkan-extension-layer
+    vulkan-loader
+    vulkan-tools
+    powertop
+    vulkan-validation-layers
+    wine
+    wine64
+    winetricks
     zerotierone
     zsh
   ];
 
-  # Make Firefox use the KDE file picker.
-  # Preferences source: https://wiki.archlinux.org/title/firefox#KDE_integration
+  fonts.packages = with pkgs; [
+    source-code-pro
+  ];
+
+  # XRDP
+  services.xrdp.enable = true;
+  services.xrdp.defaultWindowManager = "icewm";
+
+  services.geoclue2.geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
+
+  programs.virt-manager.enable = true;
+
+  programs.tuxclocker.enable = true;
+
+  programs.adb.enable = true;
+
+  programs.kdeconnect.enable = true;
+
+  virtualisation.libvirtd.enable = true;
+
+  virtualisation.spiceUSBRedirection.enable = true;
+
   programs.firefox = {
     enable = true;
     preferences = {
       "widget.use-xdg-desktop-portal.file-picker" = 1;
     };
+  };
+
+  services.printing = {
+    enable = true;
+    drivers = with pkgs; [gutenprint];
   };
 
   services.sunshine = {
@@ -86,7 +135,192 @@
     capSysAdmin = true;
     openFirewall = true;
 
+    settings = {
+      # min_log_level = "verbose";
+    };
+
+    # TEMPORARY WHILE VIRTUAL DISPLAY FEATURE IS IN PRE-RELEASE
+    package = sunshine-2025414181259;
+
+    applications = {
+      env = {
+        PATH = "$(PATH):$(HOME)/.local/bin:$(HOME)/Wallpapers/bin";
+      };
+      apps = [
+        {
+          name = "1920x1080 Virtual";
+          prep-cmd = [
+            {
+              do = "hyprctl keyword monitor HDMI-A-1, disable";
+              undo = "";
+            }
+            {
+              do = "hyprctl keyword monitor eDP-1, disable";
+              undo = "";
+            }
+            {
+              do = "hyprctl output create headless HEADLESS-0";
+              undo = "";
+            }
+            {
+              do = "hyprctl keyword monitor HDMI-A-1, 1920x1080@120, auto-left, auto";
+              undo = "";
+            }
+            {
+              do = "hyprctl keyword monitor eDP-1, 2256x1504@60, auto, 1.566663";
+              undo = "";
+            }
+            {
+              do = "hyprctl keyword monitor HEADLESS-0, 1920x1080@60, auto, auto";
+              undo = "";
+            }
+            {
+              do = "swww kill";
+              undo = "";
+            }
+            {
+              do = "swww init";
+              undo = "";
+            }
+          ];
+        }
+        {
+          name = "2256x1504 Virtual";
+          prep-cmd = [
+            {
+              do = "hyprctl keyword monitor HDMI-A-1, disable";
+              undo = "";
+            }
+            {
+              do = "hyprctl keyword monitor eDP-1, disable";
+              undo = "";
+            }
+            {
+              do = "hyprctl output create headless HEADLESS-0";
+              undo = "";
+            }
+            {
+              do = "hyprctl keyword monitor HDMI-A-1, 1920x1080@120, auto-left, auto";
+              undo = "";
+            }
+            {
+              do = "hyprctl keyword monitor eDP-1, 2256x1504@60, auto, 1.566663";
+              undo = "";
+            }
+            {
+              do = "hyprctl keyword monitor HEADLESS-0, 2256x1504@60, auto, auto";
+              undo = "";
+            }
+            {
+              do = "swww kill";
+              undo = "";
+            }
+            {
+              do = "swww init";
+              undo = "";
+            }
+          ];
+        }
+        {
+          name = "2480x1650 Virtual";
+          prep-cmd = [
+            {
+              do = "hyprctl keyword monitor HDMI-A-1, disable";
+              undo = "";
+            }
+            {
+              do = "hyprctl keyword monitor eDP-1, disable";
+              undo = "";
+            }
+            {
+              do = "hyprctl output create headless HEADLESS-0";
+              undo = "";
+            }
+            {
+              do = "hyprctl keyword monitor HDMI-A-1, 1920x1080@120, auto-left, auto";
+              undo = "";
+            }
+            {
+              do = "hyprctl keyword monitor eDP-1, 2256x1504@60, auto, 1.566663";
+              undo = "";
+            }
+            {
+              do = "hyprctl keyword monitor HEADLESS-0, 2480x1650@30, auto, auto";
+              undo = "";
+            }
+            {
+              do = "swww kill";
+              undo = "";
+            }
+            {
+              do = "swww init";
+              undo = "";
+            }
+          ];
+        }
+
+        {
+          name = "Virtual Display Stop";
+          prep-cmd = [
+            {
+              do = "hyprctl output remove HEADLESS-0";
+              undo = "";
+            }
+          ];
+
+          exclude-global-prep-cmd = "false";
+          auto-detach = "true";
+        }
+
+        {
+          name = "Desktop";
+          exclude-global-prep-cmd = "false";
+          auto-detach = "true";
+        }
+
+        {
+          name = "Steam";
+          detached = [
+            "capsh --delamb=cap_sys_admin -- -c \"setsid steam steam://open/bigpicture\""
+          ];
+          exclude-global-prep-cmd = "false";
+          auto-detach = "true";
+        }
+        {
+          name = "Lutris";
+          cmd = "capsh --delamb=cap_sys_admin -- -c \"lutris\"";
+          exclude-global-prep-cmd = "false";
+          auto-detach = "true";
+        }
+
+        {
+          name = "Kill Main Displays";
+          prep-cmd = [
+            {
+              do = "hyprctl keyword monitor HDMI-A-1, disable";
+              undo = "";
+            }
+            {
+              do = "hyprctl keyword monitor eDP-1, disable";
+              undo = "";
+            }
+          ];
+          exclude-global-prep-cmd = "false";
+          auto-detach = "true";
+        }
+
+        {
+          name = "Reboot";
+          cmd = "reboot";
+          exclude-global-prep-cmd = "false";
+          auto-detach = "true";
+        }
+      ];
+    };
   };
+
+  # For connected file systems on libvirt
+  # services.virtiofsd.enable = true;
 
   services.zerotierone = {
     enable = true;
@@ -95,39 +329,74 @@
     ];
   };
 
+  security.sudo = {
+    enable = true;
+    extraRules = [
+      {
+        commands = [
+          {
+            command = "/run/current-system/sw/bin/xbacklight";
+            options = ["NOPASSWD"];
+          }
+        ];
+        groups = ["wheel"];
+      }
+    ];
+  };
 
+  # FTP SERVER
+  # networking.firewall.allowedTCPPorts = [21];
 
+  # Inhibit power button input
+  services.logind.extraConfig = ''
+    HandlePowerKey=ignore
+    PowerKeyIgnoreInhibited=yes
+  '';
+
+  programs.gdk-pixbuf.modulePackages = [pkgs.librsvg];
+  systemd.network.wait-online.enable = false;
+  systemd.services.NetworkManager-wait-online.enable = false;
+  boot.initrd.systemd.network.wait-online.enable = false;
   programs.dconf.enable = true;
   programs.hyprland.enable = true;
   programs.zsh.enable = true;
   networking.networkmanager.enable = true;
   services.automatic-timezoned.enable = true;
+  services.udisks2.enable = true;
   services.ntp.enable = true;
   services.xserver.enable = true;
-  services.xserver.displayManager.lightdm.enable = true;
-  services.displayManager.autoLogin.user = "james";
-  services.displayManager.autoLogin.enable = true;
-
-  hardware.graphics.enable32Bit = true;
+  services.greetd = {
+    enable = true;
+    package = pkgs.greetd;
+    settings = rec {
+      initial_session = {
+        command = "dbus-run-session Hyprland";
+        user = "james";
+      };
+      default_session = initial_session;
+    };
+  };
 
   nix = let
     flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
   in {
     settings = {
-      # Enable flakes and new 'nix' command
       experimental-features = "nix-command flakes";
-      # Opinionated: disable global registry
-      flake-registry = "";
-      # Workaround for https://github.com/NixOS/nix/issues/9574
-      nix-path = config.nix.nixPath;
     };
+
     # Opinionated: make flake registry and nix path match flake inputs
     registry = lib.mapAttrs (_: flake: {inherit flake;}) flakeInputs;
     nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
   };
 
-  # FIXME: Add the rest of your current configuration
+  services.resolved = {
+    enable = true;
+  };
 
+  services.flatpak.enable = true;
+  services.mullvad-vpn.package = pkgs.mullvad-vpn;
+  services.mullvad-vpn.enable = true;
+  programs.gamemode.enable = true;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -137,29 +406,20 @@
     jack.enable = true;
   };
 
-  # TODO: Set your hostname
   networking.hostName = "powwuinator";
 
-  # TODO: Configure your system-wide user settings (groups, etc), add more users as needed.
   users.defaultUserShell = pkgs.zsh;
   users.users = {
-    # FIXME: Replace with your username
     james = {
-      # TODO: You can set an initial password for your user.
-      # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
-      # Be sure to change it (using passwd) after rebooting!
-      initialPassword = "correcthorsebatterystaple";
       isNormalUser = true;
-      openssh.authorizedKeys.keys = [
-        # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
-      ];
-      # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
+      openssh.authorizedKeys.keys = [];
       extraGroups = [
         "wheel"
         "audio"
         "games"
         "video"
         "libvirt"
+        "adbusers"
         "input"
         "autologin"
         "fuse"
@@ -169,5 +429,5 @@
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "23.05";
+  system.stateVersion = "25.05";
 }
