@@ -29,6 +29,7 @@
     android-studio
     steam-run
     scrcpy
+    nixpkgs-review
 
     (wineWowPackages.full.override {
       wineRelease = "staging";

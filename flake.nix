@@ -13,6 +13,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    crc64fast-nvme-nix.url = "github:powwu/crc64fast-nvme-nix";
+    crc64fast-nvme-nix.inputs.nixpkgs.follows = "nixpkgs";
+
     # mt7601u-access-point.url = "github:powwu/nixos-mt7601u-access-point";
   };
 
@@ -54,7 +57,7 @@
         specialArgs = {inherit inputs outputs;};
         modules = [
           ./nixos/configuration.nix
-          # ./extra/laptop.nix
+          ./extra/laptop.nix
         ];
       };
     };

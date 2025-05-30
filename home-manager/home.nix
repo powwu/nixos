@@ -128,7 +128,7 @@ in {
     enableCompletion = true;
     syntaxHighlighting.enable = true;
 
-    localVariables = {
+   localVariables = {
       PROMPT = "%m%F{green}%B%(?.%#.%F{red}!)%b%F{green} ";
       RPROMPT = " %F{red}%=%(?..%?)%b";
       PATH = "$PATH:/run/current-system/sw/bin/";
@@ -144,8 +144,8 @@ in {
       nxen = "sudo nixos-rebuild switch --flake /etc/nixos#powwuinator";
       repl = "nix repl /etc/nixos";
       shiny = "pkill sunshine && sleep 10; flatpak run dev.lizardbyte.app.Sunshine";
-      unfav = "cat ~/.current-wallpaper | rev | cut -d '/' -f 1 | rev | xargs -I {} rm ~/Wallpapers/wallpapers/favorites/{}";
       spotify = "spicetify watch -s";
+      unfav = "cat ~/.current-wallpaper | rev | cut -d '/' -f 1 | rev | xargs -I {} rm ~/Wallpapers/wallpapers/favorites/{}";
     };
     history.size = 1000000;
     history.path = "/home/james/.histfile";
@@ -187,6 +187,13 @@ in {
       export NEWPATH=$(echo $HOME/spotify | sed 's/\//\\\//g')
       sed -i "s/$OLDPATH/$NEWPATH/g" $HOME/spotify/share/spotify/spotify
     '';
+  };
+  xdg.desktopEntries.spotify = {
+    type = "Application";
+    name = "Spotify";
+    exec = "spicetify watch -s";
+    terminal = false;
+    comment = "Spotify launch wrapper w/ spicetify";
   };
 
   /*
@@ -242,7 +249,7 @@ in {
   home.activation = {
     fixVesktop = lib.hm.dag.entryAfter ["onFilesChange"] ''
                ls ~/.config/vesktop/themes/Themecord.css || cp -L ~/.config/vesktop/themes/Themecord-tmp.css ~/.config/vesktop/themes/Themecord.css
-               chmod 777 ~/.config/vesktop/themes/Themecord.css
+               chmod 774 ~/.config/vesktop/themes/Themecord.css
     '';
   };
 
@@ -272,7 +279,7 @@ in {
     };
   };
 
-  # ordinarily would be a cause for concern. however, home-manager makes sure that any backups are not overwritten, and will refuse to continue if that's not the case
+  # overwriting would be a cause for concern. however, home-manager makes sure that any backups are not overwritten, and will refuse to continue if that's not the case
   home.file.".spacemacs".source = pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/powwu/dotspacemacs/refs/heads/main/.spacemacs";
     hash = "sha256-BdeUcLRGrBaTXy/g1FwGOpoUhXlRwMaTj2Fw3iF2ooc=";
@@ -296,12 +303,12 @@ in {
   */
   wayland.windowManager.hyprland.settings = {
     exec-once = [
-      "swww-daemon & \\"
-      "waybar & \\"
+      "sleep 1; swww-daemon & \\"
+      "sleep 1; waybar & \\"
       "lxpolkit & \\"
-      "sleep 1; ~/Wallpapers/bin/wallpaper ~/Wallpapers/wallpapers/favorites & \\"
-      "sleep 4; mako --default-timeout=15000 --layer=overlay & \\"
+      "sleep 2; ~/Wallpapers/bin/wallpaper ~/Wallpapers/wallpapers/favorites & \\"
       "sleep 2; thunderbird & \\"
+      "sleep 4; mako --default-timeout=15000 --layer=overlay & \\"
       "pw-metadata -n settings 0 clock.force-quantum 0"
     ];
     # exec-once = "wl-paste -t text -w sh -c 'xclip -selection clipboard -o > /dev/null 2> /dev/null || xclip -selection clipboard'";

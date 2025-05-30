@@ -46,6 +46,8 @@ in {
     };
   };
 
+
+
   hardware = {
     graphics = {
       enable = true;
@@ -74,6 +76,7 @@ in {
     libva-utils
     lxde.lxsession
     mesa
+    inputs.crc64fast-nvme-nix.packages.x86_64-linux.default
     mesa-gl-headers
     neovim
     networkmanager
@@ -102,6 +105,7 @@ in {
   # XRDP
   services.xrdp.enable = true;
   services.xrdp.defaultWindowManager = "icewm";
+  # services.xrdp.openFirewall = true;
 
   services.geoclue2.geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
 
@@ -116,6 +120,8 @@ in {
   virtualisation.libvirtd.enable = true;
 
   virtualisation.spiceUSBRedirection.enable = true;
+
+  virtualisation.waydroid.enable = true;
 
   programs.firefox = {
     enable = true;
@@ -382,6 +388,7 @@ in {
   in {
     settings = {
       experimental-features = "nix-command flakes";
+      trusted-users = [ "james" ];
     };
 
     # Opinionated: make flake registry and nix path match flake inputs
