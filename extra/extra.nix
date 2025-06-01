@@ -30,6 +30,7 @@
     steam-run
     scrcpy
     nixpkgs-review
+    whatsie
 
     (wineWowPackages.full.override {
       wineRelease = "staging";

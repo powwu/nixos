@@ -44,6 +44,7 @@ in {
     adwaita-icon-theme-legacy
     alacritty
     amdgpu_top
+    unstable.archlinux-logout
     btop
     eza
     fastfetch
@@ -115,13 +116,13 @@ in {
   };
 
   /*
-  #######   #####    #     #
-       #   #     #   #     #
-   ​   #    #         #     #
-     #      #####    #######
-    #            #   #     #
-   #       #     #   #     #
-  #######   #####    #     #
+  #######   #####   #     #
+       #   #     #  #     #
+   ​   #    #        #     #
+     #      #####   #######
+    #            #  #     #
+   #       #     #  #     #
+  #######   #####   #     #
   */
   programs.zsh = {
     enable = true;
@@ -146,6 +147,7 @@ in {
       shiny = "pkill sunshine && sleep 10; flatpak run dev.lizardbyte.app.Sunshine";
       spotify = "spicetify watch -s";
       unfav = "cat ~/.current-wallpaper | rev | cut -d '/' -f 1 | rev | xargs -I {} rm ~/Wallpapers/wallpapers/favorites/{}";
+      lnp = "export NIX_PATH='nixpkgs=/home/james/nixpkgs/'";
     };
     history.size = 1000000;
     history.path = "/home/james/.histfile";
@@ -306,7 +308,7 @@ in {
       "sleep 1; swww-daemon & \\"
       "sleep 1; waybar & \\"
       "lxpolkit & \\"
-      "sleep 2; ~/Wallpapers/bin/wallpaper ~/Wallpapers/wallpapers/favorites & \\"
+      "sleep 1; ~/Wallpapers/bin/wallpaper ~/Wallpapers/wallpapers/favorites & \\"
       "sleep 2; thunderbird & \\"
       "sleep 4; mako --default-timeout=15000 --layer=overlay & \\"
       "pw-metadata -n settings 0 clock.force-quantum 0"
