@@ -16,7 +16,6 @@
     kicad
     krita
     moonlight-qt
-    nixpkgs-review
     obs-studio
     qbittorrent
     qdirstat
@@ -27,6 +26,7 @@
     steam-run
     # torzu
     tuxclocker
+    usb-modeswitch
     vagrant
     virt-manager
     whatsie
