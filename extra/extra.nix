@@ -25,7 +25,6 @@
     steam
     steam-run
     # torzu
-    tuxclocker
     usb-modeswitch
     vagrant
     virt-manager
