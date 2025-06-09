@@ -3,7 +3,7 @@
 [ "$(pwd)" = "/etc/nixos" ] && cd /tmp
 
 (
-  cp -r /etc/nixos "/etc/nixos-bak-$(date --iso-8601)"
+  cp -r /etc/nixos "/etc/nixos-bak-$(date --iso-8601=s)"
   rm -rf /etc/nixos/
   git clone https://github.com/powwu/nixos /etc/nixos/
   nixos-generate-config
