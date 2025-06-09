@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+git clone https://github.com/powwu/nixos /tmp/nixos
+cd /tmp/nixos
 rm -rf ./*
 cp -r /etc/nixos/* .
 git add -u .
