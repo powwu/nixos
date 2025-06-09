@@ -8,29 +8,31 @@
   ...
 }: {
   home.packages = with pkgs; [
-    cinnamon-common
+    android-studio
     easyeffects
+    ghidra
     gimp3-with-plugins
+    inkscape
+    kicad
+    krita
     moonlight-qt
+    nixpkgs-review
     obs-studio
+    qbittorrent
+    qdirstat
+    ryubing
+    scrcpy
     songrec
     steam
+    steam-run
+    # torzu
     tuxclocker
     vagrant
     virt-manager
-    wowup-cf
-    krita
-    inkscape
-    ghidra
-    qbittorrent
-    kicad
-    ryubing
-    # torzu
-    android-studio
-    steam-run
-    scrcpy
-    nixpkgs-review
     whatsie
+    wowup-cf
+    yt-dlp
+    zpaq
 
     (wineWowPackages.full.override {
       wineRelease = "staging";

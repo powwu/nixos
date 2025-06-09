@@ -105,7 +105,7 @@ in {
   # XRDP
   services.xrdp.enable = true;
   services.xrdp.defaultWindowManager = "icewm";
-  # services.xrdp.openFirewall = true;
+  services.xrdp.openFirewall = true;
 
   services.geoclue2.geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
 
