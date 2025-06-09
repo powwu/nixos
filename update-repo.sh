@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-git clone https://github.com/powwu/nixos /tmp/nixos
+git clone https://github.com/powwu/nixos /tmp/nixos || exit
 cd /tmp/nixos
 rm -rf ./*
 cp -r /etc/nixos/* .
