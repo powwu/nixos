@@ -276,15 +276,15 @@ in {
     source = pkgs.fetchFromGitHub {
       owner = "syl20bnr";
       repo = "spacemacs";
-      rev = "88c390ce78f1667eecee25baff1ee9b3acbb9b03";
-      sha256 = "1jrZhBbncEvqwaZz4bDp9Snc0JkzYM1La0iLj/Art6E=";
+      rev = "7972a579bd3063a1ec2fe5bdbcc5e175a60c1141";
+      sha256 = "sha256-e2LGD6r7ISlvyvvThkHxJllgmpmrJzS9oS7L8Mqjqs0=";
     };
   };
 
   # overwriting would be a cause for concern. however, home-manager makes sure that any backups are not overwritten, and will refuse to continue if that's not the case
   home.file.".spacemacs".source = pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/powwu/dotspacemacs/refs/heads/main/.spacemacs";
-    hash = "sha256-AAAAAAAAAAA=";
+    hash = "sha256-Q/5VAhLSyr9z9eD9bF6FVJRsEgSAMa3xOvZEvQaAjME=";
   };
 
   home.activation = {
