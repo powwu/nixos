@@ -342,7 +342,7 @@ in {
         }
         {
           name = "Reboot";
-          cmd = "sudo reboot";
+          cmd = "sudo /run/current-system/sw/bin/reboot";
           exclude-global-prep-cmd = "false";
           auto-detach = "true";
         }
