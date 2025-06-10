@@ -111,11 +111,9 @@ in {
 
   programs.virt-manager.enable = true;
 
-  programs.tuxclocker.enable = true;
-
   programs.adb.enable = true;
 
-  programs.kdeconnect.enable = true;
+  # programs.kdeconnect.enable = true;
 
   virtualisation.libvirtd.enable = true;
 
