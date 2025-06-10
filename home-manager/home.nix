@@ -82,6 +82,7 @@ in {
     telegram-desktop
     thunderbird
     unstable.hellwal
+    victor-mono
     vesktop
     vlang
     waybar
@@ -284,7 +285,7 @@ in {
   # overwriting would be a cause for concern. however, home-manager makes sure that any backups are not overwritten, and will refuse to continue if that's not the case
   home.file.".spacemacs".source = pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/powwu/dotspacemacs/refs/heads/main/.spacemacs";
-    hash = "sha256-Q/5VAhLSyr9z9eD9bF6FVJRsEgSAMa3xOvZEvQaAjME=";
+    hash = "sha256-w4WD4p+Q0Qi/92uW7JovHYBaYF5if+Q1d9BwonzESU4=";
   };
 
   home.activation = {
