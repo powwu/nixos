@@ -163,6 +163,10 @@ in {
               undo = "";
             }
             {
+              do = "hyprctl keyword monitor DP-2, disable";
+              undo = "";
+            }
+            {
               do = "hyprctl output create headless HEADLESS-0";
               undo = "";
             }
@@ -172,6 +176,10 @@ in {
             }
             {
               do = "hyprctl keyword monitor eDP-1, 2256x1504@60, auto, 1.566663";
+              undo = "";
+            }
+            {
+              do = "hyprctl keyword monitor DP-2, 1920x1080@60, auto-left, auto";
               undo = "";
             }
             {
@@ -200,6 +208,10 @@ in {
               undo = "";
             }
             {
+              do = "hyprctl keyword monitor DP-2, disable";
+              undo = "";
+            }
+            {
               do = "hyprctl output create headless HEADLESS-0";
               undo = "";
             }
@@ -209,6 +221,10 @@ in {
             }
             {
               do = "hyprctl keyword monitor eDP-1, 2256x1504@60, auto, 1.566663";
+              undo = "";
+            }
+            {
+              do = "hyprctl keyword monitor DP-2, 1920x1080@60, auto-left, auto";
               undo = "";
             }
             {
@@ -237,6 +253,10 @@ in {
               undo = "";
             }
             {
+              do = "hyprctl keyword monitor DP-2, disable";
+              undo = "";
+            }
+            {
               do = "hyprctl output create headless HEADLESS-0";
               undo = "";
             }
@@ -246,6 +266,10 @@ in {
             }
             {
               do = "hyprctl keyword monitor eDP-1, 2256x1504@60, auto, 1.566663";
+              undo = "";
+            }
+            {
+              do = "hyprctl keyword monitor DP-2, 1920x1080@60, auto-left, auto";
               undo = "";
             }
             {
@@ -308,14 +332,17 @@ in {
               do = "hyprctl keyword monitor eDP-1, disable";
               undo = "";
             }
+            {
+              do = "hyprctl keyword monitor DP-2, disable";
+              undo = "";
+            }
           ];
           exclude-global-prep-cmd = "false";
           auto-detach = "true";
         }
-
         {
           name = "Reboot";
-          cmd = "reboot";
+          cmd = "sudo reboot";
           exclude-global-prep-cmd = "false";
           auto-detach = "true";
         }
@@ -340,6 +367,10 @@ in {
         commands = [
           {
             command = "/run/current-system/sw/bin/xbacklight";
+            options = ["NOPASSWD"];
+          }
+          {
+            command = "/run/current-system/sw/bin/reboot";
             options = ["NOPASSWD"];
           }
         ];
