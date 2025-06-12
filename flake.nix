@@ -64,7 +64,7 @@
 
     homeConfigurations = {
       "james@powwuinator" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        pkgs = nixpkgs.legacyPackages.${system};
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [
           ./home-manager/home.nix
