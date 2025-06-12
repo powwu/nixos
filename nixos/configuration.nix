@@ -461,6 +461,7 @@ in {
         "fuse"
         "seat"
       ];
+     initialPassword = "password";
     };
   };
 
