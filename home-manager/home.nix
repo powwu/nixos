@@ -43,6 +43,7 @@ in {
     adwaita-icon-theme
     adwaita-icon-theme-legacy
     alacritty
+    amazon-q-cli
     amdgpu_top
     unstable.archlinux-logout
     btop
@@ -148,6 +149,7 @@ in {
       spotify = "spicetify watch -s";
       unfav = "cat ~/.current-wallpaper | rev | cut -d '/' -f 1 | rev | xargs -I {} rm ~/Wallpapers/wallpapers/favorites/{}";
       lnp = "export NIX_PATH='nixpkgs=/home/james/nixpkgs/'";
+      q = "amazon-q"
     };
     history.size = 1000000;
     history.path = "/home/james/.histfile";
