@@ -18,6 +18,7 @@ in {
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
+      outputs.overlays.custom-packages
     ];
     config = {
       allowUnfree = true;
@@ -45,7 +46,7 @@ in {
     alacritty
     amazon-q-cli
     amdgpu_top
-    unstable.archlinux-logout
+    custom.archlinux-logout
     btop
     eza
     fastfetch
@@ -130,7 +131,7 @@ in {
     enableCompletion = true;
     syntaxHighlighting.enable = true;
 
-   localVariables = {
+    localVariables = {
       PROMPT = "%m%F{green}%B%(?.%#.%F{red}!)%b%F{green} ";
       RPROMPT = " %F{red}%=%(?..%?)%b";
       PATH = "$PATH:/run/current-system/sw/bin/";
@@ -140,16 +141,16 @@ in {
       cls = "clear";
       ew = "emacs -nw";
       fav = "cat ~/.current-wallpaper | xargs cp -t ~/Wallpapers/wallpapers/favorites";
+      lnp = "export NIX_PATH='nixpkgs=/home/james/nixpkgs/'";
       ls = "eza -a";
       nxe = "sudo nixos-rebuild switch --flake /etc/nixos#powwuinator && home-manager switch -b backup --flake /etc/nixos#james@powwuinator";
       nxeh = "home-manager switch -b backup --flake /etc/nixos#james@powwuinator";
       nxen = "sudo nixos-rebuild switch --flake /etc/nixos#powwuinator";
+      q = "amazon-q";
       repl = "nix repl /etc/nixos";
       shiny = "pkill sunshine && sleep 10; flatpak run dev.lizardbyte.app.Sunshine";
       spotify = "spicetify watch -s";
       unfav = "cat ~/.current-wallpaper | rev | cut -d '/' -f 1 | rev | xargs -I {} rm ~/Wallpapers/wallpapers/favorites/{}";
-      lnp = "export NIX_PATH='nixpkgs=/home/james/nixpkgs/'";
-      q = "amazon-q";
     };
     history.size = 1000000;
     history.path = "/home/james/.histfile";
@@ -252,8 +253,8 @@ in {
   };
   home.activation = {
     fixVesktop = lib.hm.dag.entryAfter ["onFilesChange"] ''
-               ls ~/.config/vesktop/themes/Themecord.css || cp -L ~/.config/vesktop/themes/Themecord-tmp.css ~/.config/vesktop/themes/Themecord.css
-               chmod 774 ~/.config/vesktop/themes/Themecord.css
+      ls ~/.config/vesktop/themes/Themecord.css > /dev/null || cp -L ~/.config/vesktop/themes/Themecord-tmp.css ~/.config/vesktop/themes/Themecord.css
+      chmod 774 ~/.config/vesktop/themes/Themecord.css
     '';
   };
 
@@ -278,7 +279,7 @@ in {
     source = pkgs.fetchFromGitHub {
       owner = "syl20bnr";
       repo = "spacemacs";
-      rev = "7972a579bd3063a1ec2fe5bdbcc5e175a60c1141";
+      rev = "3b1b64ee211b77442214a818cbf894f8c0325026";
       sha256 = "sha256-e2LGD6r7ISlvyvvThkHxJllgmpmrJzS9oS7L8Mqjqs0=";
     };
   };
@@ -293,6 +294,10 @@ in {
     fixSpacemacs = lib.hm.dag.entryAfter ["onFilesChange"] ''
       find $HOME/.spacemacs -type l > /dev/null && cp --remove-destination `readlink $(readlink $HOME/.spacemacs)` .spacemacs
       chmod 664 $HOME/.spacemacs
+    '';
+    backupSpacemacs = lib.hm.dag.entryAfter ["fixSpacemacs"] ''
+      ls $HOME/.backup-spacemacs > /dev/null || mkdir $HOME/.backup-spacemacs
+      mv $HOME/.spacemacs.backup $HOME/.backup-spacemacs/spacemacs.backup-"$(date --iso-8601=s)" || exit 0
     '';
   };
 

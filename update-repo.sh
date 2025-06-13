@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+[ $(whoami) = "root" ] && { echo "do not run as root"; exit 1; }
+
 rm -rf /tmp/nixos
 git clone https://github.com/powwu/nixos /tmp/nixos || exit
 cd /tmp/nixos

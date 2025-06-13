@@ -6,9 +6,7 @@
   config,
   pkgs,
   ...
-}: let
-  sunshine-2025414181259 = pkgs.unstable.callPackage ../pkgs/sunshine-2025.414.181259/package.nix {libgbm = pkgs.unstable.libgbm;};
-in {
+}: {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -40,13 +38,12 @@ in {
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
+      outputs.overlays.custom-packages
     ];
     config = {
       allowUnfree = true;
     };
   };
-
-
 
   hardware = {
     graphics = {
@@ -144,7 +141,7 @@ in {
     };
 
     # TEMPORARY WHILE VIRTUAL DISPLAY FEATURE IS IN PRE-RELEASE
-    package = sunshine-2025414181259;
+    package = pkgs.custom.sunshine;
 
     applications = {
       env = {
@@ -228,7 +225,7 @@ in {
               undo = "";
             }
             {
-              do = "hyprctl keyword monitor HEADLESS-0, 2256x1504@60, auto, auto";
+              do = "hyprctl keyword monitor HEADLESS-0, 2256x1504@60, auto, 1.566663";
               undo = "";
             }
             {
@@ -417,7 +414,7 @@ in {
   in {
     settings = {
       experimental-features = "nix-command flakes";
-      trusted-users = [ "james" ];
+      trusted-users = ["james"];
     };
 
     # Opinionated: make flake registry and nix path match flake inputs
@@ -461,7 +458,7 @@ in {
         "fuse"
         "seat"
       ];
-     initialPassword = "password";
+      initialPassword = "password";
     };
   };
 

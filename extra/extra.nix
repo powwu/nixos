@@ -9,6 +9,7 @@
 }: {
   home.packages = with pkgs; [
     android-studio
+    custom.not-torzu
     easyeffects
     ghidra
     gimp3-with-plugins
@@ -16,15 +17,17 @@
     kicad
     krita
     moonlight-qt
+    nurl
+    # unstable.njq
     obs-studio
     qbittorrent
     qdirstat
+    remmina
     ryubing
     scrcpy
     songrec
     steam
     steam-run
-    # torzu
     usb-modeswitch
     vagrant
     virt-manager

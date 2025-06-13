@@ -3,7 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
-    nixpkgs-unstable.url = "github:powwu/nixpkgs/archlinux-logout-init";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-custom.url = "github:powwu/nixpkgs/custom";
 
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -23,6 +24,7 @@
     self,
     nixpkgs,
     nixpkgs-unstable,
+    nixpkgs-custom,
     home-manager,
     # mt7601u-access-point,
     ...
@@ -64,7 +66,8 @@
 
     homeConfigurations = {
       "james@powwuinator" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.${system};
+        # pkgs = forAllSystems (system: nixpkgs.legacyPackages.${system});
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [
           ./home-manager/home.nix

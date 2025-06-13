@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+[ $(whoami) = "root" ] || { echo "need root"; exit 1; }
+
 [ "$(pwd)" = "/etc/nixos" ] && cd /tmp
 
 cp -r /etc/nixos "/etc/nixos-bak-$(date --iso-8601=s)"

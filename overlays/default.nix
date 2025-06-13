@@ -20,4 +20,10 @@
       config.allowUnfree = true;
     };
   };
+  custom-packages = final: _prev: {
+    custom = import inputs.nixpkgs-custom {
+      system = final.system;
+      config.allowUnfree = true;
+    };
+  };
 }
