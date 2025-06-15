@@ -19,6 +19,7 @@
     obs-studio
     qbittorrent
     qdirstat
+    remmina
     ryubing
     scrcpy
     songrec

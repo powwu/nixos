@@ -228,7 +228,7 @@ in {
               undo = "";
             }
             {
-              do = "hyprctl keyword monitor HEADLESS-0, 2256x1504@60, auto, auto";
+              do = "hyprctl keyword monitor HEADLESS-0, 2256x1504@60, auto, 1.566663";
               undo = "";
             }
             {
