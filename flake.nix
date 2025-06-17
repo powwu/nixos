@@ -59,7 +59,9 @@
         specialArgs = {inherit inputs outputs;};
         modules = [
           ./nixos/configuration.nix
-          #  ./extra/laptop.nix
+         #  ./extra/sunshine.nix
+         #  ./extra/zerotier.nix
+         #  ./extra/laptop.nix
         ];
       };
     };

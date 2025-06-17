@@ -7,9 +7,7 @@
   config,
   pkgs,
   ...
-}: let
-  spotify-80 = pkgs.unstable.callPackage ../pkgs/spotify/default.nix {};
-in {
+}: {
   home.enableNixpkgsReleaseCheck = false; # Remove once back on stable
   imports = [];
 
@@ -177,20 +175,21 @@ in {
       sha256 = "GXmth7wJb0EKRctOcM5tZIw6VjhAb19Wb1AGBDj7vCU=";
     };
   };
-  home.file.".spotify-80" = {
+  home.file.".spotify-tmp" = {
     recursive = true;
-    source = spotify-80.outPath;
+    source = pkgs.custom.not-spotify.outPath;
   };
   home.activation = {
     fixSpotify = lib.hm.dag.entryAfter ["onFilesChange"] ''
-      mkdir $HOME/spotify 2> /dev/null && cp -rL $HOME/.spotify-80/* $HOME/spotify
+      mkdir $HOME/spotify 2> /dev/null && cp -rL $HOME/.spotify-tmp/* $HOME/spotify
       rm -f $HOME/spotify/bin/spotify
       ln -s $HOME/spotify/share/spotify/spotify $HOME/spotify/bin/spotify
       chmod -R 774 $HOME/spotify/
       chmod +x $HOME/spotify/share/spotify/spotify $HOME/spotify/share/spotify/.spotify-wrapped
-      export OLDPATH=$(echo ${spotify-80.outPath} | sed 's/\//\\\//g')
+      export OLDPATH=$(echo ${pkgs.custom.not-spotify.outPath} | sed 's/\//\\\//g')
       export NEWPATH=$(echo $HOME/spotify | sed 's/\//\\\//g')
       sed -i "s/$OLDPATH/$NEWPATH/g" $HOME/spotify/share/spotify/spotify
+      rm -rf $HOME/.spotify-tmp/
     '';
   };
   xdg.desktopEntries.spotify = {
@@ -312,13 +311,13 @@ in {
   */
   wayland.windowManager.hyprland.settings = {
     exec-once = [
-      "sleep 1; swww-daemon & \\"
-      "sleep 1; waybar & \\"
-      "lxpolkit & \\"
-      "sleep 1; ~/Wallpapers/bin/wallpaper ~/Wallpapers/wallpapers/favorites & \\"
-      "sleep 2; thunderbird & \\"
-      "sleep 4; mako --default-timeout=15000 --layer=overlay & \\"
-      "pw-metadata -n settings 0 clock.force-quantum 0"
+      "swww-daemon & \\
+      waybar & \\
+      ~/Wallpapers/bin/wallpaper ~/Wallpapers/wallpapers/favorites & \\
+      sleep 1; lxpolkit & \\
+      sleep 2; thunderbird & \\
+      sleep 4; mako --default-timeout=15000 --layer=overlay & \\
+      pw-metadata -n settings 0 clock.force-quantum 0"
     ];
     # exec-once = "wl-paste -t text -w sh -c 'xclip -selection clipboard -o > /dev/null 2> /dev/null || xclip -selection clipboard'";
 

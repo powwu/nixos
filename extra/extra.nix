@@ -8,6 +8,7 @@
   ...
 }: {
   home.packages = with pkgs; [
+    amazon-q-cli
     android-studio
     custom.not-torzu
     easyeffects
