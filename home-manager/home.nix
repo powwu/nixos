@@ -137,7 +137,7 @@
 
     shellAliases = {
       cls = "clear";
-      ew = "emacs -nw";
+      ew = "emacsclient -c --alternate-editor=\"\" -nw";
       fav = "cat ~/.current-wallpaper | xargs cp -t ~/Wallpapers/wallpapers/favorites";
       lnp = "export NIX_PATH='nixpkgs=/home/james/nixpkgs/'";
       ls = "eza -a";
