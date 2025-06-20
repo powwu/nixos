@@ -26,7 +26,7 @@ g
 n
 1
 
--9G
+-10G
 t
 20
 n
@@ -81,7 +81,7 @@ mv /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/nixos/
 rm /mnt/etc/nixos/configuration.nix
 
 echo "Installing nixos..."
-nixos-install --flake '/mnt/etc/nixos#powwuinator'
+nixos-install --flake '/mnt/etc/nixos#powwuinator' || true
 
-echo 'nix-shell -p home-manager --run "home-manager switch -b backup --flake /etc/nixos#james@powwuinator' > /mnt/home/james/.zshrc
+echo 'nix-shell -p home-manager --run "home-manager switch -b backup --flake /etc/nixos#james@powwuinator"' > /mnt/home/james/.zshrc
 echo "Installation complete. Reboot when you're ready."
