@@ -24,6 +24,8 @@
   boot.loader.grub.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.efiSupport = true;
+  boot.loader.grub.zfsSupport = true;
+  boot.zfs.devNodes = "/dev/disk/by-partuuid";
   boot.loader.grub.device = "nodev"; # seems strange but recommended for EFI setups
   boot.loader.grub.extraConfig = ''
     if keystatus --shift ; then
@@ -32,7 +34,6 @@
         set timeout=0
     fi
   '';
-  boot.loader.timeout = 0;
   nixpkgs = {
     overlays = [
       outputs.overlays.additions
@@ -178,7 +179,7 @@
     package = pkgs.greetd;
     settings = rec {
       initial_session = {
-        command = "dbus-run-session Hyprland";
+        command = "Hyprland";
         user = "james";
       };
       default_session = initial_session;

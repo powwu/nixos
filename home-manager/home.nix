@@ -137,7 +137,7 @@
 
     shellAliases = {
       cls = "clear";
-      ew = "emacsclient -c --alternate-editor=\"\" -nw";
+      ew = "emacs -nw";
       fav = "cat ~/.current-wallpaper | xargs cp -t ~/Wallpapers/wallpapers/favorites";
       lnp = "export NIX_PATH='nixpkgs=/home/james/nixpkgs/'";
       ls = "eza -a";
@@ -278,8 +278,8 @@
     source = pkgs.fetchFromGitHub {
       owner = "syl20bnr";
       repo = "spacemacs";
-      rev = "7d0ddf020a989361981a5c55cd55bce0e65e07b06";
-      sha256 = "sha256-+RnVaXNFdA2SIS8DPrjS24zqmXqRCfRdSMfaJXIj+AY=";
+      rev = "3b1b64ee211b77442214a818cbf894f8c0325026";
+      sha256 = "sha256-e2LGD6r7ISlvyvvThkHxJllgmpmrJzS9oS7L8Mqjqs0=";
     };
   };
 
@@ -311,13 +311,13 @@
   */
   wayland.windowManager.hyprland.settings = {
     exec-once = [
-      "swww-daemon & \\
-      waybar & \\
-      ~/Wallpapers/bin/wallpaper ~/Wallpapers/wallpapers/favorites & \\
-      sleep 1; lxpolkit & \\
-      sleep 2; thunderbird & \\
-      sleep 4; mako --default-timeout=15000 --layer=overlay & \\
-      pw-metadata -n settings 0 clock.force-quantum 0"
+      "sleep 1; swww-daemon & \\"
+      "sleep 1; waybar & \\"
+      "lxpolkit & \\"
+      "sleep 1; ~/Wallpapers/bin/wallpaper ~/Wallpapers/wallpapers/favorites & \\"
+      "sleep 2; thunderbird & \\"
+      "sleep 4; mako --default-timeout=15000 --layer=overlay & \\"
+      "pw-metadata -n settings 0 clock.force-quantum 0"
     ];
     # exec-once = "wl-paste -t text -w sh -c 'xclip -selection clipboard -o > /dev/null 2> /dev/null || xclip -selection clipboard'";
 
