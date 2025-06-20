@@ -18,7 +18,7 @@ DISK="$1${PART_PREFIX}"
 echo -e "Waiting 60 seconds before beginning install process on $1. THIS WILL ERASE ALL DATA. If this is incorrect, Ctrl+C NOW\n\nYour disks:"; lsblk; sleep 60
 
 echo "Wiping $DISK..."
-dd if=/dev/zero of=$DISK bs=1M status=progress
+dd if=/dev/zero of=$DISK bs=1M status=progress || true
 
 echo "Partitioning $DISK..."
 fdisk "$DISK" << EOF
@@ -81,3 +81,6 @@ rm /mnt/etc/nixos/configuration.nix
 
 echo "Installing nixos..."
 nixos-install --flake '/mnt/etc/nixos#powwuinator'
+
+echo 'nix-shell -p home-manager --run "home-manager switch -b backup --flake /etc/nixos#james@powwuinator' > /mnt/home/james/.zshrc
+echo "Installation complete. Reboot when you're ready."
