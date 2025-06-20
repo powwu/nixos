@@ -75,8 +75,9 @@ echo "Cloning nixos config..."
 mkdir -p /mnt/etc/nixos
 nix-shell -p git --run 'git clone https://github.com/powwu/nixos /mnt/etc/nixos'
 
-nixos-generate-config
+nixos-generate-config --root /mnt
 mv /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/nixos/
+rm /mnt/etc/nixos/configuration.nix
 
 echo "Installing nixos..."
 nixos-install --flake '/mnt/etc/nixos#powwuinator'
