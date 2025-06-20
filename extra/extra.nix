@@ -19,7 +19,6 @@
     krita
     moonlight-qt
     nurl
-    # unstable.njq
     obs-studio
     qbittorrent
     qdirstat
@@ -29,6 +28,7 @@
     songrec
     steam
     steam-run
+    unstable.njq
     usb-modeswitch
     vagrant
     virt-manager
