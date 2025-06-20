@@ -153,7 +153,20 @@
   };
 
   # FTP SERVER
-  # networking.firewall.allowedTCPPorts = [21];
+  # services.vsftpd = {
+  #   enable = true;
+  #   writeEnable = true;
+  #   localUsers = true;
+  #   anonymousUser = false;
+  #   extraConfig = ''
+  #     pasv_enable=YES
+  #     pasv_min_port=50000
+  #     pasv_max_port=50100
+  #     local_umask=022
+  #     allow_writeable_chroot=YES
+  #   '';
+  # };
+  # networking.firewall.allowedTCPPorts = [21] ++ (lib.range 50000 50100);
 
   # Inhibit power button input
   services.logind.extraConfig = ''
