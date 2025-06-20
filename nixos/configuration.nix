@@ -230,6 +230,7 @@
   };
 
   networking.hostName = "powwuinator";
+  networking.hostId = "deaffade";
 
   users.defaultUserShell = pkgs.zsh;
   users.users = {

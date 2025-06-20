@@ -26,7 +26,7 @@ g
 n
 1
 
-+9G
+-9G
 t
 20
 n
@@ -74,6 +74,7 @@ mount /dev/disk/by-label/boot /mnt/boot
 echo "Cloning nixos config..."
 mkdir -p /mnt/etc/nixos
 nix-shell -p git --run 'git clone https://github.com/powwu/nixos /mnt/etc/nixos'
+rm -rf /mnt/etc/nixos/.git
 
 nixos-generate-config --root /mnt
 mv /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/nixos/
