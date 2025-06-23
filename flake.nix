@@ -59,9 +59,9 @@
         specialArgs = {inherit inputs outputs;};
         modules = [
           ./nixos/configuration.nix
-         #  ./extra/sunshine.nix
-         #  ./extra/zerotier.nix
-         #  ./extra/laptop.nix
+          ./extra/sunshine.nix
+          ./extra/zerotier.nix
+          ./extra/laptop.nix
         ];
       };
     };
@@ -73,6 +73,7 @@
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [
           ./home-manager/home.nix
+          ./home-manager/wm.nix
           ./extra/extra.nix
         ];
       };
