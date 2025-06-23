@@ -76,6 +76,7 @@
           ./home-manager/pkgs.nix
           ./home-manager/wm.nix
           ./home-manager/apps.nix
+          ./home-manager/wallpapers.nix
           ./extra/extra.nix
         ];
       };

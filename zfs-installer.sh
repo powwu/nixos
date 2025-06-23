@@ -85,5 +85,5 @@ echo "Installing nixos..."
 nixos-install --flake '/mnt/etc/nixos#powwuinator' || true
 
 
-echo 'sudo /run/current-system/sw/bin/nmtui; nix-shell -p home-manager --run "home-manager switch -b backup --flake /etc/nixos#james@powwuinator"; cd ~/Wallpapers; 7z x wallpapers.7z.001' > /mnt/home/james/.zshrc
+echo 'sudo /run/current-system/sw/bin/nmtui; nix-shell -p home-manager --run "home-manager switch -b backup --flake /etc/nixos#james@powwuinator"; sudo /etc/nixos/update-nix.sh' > /mnt/home/james/.zshrc
 echo "Installation complete. Reboot when you're ready."

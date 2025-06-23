@@ -118,13 +118,6 @@
 
   virtualisation.waydroid.enable = true;
 
-  programs.firefox = {
-    enable = true;
-    preferences = {
-      #  "widget.use-xdg-desktop-portal.file-picker" = 1;
-    };
-  };
-
   services.printing = {
     enable = true;
     drivers = with pkgs; [gutenprint];

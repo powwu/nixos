@@ -11,14 +11,12 @@
     adwaita-icon-theme
     adwaita-icon-theme-legacy
     alacritty
-    amazon-q-cli
     amdgpu_top
     custom.archlinux-logout
     btop
     eza
     fastfetch
     feh
-    firefox
     font-awesome
     flex
     gcc

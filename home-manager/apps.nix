@@ -5,7 +5,16 @@
   config,
   pkgs,
   ...
-}: {
+}: let
+  lock-false = {
+    Value = false;
+    Status = "locked";
+  };
+  lock-true = {
+    Value = true;
+    Status = "locked";
+  };
+in {
   /*
   #######   #####   #     #
        #   #     #  #     #
@@ -143,8 +152,58 @@
   };
   home.activation = {
     fixVesktop = lib.hm.dag.entryAfter ["onFilesChange"] ''
-      ls ~/.config/vesktop/themes/Themecord.css > /dev/null || cp -L ~/.config/vesktop/themes/Themecord-tmp.css ~/.config/vesktop/themes/Themecord.css
-      chmod 774 ~/.config/vesktop/themes/Themecord.css
+      find ~/.config/vesktop/themes/Themecord.css > /dev/null 2> /dev/null || cp -L ~/.config/vesktop/themes/Themecord-tmp.css ~/.config/vesktop/themes/Themecord.css
+      chmod 664 ~/.config/vesktop/themes/Themecord.css
+    '';
+  };
+
+  /*
+  #     #     #     #    #  #######
+  ##   ##    # #    #   #   #     #
+  # # # #   #   #   #  #    #     #
+  #  #  #  #     #  ###     #     #
+  #     #  #######  #  #    #     #
+  #     #  #     #  #   #   #     #
+  #     #  #     #  #    #  #######
+  */
+  home.file.".config/mako" = {
+    recursive = true;
+    source = pkgs.fetchFromGitHub {
+      owner = "powwu";
+      repo = "mako";
+      rev = "f518060dd30ae9b4694d82f61504f4f48ff011ea";
+      hash = "sha256-JB3EdjeWnNHHlfIPtpF4CceyI3aw5XumVqMoV+oWs1k=";
+    };
+  };
+  home.activation = {
+    fixMako = lib.hm.dag.entryAfter ["onFilesChange"] ''
+      find ~/.config/mako/config > /dev/null 2> /dev/null || cp -L ~/.config/mako/config-tmp ~/.config/mako/config
+      chmod 664 ~/.config/mako/config
+    '';
+  };
+
+  /*
+     #     #           #      #####   ######   ###  #######  #######  #     #
+    # #    #          # #    #     #  #     #   #      #        #      #   #
+   #   #   #         #   #   #        #     #   #      #        #       # #
+  #     #  #        #     #  #        ######    #      #        #        #
+  #######  #        #######  #        #   #     #      #        #        #
+  #     #  #        #     #  #     #  #    #    #      #        #        #
+  #     #  #######  #     #   #####   #     #  ###     #        #        #
+  */
+  home.file.".config/alacritty" = {
+    recursive = true;
+    source = pkgs.fetchFromGitHub {
+      owner = "powwu";
+      repo = "alacritty";
+      rev = "0641c98f2c897da63fe3b980f27773ab8f9a8c70";
+      hash = "sha256-yxG0I5bVevO5SvGDz10q5VgDQqyJYlcxjYJq9pe+Im4=";
+    };
+  };
+  home.activation = {
+    fixAlacritty = lib.hm.dag.entryAfter ["onFilesChange"] ''
+      find ~/.config/alacritty/alacritty.yml > /dev/null 2> /dev/null || cp -L ~/.config/alacritty/alacritty-tmp.yml ~/.config/alacritty/alacritty.yml
+      chmod 774 ~/.config/alacritty/alacritty.yml
     '';
   };
 
@@ -188,6 +247,61 @@
     backupSpacemacs = lib.hm.dag.entryAfter ["fixSpacemacs"] ''
       ls $HOME/.backup-spacemacs > /dev/null || mkdir $HOME/.backup-spacemacs
       mv $HOME/.spacemacs.backup $HOME/.backup-spacemacs/spacemacs.backup-"$(date --iso-8601=s)" || exit 0
+    '';
+  };
+
+  /*
+  #######  ###  ######   #######  #######  #######  #     #
+  #         #   #     #  #        #        #     #   #   #
+  #         #   #     #  #        #        #     #    # #
+  #####     #   ######   #####    #####    #     #     #
+  #         #   #   #    #        #        #     #    # #
+  #         #   #    #   #        #        #     #   #   #
+  #        ###  #     #  #######  #        #######  #     #
+  */
+  programs.firefox = {
+    enable = true;
+    languagePacks = ["en-US"];
+
+    policies = {
+      EnableTrackingProtection = {
+        Value = true;
+        Locked = true;
+        Cryptomining = true;
+        Fingerprinting = true;
+      };
+      DisplayBookmarksToolbar = "never"; # alternatives: "always" or "newtab"
+      DisplayMenuBar = "default-off"; # alternatives: "always", "never" or "default-on"
+      SearchBar = "unified"; # alternative: "separate"
+
+      ExtensionSettings = {
+        # uBlock Origin:
+        "uBlock0@raymondhill.net" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
+          installation_mode = "normal_installed";
+        };
+        # Pywalfox:
+        "pywalfox@frewacom.org" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/pywalfox/latest.xpi";
+          installation_mode = "normal_installed";
+        };
+      };
+
+      # Check about:config for options.
+      Preferences = {
+        "browser.contentblocking.category" = {
+          Value = "strict";
+          Status = "locked";
+        };
+        "sidebar.verticalTabs" = lock-true;
+        "browser.topsites.contile.enabled" = lock-false;
+        "browser.formfill.enable" = lock-false;
+      };
+    };
+  };
+  home.activation = {
+    installPywalfox = lib.hm.dag.entryAfter ["onFilesChange"] ''
+      $HOME/.nix-profile/bin/pywalfox install --browser firefox
     '';
   };
 }
