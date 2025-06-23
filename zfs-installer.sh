@@ -4,18 +4,21 @@ set -e
 
 [ $(whoami) = "root" ] || { echo "You need to be root."; exit 1; }
 
-[ "$1" = "" ] && { echo -e "Usage: $0 /dev/yourdiskname\n\nAvailable disks:"; lsblk; exit 1; }
+DISK="$1"
+[ "$DISK" = "" ] && {
+    echo -e "Usage: $0 /dev/yourdiskname\n\nAvailable disks:"; lsblk; read -p "Disk to install on (/dev/asdf): " DISK < /dev/tty
+}
 
-if [[ $1 == *"nvme"* ]] || [[ $1 == *"mmcblk"* ]]; then
+if [[ $DISK == *"nvme"* ]] || [[ $DISK == *"mmcblk"* ]]; then
     PART_PREFIX="p"
 else
     PART_PREFIX=""
 fi
-DISK="$1${PART_PREFIX}"
+DISK="$DISK$PART_PREFIX"
 
 [ ! -e "$DISK" ] && { echo "Disk $DISK does not exist!"; exit 1; }
 
-echo -e "Waiting 60 seconds before beginning install process on $1. THIS WILL ERASE ALL DATA. If this is incorrect, Ctrl+C NOW\n\nYour disks:"; lsblk;
+echo -e "Waiting 60 seconds before beginning install process on $DISK. THIS WILL ERASE ALL DATA. If this is incorrect, Ctrl+C NOW\n\nYour disks:"; lsblk;
 
 i=60
 while [ $i -ne 0 ]; do
@@ -81,7 +84,7 @@ mount /dev/disk/by-label/boot /mnt/boot
 
 
 echo "Cloning nixos config..."
-mkdir-p /mnt/etc/nixos
+mkdir -p /mnt/etc/nixos
 nix-shell -p git --run 'git clone https://github.com/powwu/nixos /mnt/etc/nixos'
 rm -rf /mnt/etc/nixos/.git
 
@@ -121,7 +124,7 @@ echo "Installing nixos..."
 nixos-install --no-root-passwd --flake '/mnt/etc/nixos#powwuinator' || true
 
 
-echo 'ping -c 3 powwu.sh || sudo /run/current-system/sw/bin/nmtui; nix-shell -p home-manager --run "home-manager switch -b backup --flake /etc/nixos#james@powwuinator"; sudo /etc/nixos/update-nix.sh; sudo nixos-rebuild switch --flake /etc/nixos#powwuinator; nix-shell -p home-manager --run "home-manager switch -b backup --flake /etc/nixos#james@powwuinator"; echo "Installation complete. Rebooting in 30s."; sleep 30; reboot' > /mnt/home/james/.zshrc
+echo 'ping -c 3 powwu.sh || sudo /run/current-system/sw/bin/nmtui; nix-shell -p home-manager --run "home-manager switch -b backup --flake /etc/nixos#james@powwuinator"; sudo /etc/nixos/update-nix.sh; sudo nixos-rebuild switch --flake /etc/nixos#powwuinator; zsh -c "nix-shell -p home-manager --run \"home-manager switch -b backup --flake /etc/nixos#james@powwuinator\""; echo "Installation complete. Rebooting in 5s."; sleep 5; reboot' > /mnt/home/james/.zshrc
 echo "Initialization complete. Rebooting in 120 seconds to continue the install. You'll be asked to connect to wifi if you're not plugged in. Ctrl+C now to reboot on your own terms."
 i=120
 while [ $i -ne 0 ]; do

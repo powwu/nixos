@@ -10,7 +10,6 @@
   home.packages = with pkgs; [
     amazon-q-cli
     android-studio
-    custom.not-torzu
     easyeffects
     ghidra
     gimp3-with-plugins
@@ -28,7 +27,7 @@
     songrec
     steam
     steam-run
-    unstable.crc64fast-nvme-nix
+    unstable.crc64fast-nvme
     unstable.njq
     usb-modeswitch
     vagrant

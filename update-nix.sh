@@ -30,6 +30,20 @@ if ls /etc/.zerotier-enable > /dev/null 2> /dev/null; then
 else
     echo "Zerotier is not enabled by default. To enable temporarily, uncomment the line in /etc/nixos/flake.nix and rebuild. To make enabling permanent, run \`touch /etc/.zerotier-enable\`"
 fi
+if ls /etc/.extra-enable > /dev/null 2> /dev/null; then
+    echo "/etc/.extra-enable exists, uncommenting ./extra/extra.nix in flake.nix"
+    sed -i 's|^\([[:space:]]*\)#\([[:space:]]*./extra/extra.nix[[:space:]]*\)|\1\2|' /etc/nixos/flake.nix
+else
+    echo "Extra packages are not enabled by default. To enable temporarily, uncomment the line in /etc/nixos/flake.nix and rebuild. To make enabling permanent, run \`touch /etc/.extra-enable\`"
+fi
+if ls /etc/.torzu-enable > /dev/null 2> /dev/null; then
+    echo "/etc/.torzu-enable exists, uncommenting ./extra/torzu.nix in flake.nix"
+    sed -i 's|^\([[:space:]]*\)#\([[:space:]]*./extra/torzu.nix[[:space:]]*\)|\1\2|' /etc/nixos/flake.nix
+else
+    echo "Torzu is not enabled by default. To enable temporarily, uncomment the line in /etc/nixos/flake.nix and rebuild. To make enabling permanent, run \`touch /etc/.torzu-enable\`"
+fi
+
+
 
 cd /tmp
 cd /etc/nixos
