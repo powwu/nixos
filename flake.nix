@@ -73,7 +73,9 @@
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [
           ./home-manager/home.nix
+          ./home-manager/pkgs.nix
           ./home-manager/wm.nix
+          ./home-manager/apps.nix
           ./extra/extra.nix
         ];
       };

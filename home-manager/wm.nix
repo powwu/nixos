@@ -214,7 +214,7 @@
       "$mainMod, RETURN, exec, alacritty"
       "$mainMod, E, exec, env -u WAYLAND_DISPLAY nemo"
       "$mainMod, BACKSLASH, exec, firefox"
-      "$mainMod, BACKSPACE, exec, emacsclient -c --alternate-editor=\"\""
+      "$mainMod, BACKSPACE, exec, emacsclient -c -a \"\""
       "$mainMod SHIFT, BACKSLASH, exec, vesktop --enable-features=UseOzonePlatform --ozone-platform=wayland"
       "$mainMod SHIFT, BACKSLASH, exec, telegram-desktop"
       "$mainMod SHIFT, W, exec, ~/Wallpapers/bin/wallpaper ~/Wallpapers/wallpapers/favorites"

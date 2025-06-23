@@ -1,0 +1,193 @@
+{
+  inputs,
+  outputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}: {
+  /*
+  #######   #####   #     #
+       #   #     #  #     #
+   ​   #    #        #     #
+     #      #####   #######
+    #            #  #     #
+   #       #     #  #     #
+  #######   #####   #     #
+  */
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    syntaxHighlighting.enable = true;
+
+    localVariables = {
+      PROMPT = "%m%F{green}%B%(?.%#.%F{red}!)%b%F{green} ";
+      RPROMPT = " %F{red}%=%(?..%?)%b";
+      PATH = "$PATH:/run/current-system/sw/bin/";
+    };
+
+    shellAliases = {
+      cls = "clear";
+      ew = "emacsclient -n -r -a \"\"";
+      fav = "cat ~/.current-wallpaper | xargs cp -t ~/Wallpapers/wallpapers/favorites";
+      lnp = "export NIX_PATH='nixpkgs=/home/james/nixpkgs/'";
+      ls = "eza -a";
+      nxe = "sudo nixos-rebuild switch --flake /etc/nixos#powwuinator && home-manager switch -b backup --flake /etc/nixos#james@powwuinator";
+      nxeh = "home-manager switch -b backup --flake /etc/nixos#james@powwuinator";
+      nxen = "sudo nixos-rebuild switch --flake /etc/nixos#powwuinator";
+      q = "amazon-q";
+      repl = "nix repl /etc/nixos";
+      shiny = "pkill sunshine && sleep 10; flatpak run dev.lizardbyte.app.Sunshine";
+      spotify = "spicetify watch -s";
+      unfav = "cat ~/.current-wallpaper | rev | cut -d '/' -f 1 | rev | xargs -I {} rm ~/Wallpapers/wallpapers/favorites/{}";
+    };
+    history.size = 1000000;
+    history.path = "/home/james/.histfile";
+
+    # fix for strange directory issue
+    initContent = "cd ~";
+  };
+
+  /*
+   #####   ######   #######  #######  ###  #######  #     #
+  #     #  #     #  #     #     #      #   #         #   #
+  #        #     #  #     #     #      #   #          # #
+   #####   ######   #     #     #      #   #####       #
+        #  #        #     #     #      #   #           #
+  #     #  #        #     #     #      #   #           #
+   #####   #        #######     #     ###  #           #
+  */
+  home.file.".config/spicetify" = {
+    recursive = true;
+    source = pkgs.fetchFromGitHub {
+      owner = "powwu";
+      repo = "spicetify";
+      rev = "fe24be93eef748c370f8948643ce2939970923b9";
+      sha256 = "GXmth7wJb0EKRctOcM5tZIw6VjhAb19Wb1AGBDj7vCU=";
+    };
+  };
+  home.file.".spotify-tmp" = {
+    recursive = true;
+    source = pkgs.custom.not-spotify.outPath;
+  };
+  home.activation = {
+    fixSpotify = lib.hm.dag.entryAfter ["onFilesChange"] ''
+      mkdir $HOME/spotify 2> /dev/null && cp -rL $HOME/.spotify-tmp/* $HOME/spotify
+      rm -f $HOME/spotify/bin/spotify
+      ln -s $HOME/spotify/share/spotify/spotify $HOME/spotify/bin/spotify
+      chmod -R 774 $HOME/spotify/
+      chmod +x $HOME/spotify/share/spotify/spotify $HOME/spotify/share/spotify/.spotify-wrapped
+      export OLDPATH=$(echo ${pkgs.custom.not-spotify.outPath} | sed 's/\//\\\//g')
+      export NEWPATH=$(echo $HOME/spotify | sed 's/\//\\\//g')
+      sed -i "s/$OLDPATH/$NEWPATH/g" $HOME/spotify/share/spotify/spotify
+      rm -rf $HOME/.spotify-tmp/
+    '';
+  };
+  xdg.desktopEntries.spotify = {
+    type = "Application";
+    name = "Spotify";
+    exec = "spicetify watch -s";
+    terminal = false;
+    comment = "Spotify launch wrapper w/ spicetify";
+  };
+
+  /*
+  ######   #######  #######  ###
+  #     #  #     #  #         #
+  #     #  #     #  #         #
+  ######   #     #  #####     #
+  #   #    #     #  #         #
+  #    #   #     #  #         #
+  #     #  #######  #        ###
+  */
+  home.file.".config/rofi/config.rasi".text = ''
+    @theme "~/.cache/wal/colors-rofi-dark.rasi"
+  '';
+
+  /*
+  #     #     #     #
+  #  #  #    # #    #
+  #  #  #   #   #   #
+  #  #  #  #     #  #
+  #  #  #  #######  #
+  #  #  #  #     #  #
+   ## ##   #     #  #######
+  */
+  home.file.".config/wal" = {
+    recursive = true;
+    source = pkgs.fetchFromGitHub {
+      owner = "powwu";
+      repo = "wal";
+      rev = "99c30689dffc6ba8f8c1f06ea22e726064c6f17e";
+      sha256 = "sha256-SgpInaY4BCSViAaZg+KLbyCV2pYBY3QjGGNLqmL77KY=";
+    };
+  };
+
+  /*
+  #     #  #######   #####   #    #  #######  #######  ######
+  #     #  #        #     #  #   #      #     #     #  #     #
+  #     #  #        #        #  #       #     #     #  #     #
+  #     #  #####     #####   ###        #     #     #  ######
+   #   #   #              #  #  #       #     #     #  #
+    # #    #        #     #  #   #      #     #     #  #
+     #     #######   #####   #    #     #     #######  #
+  */
+  home.file.".config/vesktop" = {
+    recursive = true;
+    source = pkgs.fetchFromGitHub {
+      owner = "powwu";
+      repo = "vesktop";
+      rev = "97587a215c188efa36fddfd20ae9509b0beb60c5";
+      sha256 = "sha256-4Paxa4GdA7EqwgAqL6zZMjGxriD9VfKggnjcQ7UF2AY=";
+    };
+  };
+  home.activation = {
+    fixVesktop = lib.hm.dag.entryAfter ["onFilesChange"] ''
+      ls ~/.config/vesktop/themes/Themecord.css > /dev/null || cp -L ~/.config/vesktop/themes/Themecord-tmp.css ~/.config/vesktop/themes/Themecord.css
+      chmod 774 ~/.config/vesktop/themes/Themecord.css
+    '';
+  };
+
+  /*
+  #######  #     #     #      #####    #####
+  #        ##   ##    # #    #     #  #     #
+  #        # # # #   #   #   #        #
+  #####    #  #  #  #     #  #         #####
+  #        #     #  #######  #              #
+  #        #     #  #     #  #     #  #     #
+  #######  #     #  #     #   #####    #####
+  */
+  # Unfortunately, we can only deal with installation for now, until someone makes a spacemacs overlay for nixos (which I honestly don't care enough to do). `.spacemacs` is already a declarative configuration for emacs, just like home-manager would provide
+  programs.emacs = {
+    enable = true;
+    package = pkgs.emacs-pgtk;
+  };
+
+  services.emacs.defaultEditor = true;
+  home.file.".emacs.d" = {
+    recursive = true;
+    source = pkgs.fetchFromGitHub {
+      owner = "syl20bnr";
+      repo = "spacemacs";
+      rev = "72cf32d2adfe07a3254f31a308a8195b5c1e37e9";
+      hash = "sha256-iUYb6ZUvPUR9xfGf1vWpEYS6BMX3/0/HySeHImeGaYs=";
+    };
+  };
+
+  # overwriting would be a cause for concern. however, home-manager makes sure that any backups are not overwritten, and will refuse to continue if that's not the case
+  home.file.".spacemacs".source = pkgs.fetchurl {
+    url = "https://raw.githubusercontent.com/powwu/dotspacemacs/refs/heads/main/.spacemacs";
+    hash = "sha256-+IrCGJvpWdnLtSHFhsMaQCrWQM8UDwcOQrPB3GUrxlU=";
+  };
+
+  home.activation = {
+    fixSpacemacs = lib.hm.dag.entryAfter ["onFilesChange"] ''
+      find $HOME/.spacemacs -type l > /dev/null && cp --remove-destination `readlink $(readlink $HOME/.spacemacs)` .spacemacs
+      chmod 664 $HOME/.spacemacs
+    '';
+    backupSpacemacs = lib.hm.dag.entryAfter ["fixSpacemacs"] ''
+      ls $HOME/.backup-spacemacs > /dev/null || mkdir $HOME/.backup-spacemacs
+      mv $HOME/.spacemacs.backup $HOME/.backup-spacemacs/spacemacs.backup-"$(date --iso-8601=s)" || exit 0
+    '';
+  };
+}
