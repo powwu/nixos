@@ -48,7 +48,7 @@
               undo = "";
             }
             {
-              do = "hyprctl keyword monitor eDP-1, 2256x1504@60, auto, 1.566663";
+              do = "hyprctl keyword monitor eDP-1, 2256x1504@60, auto, 1.333333";
               undo = "";
             }
             {
@@ -93,7 +93,7 @@
               undo = "";
             }
             {
-              do = "hyprctl keyword monitor eDP-1, 2256x1504@60, auto, 1.566663";
+              do = "hyprctl keyword monitor eDP-1, 2256x1504@60, auto, 1.333333";
               undo = "";
             }
             {
@@ -101,7 +101,7 @@
               undo = "";
             }
             {
-              do = "hyprctl keyword monitor HEADLESS-0, 2256x1504@60, auto, 1.566663";
+              do = "hyprctl keyword monitor HEADLESS-0, 2256x1504@60, auto, 1.333333";
               undo = "";
             }
             {
@@ -138,7 +138,7 @@
               undo = "";
             }
             {
-              do = "hyprctl keyword monitor eDP-1, 2256x1504@60, auto, 1.566663";
+              do = "hyprctl keyword monitor eDP-1, 2256x1504@60, auto, 1.333333";
               undo = "";
             }
             {
