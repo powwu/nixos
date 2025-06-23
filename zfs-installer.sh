@@ -15,8 +15,17 @@ DISK="$1${PART_PREFIX}"
 
 [ ! -e "$DISK" ] && { echo "Disk $DISK does not exist!"; exit 1; }
 
-echo -e "Waiting 60 seconds before beginning install process on $1. THIS WILL ERASE ALL DATA. If this is incorrect, Ctrl+C NOW\n\nYour disks:"; lsblk; sleep 60
+echo -e "Waiting 60 seconds before beginning install process on $1. THIS WILL ERASE ALL DATA. If this is incorrect, Ctrl+C NOW\n\nYour disks:"; lsblk;
 
+i=60
+while [ $i -ne 0 ]; do
+    echo -ne "\r$i  "
+
+    sleep 1
+    i=$((i-1))
+done
+
+echo -e "\nIgnore the fdisk prompt when it appears, it will go away on its own."
 echo "Wiping $DISK..."
 dd if=/dev/zero of=$DISK bs=1M status=progress || true
 
@@ -72,18 +81,53 @@ mount /dev/disk/by-label/boot /mnt/boot
 
 
 echo "Cloning nixos config..."
-mkdir -p /mnt/etc/nixos
+mkdir-p /mnt/etc/nixos
 nix-shell -p git --run 'git clone https://github.com/powwu/nixos /mnt/etc/nixos'
 rm -rf /mnt/etc/nixos/.git
 
 nixos-generate-config --root /mnt
 mv /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/nixos/
 rm /mnt/etc/nixos/configuration.nix
-sed -i 's/Hyprland/zsh/g' /mnt/etc/nixos/nixos/configuration.nix
+sed -i 's/Hyprland/zsh/' /mnt/etc/nixos/nixos/configuration.nix
+rm /mnt/etc/nixos/nixos/sudo.nix
+echo '
+{...}: {
+    security.sudo = {
+        enable = true;
+        extraRules = [
+            {
+                commands = [
+                    {
+                        command = "/etc/nixos/update-nix.sh";
+                        options = ["NOPASSWD"];
+                    }
+                    {
+                        command = "/run/current-system/sw/bin/nixos-rebuild";
+                        options = ["NOPASSWD"];
+                    }
+                    {
+                        command = "/run/current-system/sw/bin/nmtui";
+                        options = ["NOPASSWD"];
+                    }
+                ];
+                groups = ["wheel"];
+            }
+        ];
+    };
+}
+' > /mnt/etc/nixos/nixos/sudo.nix
 
 echo "Installing nixos..."
-nixos-install --flake '/mnt/etc/nixos#powwuinator' || true
+nixos-install --no-root-passwd --flake '/mnt/etc/nixos#powwuinator' || true
 
 
-echo 'sudo /run/current-system/sw/bin/nmtui; nix-shell -p home-manager --run "home-manager switch -b backup --flake /etc/nixos#james@powwuinator"; sudo /etc/nixos/update-nix.sh' > /mnt/home/james/.zshrc
-echo "Installation complete. Reboot when you're ready."
+echo 'ping -c 3 powwu.sh || sudo /run/current-system/sw/bin/nmtui; nix-shell -p home-manager --run "home-manager switch -b backup --flake /etc/nixos#james@powwuinator"; sudo /etc/nixos/update-nix.sh; sudo nixos-rebuild switch --flake /etc/nixos#powwuinator; nix-shell -p home-manager --run "home-manager switch -b backup --flake /etc/nixos#james@powwuinator"; echo "Installation complete. Rebooting in 30s."; sleep 30; reboot' > /mnt/home/james/.zshrc
+echo "Initialization complete. Rebooting in 120 seconds to continue the install. You'll be asked to connect to wifi if you're not plugged in. Ctrl+C now to reboot on your own terms."
+i=120
+while [ $i -ne 0 ]; do
+    echo -ne "\r$i  "
+
+    sleep 1
+    i=$((i-1))
+done
+reboot

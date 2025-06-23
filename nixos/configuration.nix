@@ -74,7 +74,6 @@
     libva-utils
     lxde.lxsession
     mesa
-    inputs.crc64fast-nvme-nix.packages.x86_64-linux.default
     mesa-gl-headers
     neovim
     networkmanager
@@ -125,29 +124,6 @@
 
   # For connected file systems on libvirt
   # services.virtiofsd.enable = true;
-
-  security.sudo = {
-    enable = true;
-    extraRules = [
-      {
-        commands = [
-          {
-            command = "/run/current-system/sw/bin/xbacklight";
-            options = ["NOPASSWD"];
-          }
-          {
-            command = "/run/current-system/sw/bin/reboot";
-            options = ["NOPASSWD"];
-          }
-          {
-            command = "/run/current-system/sw/bin/nmtui";
-            options = ["NOPASSWD"];
-          }
-        ];
-        groups = ["wheel"];
-      }
-    ];
-  };
 
   # FTP SERVER
   # services.vsftpd = {

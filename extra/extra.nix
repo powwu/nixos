@@ -15,7 +15,7 @@
     ghidra
     gimp3-with-plugins
     inkscape
-    kicad
+    kicad-small # replace with `kicad` for 3d models
     krita
     moonlight-qt
     nurl
@@ -28,6 +28,7 @@
     songrec
     steam
     steam-run
+    unstable.crc64fast-nvme-nix
     unstable.njq
     usb-modeswitch
     vagrant
