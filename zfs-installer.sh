@@ -79,9 +79,11 @@ rm -rf /mnt/etc/nixos/.git
 nixos-generate-config --root /mnt
 mv /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/nixos/
 rm /mnt/etc/nixos/configuration.nix
+sed -i 's/Hyprland/zsh/g' /mnt/etc/nixos/nixos/configuration.nix
 
 echo "Installing nixos..."
 nixos-install --flake '/mnt/etc/nixos#powwuinator' || true
 
-echo 'nix-shell -p home-manager --run "home-manager switch -b backup --flake /etc/nixos#james@powwuinator"' > /mnt/home/james/.zshrc
+
+echo 'sudo /run/current-system/sw/bin/nmtui; nix-shell -p home-manager --run "home-manager switch -b backup --flake /etc/nixos#james@powwuinator"; cd ~/Wallpapers; 7z x wallpapers.7z.001' > /mnt/home/james/.zshrc
 echo "Installation complete. Reboot when you're ready."

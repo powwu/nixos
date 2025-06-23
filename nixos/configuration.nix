@@ -146,6 +146,10 @@
             command = "/run/current-system/sw/bin/reboot";
             options = ["NOPASSWD"];
           }
+          {
+            command = "/run/current-system/sw/bin/nmtui";
+            options = ["NOPASSWD"];
+          }
         ];
         groups = ["wheel"];
       }
