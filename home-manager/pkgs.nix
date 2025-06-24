@@ -11,20 +11,13 @@
     adwaita-icon-theme
     adwaita-icon-theme-legacy
     alacritty
-    amdgpu_top
     custom.archlinux-logout
     btop
     eza
     fastfetch
     feh
     font-awesome
-    flex
-    gcc
-    gh
     gnumake
-    go
-    gdb
-    gpp
     hyprland
     hyprshot
     imagemagick
@@ -37,10 +30,6 @@
     nemo-with-extensions
     p7zip
     pavucontrol
-    python3Packages.pyyaml
-    python3Packages.psutil
-    python3Packages.protobuf
-    pycritty
     pywal
     pywalfox-native
     rofi
@@ -50,13 +39,10 @@
     thunderbird
     unstable.hellwal
     vesktop
-    vlang
     waybar
     wl-clipboard
     wlroots
     wtype
-    xclicker
-    xorg.xeyes
     xorg.xrdb
   ];
 }

@@ -9,11 +9,18 @@
 }: {
   home.packages = with pkgs; [
     amazon-q-cli
+    amdgpu_top
     android-studio
     blender
     easyeffects
+    flex
+    gcc
+    gdb
+    gh
     ghidra
     gimp3-with-plugins
+    go
+    gpp
     inkscape
     kicad
     krita
@@ -34,8 +41,10 @@
     usb-modeswitch
     vagrant
     virt-manager
-    whatsie
+    vlang
     wowup-cf
+    xclicker
+    xorg.xeyes
     yt-dlp
     zpaq
 
