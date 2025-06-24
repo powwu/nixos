@@ -59,7 +59,7 @@
           ./nixos/sudo.nix
          #  ./extra/sunshine.nix
          #  ./extra/zerotier.nix
-          #  ./extra/laptop.nix
+         #  ./extra/laptop.nix
         ];
       };
     };
@@ -75,8 +75,8 @@
           ./home-manager/wm.nix
           ./home-manager/apps.nix
           ./home-manager/wallpapers.nix
-          #  ./extra/extra.nix
-          #  ./extra/torzu.nix
+         #  ./extra/extra.nix
+         #  ./extra/torzu.nix
         ];
       };
     };

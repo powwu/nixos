@@ -10,17 +10,19 @@
   home.packages = with pkgs; [
     amazon-q-cli
     android-studio
+    blender
     easyeffects
     ghidra
     gimp3-with-plugins
     inkscape
-    kicad-small # replace with `kicad` for 3d models
+    kicad
     krita
     moonlight-qt
     nurl
     obs-studio
     qbittorrent
     qdirstat
+    reaper
     remmina
     ryubing
     scrcpy
