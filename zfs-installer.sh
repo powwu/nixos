@@ -57,7 +57,7 @@ w
 EOF
 
 echo "Formatting partitions..."
-zpool create -O compression=lz4 -O mountpoint=none -O xattr=sa -O acltype=posixacl -o ashift=12 zpool "${DISK}1"
+zpool create -O compression=zfs -O mountpoint=none -O xattr=sa -O acltype=posixacl -o ashift=12 zpool "${DISK}1"
 mkswap -L swap "${DISK}2"
 swapon "${DISK}2"
 mkfs.fat -F 32 -n boot "${DISK}3"
