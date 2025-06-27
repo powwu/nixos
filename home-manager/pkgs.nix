@@ -11,8 +11,8 @@
     adwaita-icon-theme
     adwaita-icon-theme-legacy
     alacritty
-    custom.archlinux-logout
     btop
+    custom.archlinux-logout
     eza
     fastfetch
     feh
@@ -37,6 +37,7 @@
     swww
     telegram-desktop
     thunderbird
+    udiskie
     unstable.hellwal
     vesktop
     waybar

@@ -212,7 +212,7 @@
       "$mainMod, O, movecurrentworkspacetomonitor, 1"
       "$mainMod, P, movecurrentworkspacetomonitor, 0"
       "$mainMod, RETURN, exec, alacritty"
-      "$mainMod, E, exec, env -u WAYLAND_DISPLAY nemo"
+      "$mainMod, E, exec, nemo"
       "$mainMod, BACKSLASH, exec, firefox"
       "$mainMod, BACKSPACE, exec, emacsclient -c -a \"\""
       "$mainMod SHIFT, BACKSLASH, exec, vesktop --enable-features=UseOzonePlatform --ozone-platform=wayland"
