@@ -4,21 +4,18 @@ set -e
 
 [ $(whoami) = "root" ] || { echo "You need to be root."; exit 1; }
 
-DISK="$1"
-[ "$DISK" = "" ] && {
-    echo -e "Usage: $0 /dev/yourdiskname\n\nAvailable disks:"; lsblk; read -p "Disk to install on (/dev/asdf): " DISK < /dev/tty
-}
+[ "$1" = "" ] && { echo -e "Usage: $0 /dev/yourdiskname\n\nAvailable disks:"; lsblk; exit 1; }
 
-if [[ $DISK == *"nvme"* ]] || [[ $DISK == *"mmcblk"* ]]; then
+if [[ $1 == *"nvme"* ]] || [[ $1 == *"mmcblk"* ]]; then
     PART_PREFIX="p"
 else
     PART_PREFIX=""
 fi
-DISK="$DISK$PART_PREFIX"
+DISK="$1${PART_PREFIX}"
 
 [ ! -e "$DISK" ] && { echo "Disk $DISK does not exist!"; exit 1; }
 
-echo -e "Waiting 60 seconds before beginning install process on $DISK. THIS WILL ERASE ALL DATA. If this is incorrect, Ctrl+C NOW\n\nYour disks:"; lsblk;
+echo -e "Waiting 60 seconds before beginning install process on $1. THIS WILL ERASE ALL DATA. If this is incorrect, Ctrl+C NOW\n\nYour disks:"; lsblk;
 
 i=60
 while [ $i -ne 0 ]; do
@@ -60,7 +57,7 @@ w
 EOF
 
 echo "Formatting partitions..."
-zpool create -O compression=zstd -O mountpoint=none -O xattr=sa -O acltype=posixacl -o ashift=12 zpool "${DISK}1"
+zpool create -O compression=zfs -O mountpoint=none -O xattr=sa -O acltype=posixacl -o ashift=12 zpool "${DISK}1"
 mkswap -L swap "${DISK}2"
 swapon "${DISK}2"
 mkfs.fat -F 32 -n boot "${DISK}3"

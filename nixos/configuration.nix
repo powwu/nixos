@@ -116,6 +116,7 @@
   virtualisation.spiceUSBRedirection.enable = true;
 
   virtualisation.waydroid.enable = true;
+  security.polkit.enable = true;
 
   services.printing = {
     enable = true;
