@@ -28,6 +28,7 @@
     mako
     mpv
     nemo-with-extensions
+    nomacs
     p7zip
     pavucontrol
     pywal

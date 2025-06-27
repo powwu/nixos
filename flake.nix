@@ -59,7 +59,7 @@
           ./nixos/sudo.nix
          #  ./extra/sunshine.nix
          #  ./extra/zerotier.nix
-          #  ./extra/laptop.nix
+         #  ./extra/laptop.nix
         ];
       };
     };
