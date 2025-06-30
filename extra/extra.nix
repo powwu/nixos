@@ -39,6 +39,7 @@
     songrec
     steam
     steam-run
+    tinyxxd
     unstable.crc64fast-nvme
     unstable.njq
     usb-modeswitch
