@@ -42,6 +42,13 @@ if ls /etc/.torzu-enable > /dev/null 2> /dev/null; then
 else
     echo "Torzu is not enabled by default. To enable temporarily, uncomment the line in /etc/nixos/flake.nix and rebuild. To make enabling permanent, run \`touch /etc/.torzu-enable\`"
 fi
+if ls /etc/.jellyfin-enable > /dev/null 2> /dev/null; then
+    echo "/etc/.jellyfin-enable exists, uncommenting ./extra/jellyfin.nix in flake.nix"
+    sed -i 's|^\([[:space:]]*\)#\([[:space:]]*./extra/jellyfin.nix[[:space:]]*\)|\1\2|' /etc/nixos/flake.nix
+else
+    echo "Jellyfin is not enabled by default. To enable temporarily, uncomment the line in /etc/nixos/flake.nix and rebuild. To make enabling permanent, run \`touch /etc/.jellyfin-enable\`"
+fi
+
 
 
 

@@ -12,6 +12,7 @@ sed -i 's|^\([[:space:]]*\)\([^#][[:space:]]*./extra/sunshine.nix[[:space:]]*\)|
 sed -i 's|^\([[:space:]]*\)\([^#][[:space:]]*./extra/zerotier.nix[[:space:]]*\)|\1# \2|' flake.nix
 sed -i 's|^\([[:space:]]*\)\([^#][[:space:]]*./extra/extra.nix[[:space:]]*\)|\1# \2|' flake.nix
 sed -i 's|^\([[:space:]]*\)\([^#][[:space:]]*./extra/torzu.nix[[:space:]]*\)|\1# \2|' flake.nix
+sed -i 's|^\([[:space:]]*\)\([^#][[:space:]]*./extra/jellyfin.nix[[:space:]]*\)|\1# \2|' flake.nix
 git add -u .
 git commit -m "$(date --iso-8601=s)"
 git push
