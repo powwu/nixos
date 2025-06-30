@@ -11,7 +11,9 @@
     amazon-q-cli
     amdgpu_top
     android-studio
+    ardour
     blender
+    calibre
     easyeffects
     flex
     gcc
