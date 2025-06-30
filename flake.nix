@@ -59,6 +59,7 @@
           ./nixos/sudo.nix
          #  ./extra/sunshine.nix
          #  ./extra/zerotier.nix
+          ./extra/jellyfin.nix
           #  ./extra/laptop.nix
         ];
       };
