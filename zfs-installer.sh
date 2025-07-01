@@ -4,6 +4,8 @@ set -e
 
 [ $(whoami) = "root" ] || { echo "You need to be root."; exit 1; }
 
+[ ! -d "/sys/firmware/efi" ] && { echo "Error: This script requires UEFI boot mode. Please boot the NixOS LiveCD in UEFI mode, not legacy BIOS."; exit 1; }
+
 [ "$1" = "" ] && { echo -e "Usage: $0 /dev/yourdiskname\n\nAvailable disks:"; lsblk; exit 1; }
 
 if [[ $1 == *"nvme"* ]] || [[ $1 == *"mmcblk"* ]]; then
