@@ -9,10 +9,10 @@
 }: {
   home.packages = with pkgs; [
     amazon-q-cli
-    awscli2
     amdgpu_top
     android-studio
     ardour
+    awscli2
     blender
     calibre
     easyeffects
@@ -27,7 +27,6 @@
     inkscape
     kicad
     krita
-    moonlight-qt
     nurl
     obs-studio
     qbittorrent
@@ -39,8 +38,8 @@
     songrec
     steam
     steam-run
-    tinyxxd
     unstable.crc64fast-nvme
+    unstable.moonlight-qt
     unstable.njq
     usb-modeswitch
     vagrant
