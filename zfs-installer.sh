@@ -123,7 +123,7 @@ echo "Installing nixos..."
 nixos-install --no-root-passwd --flake '/mnt/etc/nixos#powwuinator' || true
 
 
-echo 'ping -c 3 powwu.sh || sudo /run/current-system/sw/bin/nmtui; nix-shell -p home-manager --run "home-manager switch -b backup --flake /etc/nixos#james@powwuinator"; sudo /etc/nixos/update-nix.sh; sudo nixos-rebuild switch --flake /etc/nixos#powwuinator; zsh -c "nix-shell -p home-manager --run \"home-manager switch -b backup --flake /etc/nixos#james@powwuinator\""; echo "Installation complete. Rebooting in 5s."; sleep 5; reboot' > /mnt/home/james/.zshrc
+echo 'ping -c 1 powwu.sh || sudo /run/current-system/sw/bin/nmtui; nix-shell -p home-manager --run "home-manager switch -b backup --flake /etc/nixos#james@powwuinator"; sudo /etc/nixos/update-nix.sh; sudo nixos-rebuild switch --flake /etc/nixos#powwuinator; zsh -c "nix-shell -p home-manager --run \"home-manager switch -b backup --flake /etc/nixos#james@powwuinator\""; echo "Installation complete. Rebooting in 5s."; sleep 5; reboot' > /mnt/home/james/.zshrc
 echo "Initialization complete. Rebooting in 120 seconds to continue the install. You'll be asked to connect to wifi if you're not plugged in. Ctrl+C now to reboot on your own terms."
 i=120
 while [ $i -ne 0 ]; do
