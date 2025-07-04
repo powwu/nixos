@@ -228,8 +228,8 @@ in {
     source = pkgs.fetchFromGitHub {
       owner = "powwu";
       repo = "spacemacs";
-      rev = "2643debecc9f9c5f7563c679ad2cb7729726504d";
-      hash = "sha256-Y75TYqfdYqHAP7IcFEq3248Gkm+cpD6pnwlywd5PIVU=";
+      rev = "6751dae7ab8785f90edea585160926bad5e3e2ff";
+      hash = "sha256-ajHgzeYcD1moI1Eir+GT0iZsOxMSlgkgB+Bh513TnxQ=";
     };
   };
 
