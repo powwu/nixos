@@ -226,10 +226,10 @@ in {
   home.file.".emacs.d" = {
     recursive = true;
     source = pkgs.fetchFromGitHub {
-      owner = "syl20bnr";
+      owner = "powwu";
       repo = "spacemacs";
-      rev = "72cf32d2adfe07a3254f31a308a8195b5c1e37e9";
-      hash = "sha256-iUYb6ZUvPUR9xfGf1vWpEYS6BMX3/0/HySeHImeGaYs=";
+      rev = "69e9f07cdf48420daba90ffeec1b84af66b32eb9";
+      hash = "sha256-NT7/ANCGf9/y10VcuTEijO+V69DyU1Muu6RN1OJ1R9E=";
     };
   };
 
