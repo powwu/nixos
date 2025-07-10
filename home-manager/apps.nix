@@ -52,6 +52,8 @@ in {
     };
     history.size = 1000000;
     history.path = "/home/james/.histfile";
+    history.ignoreDups = true;
+    history.append = true;
 
     # fix for strange directory issue
     initContent = "cd ~";
