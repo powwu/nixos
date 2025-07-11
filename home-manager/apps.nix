@@ -55,8 +55,10 @@ in {
     history.ignoreDups = true;
     history.append = true;
 
-    # fix for strange directory issue
-    initContent = "cd ~";
+    initContent = ''
+      any-nix-shell zsh --info-right | source /dev/stdin
+      cd ~
+    '';
   };
 
   /*
