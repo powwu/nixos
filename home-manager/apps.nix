@@ -53,6 +53,7 @@ in {
     history.size = 1000000;
     history.path = "/home/james/.histfile";
     history.ignoreDups = true;
+    history.ignoreSpace = true;
     history.append = true;
 
     initContent = ''
