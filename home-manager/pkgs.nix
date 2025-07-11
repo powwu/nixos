@@ -11,6 +11,7 @@
     adwaita-icon-theme
     adwaita-icon-theme-legacy
     alacritty
+    any-nix-shell
     btop
     custom.archlinux-logout
     eza
