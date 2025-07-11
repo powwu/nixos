@@ -40,7 +40,7 @@
     telegram-desktop
     thunderbird
     udiskie
-    unstable.hellwal
+    hellwal
     vesktop
     waybar
     wl-clipboard
