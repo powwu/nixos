@@ -14,7 +14,7 @@
     ardour
     awscli2
     blender
-    calibre
+    custom.calibre
     easyeffects
     flex
     gcc

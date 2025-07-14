@@ -49,6 +49,7 @@ in {
       shiny = "pkill sunshine && sleep 10; flatpak run dev.lizardbyte.app.Sunshine";
       spotify = "spicetify watch -s";
       unfav = "cat ~/.current-wallpaper | rev | cut -d '/' -f 1 | rev | xargs -I {} rm ~/Wallpapers/wallpapers/favorites/{}";
+      ytdl = "yt-dlp -f \"bestvideo[height<=1080]+bestaudio/best[height<=1080]\" -t sleep --cookies ~/yt-dlp-cookies.txt --extractor-args \"youtube:player-client=all,-ios,-android,-mweb,-tv,-tv_simply,-android_vr\"";
     };
     history.size = 1000000;
     history.path = "/home/james/.histfile";
