@@ -50,7 +50,7 @@ in {
       spotify = "spicetify watch -s";
       unfav = "cat ~/.current-wallpaper | rev | cut -d '/' -f 1 | rev | xargs -I {} rm ~/Wallpapers/wallpapers/favorites/{}";
       ytdl = "yt-dlp -f \"bestvideo[height<=1080]+bestaudio/best[height<=1080]\" -t sleep --cookies ~/yt-dlp-cookies.txt --extractor-args \"youtube:player-client=all,-ios,-android,-mweb,-tv,-tv_simply,-android_vr\"";
-      videores = "nix-shell -p ffmpeg --run ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0";
+      videores = "ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0";
     };
     history.size = 1000000;
     history.path = "/home/james/.histfile";

@@ -29,6 +29,7 @@
     krita
     nurl
     obs-studio
+    openscad
     qbittorrent
     qdirstat
     reaper
