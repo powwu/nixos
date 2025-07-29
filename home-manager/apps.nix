@@ -32,7 +32,7 @@ in {
     localVariables = {
       PROMPT = "%m%F{green}%B%(?.%#.%F{red}!)%b%F{green} ";
       RPROMPT = " %F{red}%=%(?..%?)%b";
-      PATH = "$PATH:/run/current-system/sw/bin/";
+      PATH = "$PATH:/run/current-system/sw/bin/:$HOME/.local/bin/";
     };
 
     shellAliases = {
@@ -60,7 +60,7 @@ in {
 
     initContent = ''
       any-nix-shell zsh --info-right | source /dev/stdin
-      cd ~
+      [[ $RPROMPT != '%0{%}' ]] && cd ~
     '';
   };
 
