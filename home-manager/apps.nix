@@ -60,7 +60,7 @@ in {
 
     initContent = ''
       any-nix-shell zsh --info-right | source /dev/stdin
-      [[ $RPROMPT != '%0{%}' ]] && cd ~
+      [[ $RPROMPT = '%0{%}' ]] && cd ~
     '';
   };
 
