@@ -9,9 +9,9 @@
 }: {
   home.packages = with pkgs; [
     amazon-q-cli
-    anki
     amdgpu_top
     android-studio
+    anki
     ardour
     awscli2
     blender
