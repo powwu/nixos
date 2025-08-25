@@ -9,6 +9,7 @@
 }: {
   home.packages = with pkgs; [
     amazon-q-cli
+    anki
     amdgpu_top
     android-studio
     ardour
