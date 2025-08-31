@@ -11,7 +11,6 @@
     amazon-q-cli
     amdgpu_top
     android-studio
-    anki
     ardour
     awscli2
     blender
@@ -25,6 +24,7 @@
     gimp3-with-plugins
     go
     gpp
+    gpt4all
     inkscape
     kicad
     krita

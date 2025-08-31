@@ -43,6 +43,7 @@
     hellwal
     vesktop
     waybar
+    wget
     wl-clipboard
     wlroots
     wtype

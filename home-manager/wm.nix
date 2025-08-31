@@ -30,7 +30,8 @@
     monitor = [
       "DP-4,1920x1080@120,auto-left,1,vrr,0"
       "eDP-1,2256x1504@60,auto,1.333333"
-      "HDMI-A-1,1920x1080@60,auto,1"
+      "HDMI-A-1,1920x1080@120,auto-left,1"
+      "DP-3,1920x1080@60,auto-right,1.3333"
     ];
 
     env = [
