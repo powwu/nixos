@@ -127,6 +127,7 @@
     };
 
     misc = {
+      enable_anr_dialog = false;
       disable_hyprland_logo = true;
     };
 
