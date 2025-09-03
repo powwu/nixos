@@ -33,6 +33,7 @@
 
   programs.home-manager.enable = true;
   wayland.windowManager.hyprland.enable = true;
+  programs.hyprlock.enable = true;
   programs.waybar.enable = true;
 
   programs.neovim = {

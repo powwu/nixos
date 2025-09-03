@@ -48,6 +48,12 @@ if ls /etc/.jellyfin-enable > /dev/null 2> /dev/null; then
 else
     echo "Jellyfin is not enabled by default. To enable temporarily, uncomment the line in /etc/nixos/flake.nix and rebuild. To make enabling permanent, run \`touch /etc/.jellyfin-enable\`"
 fi
+if ls /etc/.hyprlock-enable > /dev/null 2> /dev/null; then
+    echo "/etc/.hyprlock-enable exists, uncommenting ./home-manager/lock.nix in flake.nix"
+    sed -i 's|^\([[:space:]]*\)#\([[:space:]]*./home-manager/lock.nix[[:space:]]*\)|\1\2|' /etc/nixos/flake.nix
+else
+    echo "Hyprlock is not enabled by default. To enable temporarily, uncomment the line in /etc/nixos/flake.nix and rebuild. To make enabling permanent, run \`touch /etc/.hyprlock-enable\`"
+fi
 
 
 

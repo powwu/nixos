@@ -76,6 +76,7 @@
           ./home-manager/wm.nix
           ./home-manager/apps.nix
           ./home-manager/wallpapers.nix
+         #  ./home-manager/lock.nix
          #  ./extra/extra.nix
           #  ./extra/torzu.nix
         ];
