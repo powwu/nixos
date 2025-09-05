@@ -48,5 +48,6 @@
     wlroots
     wtype
     xorg.xrdb
+    zip
   ];
 }
