@@ -35,7 +35,7 @@
     pywal
     pywalfox-native
     rofi
-    spicetify-cli
+    unstable.spicetify-cli
     swww
     telegram-desktop
     thunderbird
