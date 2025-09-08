@@ -23,7 +23,7 @@
       "sleep 2; ~/Wallpapers/bin/wallpaper ~/Wallpapers/wallpapers/favorites & \\"
       "sleep 2; thunderbird & \\"
       "sleep 4; mako --default-timeout=15000 --layer=overlay & \\"
-      "pw-metadata -n settings 0 clock.force-quantum 0"
+      "pw-metadata -n settings 0 clock.force-quantum 128"
     ];
     # exec-once = "wl-paste -t text -w sh -c 'xclip -selection clipboard -o > /dev/null 2> /dev/null || xclip -selection clipboard'";
 
