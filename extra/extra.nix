@@ -11,6 +11,7 @@
     amazon-q-cli
     amdgpu_top
     android-studio
+    anki-bin
     ardour
     awscli2
     blender
