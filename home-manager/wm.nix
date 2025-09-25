@@ -44,7 +44,7 @@
 
     input = {
       kb_layout = "us,es";
-      kb_options = [ "ctrl:nocaps" "grp:alt_space_toggle" ];
+      kb_options = ["ctrl:nocaps" "grp:alt_space_toggle"];
 
       follow_mouse = 1;
 
