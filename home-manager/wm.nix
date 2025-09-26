@@ -44,7 +44,7 @@
 
     input = {
       kb_layout = "us,es";
-      kb_options = ["ctrl:nocaps" "grp:alt_space_toggle"];
+      kb_options = "ctrl:nocaps";
 
       follow_mouse = 1;
 
@@ -235,6 +235,13 @@
       "SHIFT,Print,exec,QT_SCREEN_SCALE_FACTORS=\"0.625\" flameshot gui"
       "$mainMod SHIFT, P, pseudo, # dwindle"
       "$mainMod, J, togglesplit, # dwindle"
+
+
+      # Hyprlock (no issues if hyprlock is disabled, the bind will just become a dummy)
+      "$mainMod, L, exec, hyprlock"
+
+      # Language switch
+      "$mainMod ALT, SPACE, exec, hyprctl switchxkblayout $(hyprctl devices -j | jq -r '.keyboards[] | select(.main == true) | .name') next; notify-send \"Keyboard layout: $(hyprctl devices -j | jq -r '.keyboards[] | select(.main == true) | .active_keymap')\""
 
       # Move focus with mainMod + arrow keys
       "$mainMod, left, movefocus, l"

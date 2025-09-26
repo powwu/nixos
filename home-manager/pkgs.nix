@@ -19,10 +19,13 @@
     feh
     font-awesome
     gnumake
+    hellwal
     hyprland
     hyprshot
     imagemagick
     inputs.themecord.packages.x86_64-linux.default
+    jq
+    libnotify
     lutris
     lxappearance
     magic-wormhole
@@ -35,12 +38,11 @@
     pywal
     pywalfox-native
     rofi
-    unstable.spicetify-cli
     swww
     telegram-desktop
     thunderbird
     udiskie
-    hellwal
+    unstable.spicetify-cli
     vesktop
     waybar
     wget
