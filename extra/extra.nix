@@ -7,7 +7,9 @@
   pkgs,
   ...
 }: {
+
   home.packages = with pkgs; [
+    alsa-lib
     amazon-q-cli
     amdgpu_top
     android-studio
@@ -15,6 +17,7 @@
     ardour
     awscli2
     blender
+    bottles
     custom.calibre
     easyeffects
     flex
@@ -26,12 +29,15 @@
     go
     gpp
     gpt4all
+    helm
     inkscape
     kicad
     krita
     nurl
     obs-studio
+    odin2
     openscad
+    openvr
     qbittorrent
     qdirstat
     reaper
@@ -41,16 +47,22 @@
     songrec
     steam
     steam-run
+    surge-XT
+    texliveTeTeX
     unstable.crc64fast-nvme
     unstable.moonlight-qt
     unstable.njq
     usb-modeswitch
     vagrant
     virt-manager
+    vital
     vlang
+    wlx-overlay-s
     wowup-cf
     xclicker
     xorg.xeyes
+    yabridge
+    yabridgectl
     yt-dlp
     zpaq
 

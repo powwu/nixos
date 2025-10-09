@@ -52,24 +52,24 @@
       enable32Bit = true;
     };
 
-    amdgpu.amdvlk = {
-      enable = true;
-      support32Bit.enable = true;
-    };
+  #   amdgpu.amdvlk = {
+  #     enable = true;
+  #     support32Bit.enable = true;
+  #   };
   };
 
   environment.systemPackages = with pkgs; [
+    OVMFFull
     acpilight
+    appimage-run
     bash
     dxvk
+    file
+    gdk-pixbuf
     git
     git-lfs
-    file
     gutenprint
     icewm
-    virtiofsd
-    gdk-pixbuf
-    OVMFFull
     libva
     libva-utils
     lxde.lxsession
@@ -79,18 +79,22 @@
     networkmanager
     openvr
     pipewire
+    powertop
     python3
     qemu
     rtkit
+    unityhub
+    unstable.alcom
     usbutils
+    virtiofsd
     vulkan-extension-layer
     vulkan-loader
     vulkan-tools
-    powertop
     vulkan-validation-layers
     wine
     wine64
     winetricks
+    wivrn
     zsh
   ];
 
@@ -107,16 +111,30 @@
 
   programs.virt-manager.enable = true;
 
+  programs.steam = {
+
+    enable = true;
+
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+
+  };
+
   programs.adb.enable = true;
+
 
   # programs.kdeconnect.enable = true;
 
   virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd.qemu.vhostUserPackages = [ pkgs.virtiofsd ];
 
   virtualisation.spiceUSBRedirection.enable = true;
 
   virtualisation.waydroid.enable = true;
   security.polkit.enable = true;
+  programs.appimage.enable = true;
+  programs.appimage.binfmt = true;
 
   services.printing = {
     enable = true;
@@ -226,6 +244,34 @@
       initialPassword = "password";
     };
   };
+
+  security.pam.loginLimits = [
+    { domain = "@audio"; item = "memlock"; type = "-"   ; value = "unlimited"; }
+    { domain = "@audio"; item = "rtprio" ; type = "-"   ; value = "99"       ; }
+    { domain = "@audio"; item = "nofile" ; type = "soft"; value = "99999"    ; }
+    { domain = "@audio"; item = "nofile" ; type = "hard"; value = "99999"    ; }
+  ];
+
+  services.udev.extraRules = ''
+      KERNEL=="rtc0", GROUP="audio"
+      KERNEL=="hpet", GROUP="audio"
+    '';
+  # services.udev.packages = [
+  #   (pkgs.writeTextFile {
+  #     name = "50-oculus.rules";
+  #     text = ''
+  #         SUBSYSTEM="usb", ATTR{idVendor}=="2833", ATTR{idProduct}=="0186", MODE="0660" group="plugdev", symlink+="ocuquest%n"
+  #       '';
+  #     destination = "/etc/udev/rules.d/50-oculus.rules";
+  #   } )
+  #   (pkgs.writeTextFile {
+  #     name = "52-android.rules";
+  #     text = ''
+  #         SUBSYSTEM=="usb", ATTR{idVendor}=="2833", ATTR{idProduct}=="0186", MODE="0666", OWNER=matt;
+  #       '';
+  #     destination = "/etc/udev/rules.d/52-android.rules";
+  #   })
+  # ];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "25.05";
