@@ -140,6 +140,23 @@ in {
   };
 
   /*
+  #     #     #     #        #######   #####   ######      #     #     #
+  #  #  #    # #    #        #     #  #     #  #     #    # #    ##   ##
+  #  #  #   #   #   #        #     #  #        #     #   #   #   # # # #
+  #  #  #  #     #  #        #     #  #  ####  ######   #     #  #  #  #
+  #  #  #  #######  #        #     #  #     #  #   #    #######  #     #
+  #  #  #  #     #  #        #     #  #     #  #    #   #     #  #     #
+   ## ##   #     #  #######  #######   #####   #     #  #     #  #     #
+  */
+  home.file.".config/walogram/constants.tdesktop-theme" = {
+    recursive = true;
+    source = pkgs.fetchurl {
+      url = "https://codeberg.org/thirtysix/walogram/raw/commit/98c35dfc17fe2333f8e399c6a8aa4c7bad23f264/constants.tdesktop-theme";
+      hash = "sha256-CRwpV5a0OZ64jqDAgX035ssWPsS3l+j+hPh+gIT1WOI=";
+    };
+  };
+
+  /*
   #     #  #######   #####   #    #  #######  #######  ######
   #     #  #        #     #  #   #      #     #     #  #     #
   #     #  #        #        #  #       #     #     #  #     #

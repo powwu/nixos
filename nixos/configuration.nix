@@ -26,7 +26,6 @@
 
   zramSwap.enable = true;
 
-
   boot.loader.grub.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.efiSupport = true;
@@ -58,10 +57,10 @@
       enable32Bit = true;
     };
 
-  #   amdgpu.amdvlk = {
-  #     enable = true;
-  #     support32Bit.enable = true;
-  #   };
+    #   amdgpu.amdvlk = {
+    #     enable = true;
+    #     support32Bit.enable = true;
+    #   };
   };
 
   services.wivrn.enable = true;
@@ -121,22 +120,19 @@
   programs.virt-manager.enable = true;
 
   programs.steam = {
-
     enable = true;
 
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
 
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-
   };
 
   programs.adb.enable = true;
 
-
   # programs.kdeconnect.enable = true;
 
   virtualisation.libvirtd.enable = true;
-  virtualisation.libvirtd.qemu.vhostUserPackages = [ pkgs.virtiofsd ];
+  virtualisation.libvirtd.qemu.vhostUserPackages = [pkgs.virtiofsd];
 
   virtualisation.spiceUSBRedirection.enable = true;
 
@@ -256,16 +252,36 @@
   };
 
   security.pam.loginLimits = [
-    { domain = "@audio"; item = "memlock"; type = "-"   ; value = "unlimited"; }
-    { domain = "@audio"; item = "rtprio" ; type = "-"   ; value = "99"       ; }
-    { domain = "@audio"; item = "nofile" ; type = "soft"; value = "99999"    ; }
-    { domain = "@audio"; item = "nofile" ; type = "hard"; value = "99999"    ; }
+    {
+      domain = "@audio";
+      item = "memlock";
+      type = "-";
+      value = "unlimited";
+    }
+    {
+      domain = "@audio";
+      item = "rtprio";
+      type = "-";
+      value = "99";
+    }
+    {
+      domain = "@audio";
+      item = "nofile";
+      type = "soft";
+      value = "99999";
+    }
+    {
+      domain = "@audio";
+      item = "nofile";
+      type = "hard";
+      value = "99999";
+    }
   ];
 
   services.udev.extraRules = ''
-      KERNEL=="rtc0", GROUP="audio"
-      KERNEL=="hpet", GROUP="audio"
-    '';
+    KERNEL=="rtc0", GROUP="audio"
+    KERNEL=="hpet", GROUP="audio"
+  '';
   # services.udev.packages = [
   #   (pkgs.writeTextFile {
   #     name = "50-oculus.rules";

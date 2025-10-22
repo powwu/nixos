@@ -241,7 +241,6 @@
       "$mainMod SHIFT, P, pseudo, # dwindle"
       "$mainMod, J, togglesplit, # dwindle"
 
-
       # Hyprlock (no issues if hyprlock is disabled, the bind will just become a dummy)
       "$mainMod, L, exec, hyprlock"
 
