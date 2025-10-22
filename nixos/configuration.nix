@@ -20,6 +20,12 @@
   ];
 
   boot.loader.systemd-boot.enable = false;
+  virtualisation.docker = {
+    enable = true;
+  };
+
+  zramSwap.enable = true;
+
 
   boot.loader.grub.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -57,6 +63,9 @@
   #     support32Bit.enable = true;
   #   };
   };
+
+  services.wivrn.enable = true;
+  services.wivrn.openFirewall = true;
 
   environment.systemPackages = with pkgs; [
     OVMFFull
@@ -233,6 +242,7 @@
         "wheel"
         "audio"
         "games"
+        # "docker"
         "video"
         "libvirt"
         "adbusers"

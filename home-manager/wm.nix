@@ -39,8 +39,9 @@
       "XCURSOR_SIZE,24"
       "HYPRCURSOR_THEME,Adwaita"
       "HYPRCURSOR_SIZE,24"
-      "WLR_NO_HARDWARE_CURSORS,1"
     ];
+
+    cursor.no_hardware_cursors = true;
 
     input = {
       kb_layout = "us,es";
@@ -132,6 +133,10 @@
     };
 
     windowrulev2 = [
+      "noinitialfocus,title:(.*OpenVINO\ Music\ Separation.*)"
+      "move 0 0,title:(.*OpenVINO\ Music\ Separation.*)"
+      "workspace name:stem silent,title:(.*OpenVINO\ Music\ Separation.*)"
+
       "noanim,class:(flameshot)"
       "move 0 0,class:(flameshot)"
 

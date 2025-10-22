@@ -20,6 +20,7 @@
     bottles
     custom.calibre
     easyeffects
+    ffmpeg
     flex
     gcc
     gdb
@@ -33,6 +34,7 @@
     inkscape
     kicad
     krita
+    nix-search-cli
     nurl
     obs-studio
     odin2
