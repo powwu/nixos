@@ -277,10 +277,10 @@
       value = "99999";
     }
   ];
-
   services.udev.extraRules = ''
-    KERNEL=="rtc0", GROUP="audio"
-    KERNEL=="hpet", GROUP="audio"
+      KERNEL=="rtc0", GROUP="audio"
+      KERNEL=="hpet", GROUP="audio"
+      KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="5343", ATTRS{idProduct}=="0080", OWNER="1000", GROUP="100", MODE="0666", TAG+="uaccess", TAG+="udev-acl"
   '';
   # services.udev.packages = [
   #   (pkgs.writeTextFile {
