@@ -2,11 +2,11 @@
   description = "powwu's nixos configuration flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-custom.url = "github:powwu/nixpkgs/custom";
 
-    home-manager.url = "github:nix-community/home-manager/release-25.05";
+    home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     themecord = {
@@ -57,10 +57,10 @@
         modules = [
           ./nixos/configuration.nix
           ./nixos/sudo.nix
-         #  ./extra/sunshine.nix
+          # ./extra/sunshine.nix
          #  ./extra/zerotier.nix
-         #  ./extra/jellyfin.nix
-          #  ./extra/laptop.nix
+          #  ./extra/jellyfin.nix
+         #  ./extra/laptop.nix
         ];
       };
     };
@@ -76,9 +76,9 @@
           ./home-manager/wm.nix
           ./home-manager/apps.nix
           ./home-manager/wallpapers.nix
-          #  ./home-manager/lock.nix
+         #  ./home-manager/lock.nix
          #  ./extra/extra.nix
-         #  ./extra/torzu.nix
+          #  ./extra/torzu.nix
         ];
       };
     };

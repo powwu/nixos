@@ -28,7 +28,7 @@
     gimp3-with-plugins
     go
     gpp
-    gpt4all
+    # gpt4all
     helm
     inkscape
     kicad

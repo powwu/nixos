@@ -80,7 +80,7 @@
     icewm
     libva
     libva-utils
-    lxde.lxsession
+    lxsession
     mesa
     mesa-gl-headers
     neovim
@@ -166,10 +166,10 @@
   # networking.firewall.allowedTCPPorts = [21] ++ (lib.range 50000 50100);
 
   # Inhibit power button input
-  services.logind.extraConfig = ''
-    HandlePowerKey=ignore
-    PowerKeyIgnoreInhibited=yes
-  '';
+  services.logind.settings.Login = {
+      PowerKeyIgnoreInhibited="yes";
+      HandlePowerKey="ignore";
+  };
 
   programs.gdk-pixbuf.modulePackages = [pkgs.librsvg];
   systemd.network.wait-online.enable = false;
@@ -278,9 +278,9 @@
     }
   ];
   services.udev.extraRules = ''
-      KERNEL=="rtc0", GROUP="audio"
-      KERNEL=="hpet", GROUP="audio"
-      KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="5343", ATTRS{idProduct}=="0080", OWNER="1000", GROUP="100", MODE="0666", TAG+="uaccess", TAG+="udev-acl"
+    KERNEL=="rtc0", GROUP="audio"
+    KERNEL=="hpet", GROUP="audio"
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="5343", ATTRS{idProduct}=="0080", MODE="0666", TAG+="uaccess", TAG+="udev-acl"
   '';
   # services.udev.packages = [
   #   (pkgs.writeTextFile {

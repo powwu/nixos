@@ -12,12 +12,11 @@
     capSysAdmin = true;
     openFirewall = true;
 
-    settings = {
-      # min_log_level = "verbose";
-    };
+    # settings = {
+    #   min_log_level = "verbose";
+    # };
 
-    # TEMPORARY WHILE VIRTUAL DISPLAY FEATURE IS IN PRE-RELEASE
-    package = pkgs.custom.sunshine;
+    package = pkgs.sunshine;
 
     applications = {
       env = {
