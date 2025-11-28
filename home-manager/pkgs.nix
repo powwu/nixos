@@ -17,7 +17,7 @@
     eza
     fastfetch
     feh
-    font-awesome
+    font-awesome_6
     gnumake
     hellwal
     hyprland

@@ -117,11 +117,12 @@
       };
     };
 
-    gestures = {
-      workspace_swipe = true;
-      workspace_swipe_fingers = 3;
-      workspace_swipe_cancel_ratio = 0.1;
-    };
+    gesture = [
+      "3, horizontal, workspace"
+      # workspace_swipe = true;
+      # workspace_swipe_fingers = 3;
+      # workspace_swipe_cancel_ratio = 0.1;
+    ];
 
     xwayland = {
       force_zero_scaling = true;
@@ -158,7 +159,7 @@
       "workspace 6,title:(.*Battle\.net.*)"
 
       # archlinux-logout
-      "animation slidefadevert,1,10,linear,class:(archlinux-logout.py)"
+      #"animation slidefadevert,1,10,linear,class:(archlinux-logout.py)" # broken 25.11
       "move 0 0,class:(archlinux-logout.py)"
       "float,class:(archlinux-logout.py)"
 
