@@ -167,8 +167,8 @@
 
   # Inhibit power button input
   services.logind.settings.Login = {
-      PowerKeyIgnoreInhibited="yes";
-      HandlePowerKey="ignore";
+    PowerKeyIgnoreInhibited = "yes";
+    HandlePowerKey = "ignore";
   };
 
   programs.gdk-pixbuf.modulePackages = [pkgs.librsvg];

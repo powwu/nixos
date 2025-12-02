@@ -59,8 +59,8 @@
           ./nixos/sudo.nix
          #  ./extra/sunshine.nix
          #  ./extra/zerotier.nix
-          #  ./extra/jellyfin.nix
-         #  ./extra/laptop.nix
+         #  ./extra/jellyfin.nix
+          #  ./extra/laptop.nix
         ];
       };
     };
@@ -76,9 +76,9 @@
           ./home-manager/wm.nix
           ./home-manager/apps.nix
           ./home-manager/wallpapers.nix
-         #  ./home-manager/lock.nix
+          #  ./home-manager/lock.nix
          #  ./extra/extra.nix
-          #  ./extra/torzu.nix
+         #  ./extra/torzu.nix
         ];
       };
     };
