@@ -73,6 +73,7 @@
     bash
     dxvk
     file
+    flatpak
     gdk-pixbuf
     git
     git-lfs

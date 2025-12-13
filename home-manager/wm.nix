@@ -424,7 +424,7 @@
           format = "{}    ";
           max-length = 40;
           interval = 300;
-          exec = "curl -Ss 'https:#wttr.in?0&T&Q' 2> /dev/null | cut -c 16- | head -2 | tr '\n' ' ' | awk '{$1=$1};1'";
+          exec = "curl -Ss 'https://wttr.in?0&T&Q' 2> /dev/null | cut -c 16- | head -2 | tr '\n' ' ' | awk '{$1=$1};1'";
         };
       };
     };
