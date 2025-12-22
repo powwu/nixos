@@ -20,7 +20,7 @@
       "sleep 1; swww-daemon & \\"
       "sleep 1; waybar & \\"
       "sleep 1; lxpolkit & \\"
-      "sleep 2; ~/Wallpapers/bin/wallpaper ~/Wallpapers/wallpapers/favorites & \\"
+      "sleep 5; ~/Wallpapers/bin/wallpaper ~/Wallpapers/wallpapers/favorites & \\"
       "sleep 2; thunderbird & \\"
       "sleep 4; mako --default-timeout=15000 --layer=overlay & \\"
       "pw-metadata -n settings 0 clock.force-quantum 128"
