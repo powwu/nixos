@@ -12,6 +12,14 @@
 
   powerManagement.powertop.enable = true;
 
+  hardware.bluetooth.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    blueberry
+  ];
+
+  programs.tuxclocker.enable = true;
+
   services.tlp = {
     enable = true;
     settings = {
