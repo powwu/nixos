@@ -27,15 +27,19 @@
           name = "1920x1080 Virtual";
           prep-cmd = [
             {
-              do = "hyprctl keyword monitor HDMI-A-1, disable";
+              do = "hyprctl keyword monitor HDMI-A-1, disable || true";
               undo = "";
             }
             {
-              do = "hyprctl keyword monitor eDP-1, disable";
+              do = "hyprctl keyword monitor eDP-1, disable || true";
               undo = "";
             }
             {
-              do = "hyprctl keyword monitor DP-2, disable";
+              do = "hyprctl keyword monitor DP-2, disable || true";
+              undo = "";
+            }
+            {
+              do = "hyprctl keyword monitor DP-3, disable || true";
               undo = "";
             }
             {
@@ -43,19 +47,23 @@
               undo = "";
             }
             {
-              do = "hyprctl keyword monitor HDMI-A-1, 1920x1080@120, auto-left, auto";
+              do = "hyprctl keyword monitor HDMI-A-1, 1920x1080@180, auto-left, auto || true";
               undo = "";
             }
             {
-              do = "hyprctl keyword monitor eDP-1, 2256x1504@60, auto, 1.333333";
+              do = "hyprctl keyword monitor eDP-1, 2256x1504@60, auto, 1.333333 || true";
               undo = "";
             }
             {
-              do = "hyprctl keyword monitor DP-2, 1920x1080@60, auto-left, auto";
+              do = "hyprctl keyword monitor DP-2, 1920x1080@60, auto-left, auto || true";
               undo = "";
             }
             {
-              do = "hyprctl keyword monitor HEADLESS-0, 1920x1080@60, auto, auto";
+              do = "hyprctl keyword monitor DP-3, 1920x1080@60, auto-right, auto || true";
+              undo = "";
+            }
+            {
+              do = "hyprctl keyword monitor HEADLESS-0, 1920x1080@60, auto, auto || true";
               undo = "";
             }
             {
@@ -206,6 +214,10 @@
             }
             {
               do = "hyprctl keyword monitor DP-2, disable";
+              undo = "";
+            }
+            {
+              do = "hyprctl keyword monitor DP-3, disable";
               undo = "";
             }
           ];

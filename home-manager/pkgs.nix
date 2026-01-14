@@ -50,6 +50,7 @@
     wlroots
     wtype
     xorg.xrdb
+    xhost
     zip
   ];
 }

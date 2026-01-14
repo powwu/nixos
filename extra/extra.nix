@@ -45,16 +45,19 @@
     remmina
     ryubing
     scrcpy
+    slimevr
+    slimevr-server
     songrec
     steam
     steam-run
     surge-XT
     texliveTeTeX
-    unstable.crc64fast-nvme
+    crc64fast-nvme
     unstable.moonlight-qt
-    unstable.njq
+    njq
     usb-modeswitch
     vagrant
+    vial
     virt-manager
     vital
     vlang

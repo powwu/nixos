@@ -9,6 +9,7 @@
 }: {
   imports = [
     ./hardware-configuration.nix
+    inputs.crossmacro.nixosModules.default
   ];
   boot.kernelPackages = pkgs.linuxPackages;
   # boot.extraModulePackages = [inputs.mt7601u-access-point.packages.x86_64-linux.default];
@@ -147,6 +148,11 @@
     drivers = with pkgs; [gutenprint];
   };
 
+  programs.crossmacro = {
+    enable = true;
+    users = [ "james" ];  # Add users who should access CrossMacro
+  };
+
   # For connected file systems on libvirt
   # services.virtiofsd.enable = true;
 
@@ -165,6 +171,16 @@
   #   '';
   # };
   # networking.firewall.allowedTCPPorts = [21] ++ (lib.range 50000 50100);
+
+  # slimevr
+  networking.firewall.allowedTCPPorts = [21110];
+  networking.firewall.allowedUDPPorts = [
+    35903
+    6969
+    8266
+    9001
+    9000
+  ];
 
   # Inhibit power button input
   services.logind.settings.Login = {
@@ -287,15 +303,15 @@
   #   (pkgs.writeTextFile {
   #     name = "50-oculus.rules";
   #     text = ''
-  #         SUBSYSTEM="usb", ATTR{idVendor}=="2833", ATTR{idProduct}=="0186", MODE="0660" group="plugdev", symlink+="ocuquest%n"
-  #       '';
+  #          SUBSYSTEM="usb", ATTR{idVendor}=="2833", ATTR{idProduct}=="0186", MODE="0660" group="plugdev", symlink+="ocuquest%n"
+  #        '';
   #     destination = "/etc/udev/rules.d/50-oculus.rules";
   #   } )
   #   (pkgs.writeTextFile {
   #     name = "52-android.rules";
   #     text = ''
-  #         SUBSYSTEM=="usb", ATTR{idVendor}=="2833", ATTR{idProduct}=="0186", MODE="0666", OWNER=matt;
-  #       '';
+  #          SUBSYSTEM=="usb", ATTR{idVendor}=="2833", ATTR{idProduct}=="0186", MODE="0666", OWNER=matt;
+  #        '';
   #     destination = "/etc/udev/rules.d/52-android.rules";
   #   })
   # ];
