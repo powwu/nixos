@@ -28,7 +28,7 @@
     gimp3-with-plugins
     go
     gpp
-    # gpt4all
+    # unstable.gpt4all
     helm
     inkscape
     kicad
@@ -45,8 +45,8 @@
     remmina
     ryubing
     scrcpy
-    slimevr
-    slimevr-server
+    unstable.slimevr
+    unstable.slimevr-server
     songrec
     steam
     steam-run
@@ -62,7 +62,7 @@
     vital
     vlang
     wlx-overlay-s
-    wowup-cf
+    unstable.wowup-cf
     xclicker
     xorg.xeyes
     yabridge

@@ -9,10 +9,8 @@
     home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    themecord = {
-      url = "github:danihek/themecord";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    themecord.url = "github:danihek/themecord";
+    themecord.inputs.nixpkgs.follows = "nixpkgs";
 
     crossmacro.url = "github:alper-han/CrossMacro";
 

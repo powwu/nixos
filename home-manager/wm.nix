@@ -28,11 +28,13 @@
     # exec-once = "wl-paste -t text -w sh -c 'xclip -selection clipboard -o > /dev/null 2> /dev/null || xclip -selection clipboard'";
 
     monitor = [
-      "HDMI-A-1,1920x1080@180,0x0,1"
+      "HDMI-A-1,1920x1080@165,0x0,1"
       "DP-4,1920x1080@120,auto-left,1,vrr,0"
       "eDP-1,2256x1504@60,auto,1.333333"
       "DP-3,1920x1080@60,1920x0,1.3333"
     ];
+
+    render.cm_auto_hdr = false;
 
     env = [
       "XCURSOR_THEME,Adwaita"

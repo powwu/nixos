@@ -150,7 +150,7 @@
 
   programs.crossmacro = {
     enable = true;
-    users = [ "james" ];  # Add users who should access CrossMacro
+    users = ["james"]; # Add users who should access CrossMacro
   };
 
   # For connected file systems on libvirt
