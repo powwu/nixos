@@ -13,7 +13,6 @@
     alacritty
     any-nix-shell
     btop
-    custom.archlinux-logout
     eza
     fastfetch
     feh
@@ -23,7 +22,6 @@
     hyprland
     hyprshot
     imagemagick
-    inputs.themecord.packages.x86_64-linux.default
     jq
     libnotify
     lutris
@@ -39,11 +37,8 @@
     pywalfox-native
     rofi
     swww
-    telegram-desktop
     thunderbird
     udiskie
-    unstable.spicetify-cli
-    vesktop
     waybar
     wget
     wl-clipboard

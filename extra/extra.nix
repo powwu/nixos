@@ -8,6 +8,7 @@
   ...
 }: {
   home.packages = with pkgs; [
+    # unstable.gpt4all
     alsa-lib
     amazon-q-cli
     amdgpu_top
@@ -17,7 +18,10 @@
     awscli2
     blender
     bottles
-    custom.calibre
+    calibre
+    crc64fast-nvme
+    custom.archlinux-logout
+    custom.toonmux
     easyeffects
     ffmpeg
     flex
@@ -28,12 +32,14 @@
     gimp3-with-plugins
     go
     gpp
-    # unstable.gpt4all
     helm
     inkscape
+    inputs.themecord.packages.x86_64-linux.default
     kicad
     krita
+    nix-index
     nix-search-cli
+    njq
     nurl
     obs-studio
     odin2
@@ -45,24 +51,28 @@
     remmina
     ryubing
     scrcpy
-    unstable.slimevr
-    unstable.slimevr-server
+    shticker-book-unwritten
     songrec
     steam
     steam-run
     surge-XT
+    telegram-desktop
     texliveTeTeX
-    crc64fast-nvme
+    unstable.crossmacro
     unstable.moonlight-qt
-    njq
+    unstable.pince
+    unstable.slimevr
+    unstable.slimevr-server
+    unstable.spicetify-cli
+    unstable.wowup-cf
     usb-modeswitch
     vagrant
+    vesktop
     vial
     virt-manager
     vital
     vlang
     wlx-overlay-s
-    unstable.wowup-cf
     xclicker
     xorg.xeyes
     yabridge

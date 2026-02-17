@@ -12,8 +12,6 @@
     themecord.url = "github:danihek/themecord";
     themecord.inputs.nixpkgs.follows = "nixpkgs";
 
-    crossmacro.url = "github:alper-han/CrossMacro";
-
     # mt7601u-access-point.url = "github:powwu/nixos-mt7601u-access-point";
   };
 

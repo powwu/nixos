@@ -9,7 +9,6 @@
 }: {
   imports = [
     ./hardware-configuration.nix
-    inputs.crossmacro.nixosModules.default
   ];
   boot.kernelPackages = pkgs.linuxPackages;
   # boot.extraModulePackages = [inputs.mt7601u-access-point.packages.x86_64-linux.default];
@@ -148,10 +147,10 @@
     drivers = with pkgs; [gutenprint];
   };
 
-  programs.crossmacro = {
-    enable = true;
-    users = ["james"]; # Add users who should access CrossMacro
-  };
+  # programs.crossmacro = {
+  #   enable = true;
+  #   users = ["james"]; # Add users who should access CrossMacro
+  # };
 
   # For connected file systems on libvirt
   # services.virtiofsd.enable = true;
