@@ -148,6 +148,8 @@
       "tile,title:(.*Battle\.net.*)"
       "tile,class:(wow.exe)"
       "fullscreen,class:(wow.exe)"
+      "tile,class:(Toontown Rewritten)"
+      "float,class:(toonmux)"
 
       "fullscreen,class:(^steam_app.*)"
       "fullscreen,title:(Steam Big Picture Mode)"
@@ -159,6 +161,9 @@
       "workspace 6,class:(wow.exe)"
       "workspace 6,class:(lutris)"
       "workspace 6,title:(.*Battle\.net.*)"
+      "workspace 6,title:(.*Battle\.net.*)"
+      "workspace 6,class:(Toontown Rewritten)"
+      "workspace 6,class:(toonmux)"
 
       # archlinux-logout
       #"animation slidefadevert,1,10,linear,class:(archlinux-logout.py)" # broken 25.11
