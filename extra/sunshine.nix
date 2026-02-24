@@ -231,7 +231,7 @@
           auto-detach = "true";
         }
         {
-          name = "Reboot";
+          name = "Shutdown";
           cmd = "sudo /run/current-system/sw/bin/shutdown";
           exclude-global-prep-cmd = "false";
           auto-detach = "true";
