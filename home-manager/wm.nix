@@ -150,6 +150,7 @@
       "fullscreen,class:(wow.exe)"
       "tile,class:(Toontown Rewritten)"
       "float,class:(toonmux)"
+      "pin,class:(toonmux)"
 
       "fullscreen,class:(^steam_app.*)"
       "fullscreen,title:(Steam Big Picture Mode)"
@@ -163,7 +164,6 @@
       "workspace 6,title:(.*Battle\.net.*)"
       "workspace 6,title:(.*Battle\.net.*)"
       "workspace 6,class:(Toontown Rewritten)"
-      "workspace 6,class:(toonmux)"
 
       # archlinux-logout
       #"animation slidefadevert,1,10,linear,class:(archlinux-logout.py)" # broken 25.11
@@ -224,6 +224,7 @@
       ", code:232, exec, sudo xbacklight -dec 5"
       ", code:233, exec, sudo xbacklight -inc 5"
       ", code:255, exec, true" # inhibit XF86RFKill
+      ", code:191, exec, pgrep cpulimit || cpulimit -l 8 -p $(pgrep TTREngine); pgrep cpulimit && pkill cpulimit"
       "$mainMod, O, movecurrentworkspacetomonitor, 1"
       "$mainMod, P, movecurrentworkspacetomonitor, 0"
       "$mainMod, RETURN, exec, alacritty"

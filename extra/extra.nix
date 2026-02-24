@@ -19,6 +19,7 @@
     blender
     bottles
     calibre
+    cpulimit
     crc64fast-nvme
     custom.archlinux-logout
     custom.toonmux

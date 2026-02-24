@@ -13,6 +13,10 @@
             options = ["NOPASSWD"];
           }
           {
+            command = "/run/current-system/sw/bin/shutdown";
+            options = ["NOPASSWD"];
+          }
+          {
             command = "/run/current-system/sw/bin/nmtui";
             options = ["NOPASSWD"];
           }

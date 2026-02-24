@@ -230,6 +230,13 @@
           exclude-global-prep-cmd = "false";
           auto-detach = "true";
         }
+        {
+          name = "Reboot";
+          cmd = "sudo /run/current-system/sw/bin/shutdown";
+          exclude-global-prep-cmd = "false";
+          auto-detach = "true";
+        }
+
       ];
     };
   };
