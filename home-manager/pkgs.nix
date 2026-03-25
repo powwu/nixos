@@ -50,6 +50,7 @@
     wtype
     xhost
     xorg.xrdb
+    xwayland-satellite
     zip
   ];
 }

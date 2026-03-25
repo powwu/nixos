@@ -236,7 +236,6 @@
           exclude-global-prep-cmd = "false";
           auto-detach = "true";
         }
-
       ];
     };
   };
