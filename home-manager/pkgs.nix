@@ -6,7 +6,7 @@
   pkgs,
   ...
 }: {
-  # SEE ALSO: extra.nix
+  # SEE ALSO: extra.nix 
   home.packages = with pkgs; [
     adwaita-icon-theme
     adwaita-icon-theme-legacy
