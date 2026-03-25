@@ -13,6 +13,7 @@
     alacritty
     any-nix-shell
     btop
+    custom.archlinux-logout
     eza
     fastfetch
     feh
@@ -44,8 +45,8 @@
     wl-clipboard
     wlroots
     wtype
-    xorg.xrdb
     xhost
+    xorg.xrdb
     zip
   ];
 }

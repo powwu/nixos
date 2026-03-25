@@ -22,6 +22,7 @@
     cpulimit
     crc64fast-nvme
     custom.archlinux-logout
+    custom.telegram-desktop
     custom.toonmux
     easyeffects
     ffmpeg
@@ -33,11 +34,14 @@
     gimp3-with-plugins
     go
     gpp
+    grim
     helm
     inkscape
     inputs.themecord.packages.x86_64-linux.default
+    kdePackages.kleopatra
     kicad
     krita
+    libqalculate
     nix-index
     nix-search-cli
     njq
@@ -53,18 +57,20 @@
     ryubing
     scrcpy
     shticker-book-unwritten
+    slurp
     songrec
     steam
     steam-run
     surge-XT
-    telegram-desktop
+    tesseract
     texliveTeTeX
     unstable.crossmacro
-    unstable.moonlight-qt
+    moonlight-qt
     unstable.pince
     unstable.slimevr
     unstable.slimevr-server
     unstable.spicetify-cli
+    unstable.winetricks
     unstable.wowup-cf
     usb-modeswitch
     vagrant

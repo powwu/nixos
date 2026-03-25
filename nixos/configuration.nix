@@ -12,7 +12,7 @@
   ];
   boot.kernelPackages = pkgs.linuxPackages;
   # boot.extraModulePackages = [inputs.mt7601u-access-point.packages.x86_64-linux.default];
-  boot.extraModulePackages = [config.boot.kernelPackages.rtl8852bu];
+  boot.extraModulePackages = [config.boot.kernelPackages.rtl8852bu config.boot.kernelPackages.v4l2loopback] ;
   boot.kernelParams = [
     "quiet"
     "splash"
@@ -65,6 +65,8 @@
 
   services.wivrn.enable = true;
   services.wivrn.openFirewall = true;
+
+  systemd.settings.Manager = { DefaultLimitNOFILE = 524288; };
 
   environment.systemPackages = with pkgs; [
     OVMFFull
@@ -268,6 +270,12 @@
   };
 
   security.pam.loginLimits = [
+    {
+      domain = "james";
+      type = "hard";
+      item = "nofile";
+      value = "524288";
+    }
     {
       domain = "@audio";
       item = "memlock";

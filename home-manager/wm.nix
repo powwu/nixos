@@ -21,6 +21,7 @@
       "sleep 1; waybar & \\"
       "sleep 1; lxpolkit & \\"
       "sleep 2; ~/Wallpapers/bin/wallpaper ~/Wallpapers/wallpapers/favorites & \\"
+      "sleep 2; firefox 'https://trello.com/b/Bnhbg7i0/daily-to-do' & \\"
       "sleep 2; thunderbird & \\"
       "sleep 4; mako --default-timeout=15000 --layer=overlay & \\"
       "pw-metadata -n settings 0 clock.force-quantum 128"
@@ -164,6 +165,7 @@
       "workspace 6,title:(.*Battle\.net.*)"
       "workspace 6,title:(.*Battle\.net.*)"
       "workspace 6,class:(Toontown Rewritten)"
+      "workspace 6,title:(Toontown Realms)"
 
       # archlinux-logout
       #"animation slidefadevert,1,10,linear,class:(archlinux-logout.py)" # broken 25.11
@@ -224,7 +226,7 @@
       ", code:232, exec, sudo xbacklight -dec 5"
       ", code:233, exec, sudo xbacklight -inc 5"
       ", code:255, exec, true" # inhibit XF86RFKill
-      ", code:191, exec, pgrep cpulimit || cpulimit -l 8 -p $(pgrep TTREngine); pgrep cpulimit && pkill cpulimit"
+      ", code:191, exec, pgrep cpulimit || cpulimit -l 5 -p $(pgrep TTREngine); pgrep cpulimit && pkill cpulimit"
       "$mainMod, O, movecurrentworkspacetomonitor, 1"
       "$mainMod, P, movecurrentworkspacetomonitor, 0"
       "$mainMod, RETURN, exec, alacritty"
