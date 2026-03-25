@@ -203,7 +203,7 @@
   services.ntp.enable = true;
   services.xserver.enable = true;
   services.greetd = {
-    enable = true;
+    enable = false;
     package = pkgs.greetd;
     settings = rec {
       initial_session = {

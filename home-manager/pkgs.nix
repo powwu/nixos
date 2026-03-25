@@ -6,7 +6,7 @@
   pkgs,
   ...
 }: {
-  # SEE ALSO: extra.nix 
+  # SEE ALSO: extra.nix
   home.packages = with pkgs; [
     adwaita-icon-theme
     adwaita-icon-theme-legacy
@@ -15,6 +15,9 @@
     btop
     custom.archlinux-logout
     eza
+    unstable.emacsPackages.ewm
+    emacsPackages.wallpaper
+    emacsPackages.vterm
     fastfetch
     feh
     font-awesome_6
