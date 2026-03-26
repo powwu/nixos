@@ -1,9 +1,8 @@
-{ pkgs ? import <nixpkgs> {}
-, withScreencastSupport ? true
-, emacsPackage ? pkgs.emacs-pgtk
-}:
-
-let
+{
+  pkgs ? import <nixpkgs> {},
+  withScreencastSupport ? true,
+  emacsPackage ? pkgs.emacs-pgtk,
+}: let
   inherit (pkgs) lib;
   inherit (pkgs) rustPlatform pkg-config;
   inherit (pkgs) glib libdisplay-info libdrm libgbm libglvnd libinput libxkbcommon pipewire seatd systemd wayland;
@@ -35,18 +34,20 @@ let
       rustPlatform.bindgenHook
     ];
 
-    buildInputs = [
-      glib # For GIO (XDG app enumeration)
-      libdisplay-info # EDID parsing for monitor make/model
-      libdrm
-      libgbm
-      libglvnd # For libEGL
-      libinput
-      libxkbcommon
-      seatd
-      systemd # For libudev
-      wayland
-    ] ++ lib.optional withScreencastSupport pipewire;
+    buildInputs =
+      [
+        glib # For GIO (XDG app enumeration)
+        libdisplay-info # EDID parsing for monitor make/model
+        libdrm
+        libgbm
+        libglvnd # For libEGL
+        libinput
+        libxkbcommon
+        seatd
+        systemd # For libudev
+        wayland
+      ]
+      ++ lib.optional withScreencastSupport pipewire;
 
     buildFeatures = lib.optional withScreencastSupport "screencast";
     buildNoDefaultFeatures = true;
@@ -76,26 +77,25 @@ let
     root = ./../etc;
     fileset = lib.fileset.intersection gitTrackedFiles ./../etc;
   };
-
 in
-emacsPackage.pkgs.trivialBuild {
-  pname = "ewm";
-  version = "0.1.0";
-  src = lib.fileset.toSource {
-    root = ./../lisp;
-    fileset = lib.fileset.intersection gitTrackedFiles ./../lisp;
-  };
-  packageRequires = [ ewm-core ];
-  passthru.module = "${./service.nix}";
-  postInstall = ''
-    cp -r ${etcFiles} $out/etc
-  '';
+  emacsPackage.pkgs.trivialBuild {
+    pname = "ewm";
+    version = "0.1.0";
+    src = lib.fileset.toSource {
+      root = ./../lisp;
+      fileset = lib.fileset.intersection gitTrackedFiles ./../lisp;
+    };
+    packageRequires = [ewm-core];
+    passthru.module = "${./service.nix}";
+    postInstall = ''
+      cp -r ${etcFiles} $out/etc
+    '';
 
-  meta = {
-    description = "Emacs Wayland Manager - Wayland compositor for Emacs";
-    homepage = "https://github.com/ezemtsov/ewm";
-    license = lib.licenses.gpl3Plus;
-    platforms = lib.platforms.linux;
-    mainProgram = "ewm-emacs";
-  };
-}
+    meta = {
+      description = "Emacs Wayland Manager - Wayland compositor for Emacs";
+      homepage = "https://github.com/ezemtsov/ewm";
+      license = lib.licenses.gpl3Plus;
+      platforms = lib.platforms.linux;
+      mainProgram = "ewm-emacs";
+    };
+  }

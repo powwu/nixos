@@ -9,7 +9,13 @@
 }: {
   imports = [
     ./hardware-configuration.nix
+    inputs.ewm.nixosModules.default
   ];
+
+  programs.ewm = {
+    enable = true;
+  };
+
   boot.kernelPackages = pkgs.linuxPackages;
   # boot.extraModulePackages = [inputs.mt7601u-access-point.packages.x86_64-linux.default];
   boot.extraModulePackages = [config.boot.kernelPackages.rtl8852bu config.boot.kernelPackages.v4l2loopback];
@@ -203,7 +209,7 @@
   services.ntp.enable = true;
   services.xserver.enable = true;
   services.greetd = {
-    enable = false;
+    enable = true;
     package = pkgs.greetd;
     settings = rec {
       initial_session = {

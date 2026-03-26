@@ -12,6 +12,8 @@
     themecord.url = "github:danihek/themecord";
     themecord.inputs.nixpkgs.follows = "nixpkgs";
 
+    ewm.url = "https://codeberg.org/ezemtsov/ewm/archive/master.tar.gz";
+
     # mt7601u-access-point.url = "github:powwu/nixos-mt7601u-access-point";
   };
 

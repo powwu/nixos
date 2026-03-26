@@ -7,14 +7,9 @@
   config,
   pkgs,
   ...
-}:
-let ewmservice = import ../pkgs/ewm/nix/service.nix; in {
+}: {
   # home.enableNixpkgsReleaseCheck = false; # Remove once back on stable
-      imports = [
-          ewmservice
-        ];
-
-
+  imports = [ ];
 
   nixpkgs = {
     overlays = [
@@ -38,10 +33,8 @@ let ewmservice = import ../pkgs/ewm/nix/service.nix; in {
 
   programs.home-manager.enable = true;
   wayland.windowManager.hyprland.enable = true;
-  programs.ewm.enable = true;
   programs.hyprlock.enable = true;
   programs.waybar.enable = true;
-
 
   programs.neovim = {
     enable = true;

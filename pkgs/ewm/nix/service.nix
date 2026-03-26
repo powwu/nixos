@@ -9,8 +9,7 @@
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   cfg = config.programs.ewm;
 
   # Extract the unwrapped emacs for building (withPackages results carry
@@ -31,20 +30,20 @@ let
       ${cfg.extraEmacsArgs} "$@"
   '';
 
-  ewmSystemPackage = pkgs.runCommand "ewm-system" {
-    passthru.providedSessions = [ "ewm" ];
-  } ''
-    install -Dm755 ${launchScript} $out/bin/ewm-launch
-    install -Dm755 ${../resources/ewm-session} $out/bin/ewm-session
-    install -Dm644 ${../resources/ewm.desktop} $out/share/wayland-sessions/ewm.desktop
-    mkdir -p $out/lib/systemd/user
-    substitute ${../resources/ewm.service} $out/lib/systemd/user/ewm.service \
-      --replace-fail 'ExecStart=ewm-launch' 'ExecStart=/run/current-system/sw/bin/ewm-launch'
-    install -Dm644 ${../resources/ewm-shutdown.target} $out/lib/systemd/user/ewm-shutdown.target
-    install -Dm644 ${../resources/ewm-portals.conf} $out/share/xdg-desktop-portal/ewm-portals.conf
-  '';
-in
-{
+  ewmSystemPackage =
+    pkgs.runCommand "ewm-system" {
+      passthru.providedSessions = ["ewm"];
+    } ''
+      install -Dm755 ${launchScript} $out/bin/ewm-launch
+      install -Dm755 ${../resources/ewm-session} $out/bin/ewm-session
+      install -Dm644 ${../resources/ewm.desktop} $out/share/wayland-sessions/ewm.desktop
+      mkdir -p $out/lib/systemd/user
+      substitute ${../resources/ewm.service} $out/lib/systemd/user/ewm.service \
+        --replace-fail 'ExecStart=ewm-launch' 'ExecStart=/run/current-system/sw/bin/ewm-launch'
+      install -Dm644 ${../resources/ewm-shutdown.target} $out/lib/systemd/user/ewm-shutdown.target
+      install -Dm644 ${../resources/ewm-portals.conf} $out/share/xdg-desktop-portal/ewm-portals.conf
+    '';
+in {
   options.programs.ewm = {
     enable = lib.mkEnableOption "EWM, an Emacs Wayland Manager";
 
@@ -56,7 +55,7 @@ in
 
     emacsPackage = lib.mkOption {
       type = lib.types.package;
-      default = pkgs.emacs-pgtk.pkgs.withPackages (_: [ ewmPackage ]);
+      default = pkgs.emacs-pgtk.pkgs.withPackages (_: [ewmPackage]);
       description = "Emacs package to use. Must be a pgtk build with the EWM package available.";
       example = "pkgs.emacs30-pgtk";
     };
@@ -74,15 +73,17 @@ in
       example = "--no-site-lisp --eval '(foo)'";
     };
 
-    screencast.enable = lib.mkEnableOption "screen casting via PipeWire" // {
-      default = true;
-    };
+    screencast.enable =
+      lib.mkEnableOption "screen casting via PipeWire"
+      // {
+        default = true;
+      };
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = [ ewmSystemPackage ];
-    services.displayManager.sessionPackages = [ ewmSystemPackage ];
-    systemd.packages = [ ewmSystemPackage ];
+    environment.systemPackages = [ewmSystemPackage];
+    services.displayManager.sessionPackages = [ewmSystemPackage];
+    systemd.packages = [ewmSystemPackage];
     security.polkit.enable = true;
 
     # Provides fonts, xdg-utils, graphics, PipeWire, inotify limits, etc.
@@ -99,8 +100,8 @@ in
     # XDG portal configuration for screen sharing, file dialogs, etc.
     xdg.portal = {
       enable = lib.mkDefault true;
-      configPackages = [ ewmSystemPackage ];
-      extraPortals = [ pkgs.xdg-desktop-portal-gnome pkgs.xdg-desktop-portal-gtk ];
+      configPackages = [ewmSystemPackage];
+      extraPortals = [pkgs.xdg-desktop-portal-gnome pkgs.xdg-desktop-portal-gtk];
     };
   };
 }
