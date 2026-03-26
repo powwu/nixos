@@ -324,18 +324,15 @@
   programs.waybar = {
     settings = {
       mainBar = {
-        layer = "top"; # Waybar at top layer
-        position = "top"; # Waybar at the bottom of your screen
-        height = 22; # Waybar height
+        layer = "bottom";
+        position = "bottom";
+        height = 20; # Waybar height
+        mode = "overlay";
 
         # Choose the order of the modules
         modules-left = [
-          "hyprland/workspaces"
-          "custom/spotify"
-          "custom/media"
         ];
         modules-center = [
-          "hyprland/window"
         ];
         modules-right = [
           "custom/weather"
@@ -443,13 +440,13 @@
         * {
             border: none;
             border-radius: 0;
-            font-family: "Ubuntu Nerd Font";
-            font-size: 12px;
+            font-family: "Victor Mono";
+            font-size: 14px;
             min-height: 0;
         }
 
         window#waybar {
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.0);
             color: white;
         }
 
