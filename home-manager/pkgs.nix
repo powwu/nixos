@@ -15,7 +15,6 @@
     btop
     custom.archlinux-logout
     eza
-    unstable.emacsPackages.ewm
     emacsPackages.wallpaper
     emacsPackages.vterm
     fastfetch

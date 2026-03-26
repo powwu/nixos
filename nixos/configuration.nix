@@ -12,9 +12,7 @@
     inputs.ewm.nixosModules.default
   ];
 
-  programs.ewm = {
-    enable = true;
-  };
+  programs.ewm.enable = true;
 
   boot.kernelPackages = pkgs.linuxPackages;
   # boot.extraModulePackages = [inputs.mt7601u-access-point.packages.x86_64-linux.default];
@@ -213,7 +211,7 @@
     package = pkgs.greetd;
     settings = rec {
       initial_session = {
-        command = "Hyprland";
+        command = "ewm-launch";
         user = "james";
       };
       default_session = initial_session;
