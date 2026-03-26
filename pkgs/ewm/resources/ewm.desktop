@@ -1,6 +1,0 @@
-[Desktop Entry]
-Name=ewm
-Comment=Emacs Wayland Manager
-Exec=ewm-session
-Type=Application
-DesktopNames=ewm

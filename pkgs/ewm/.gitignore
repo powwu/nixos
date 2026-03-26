@@ -1,8 +1,0 @@
-/compositor/target/
-*.elc
-*.log
-*.png
-!docs/**/*.png
-.direnv/
-result
-\#*\#
