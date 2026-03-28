@@ -9,7 +9,7 @@
   ...
 }: {
   # home.enableNixpkgsReleaseCheck = false; # Remove once back on stable
-  imports = [ ];
+  imports = [];
 
   nixpkgs = {
     overlays = [

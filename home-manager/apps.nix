@@ -254,7 +254,7 @@ in {
   #        #     #  #     #  #     #  #     #
   #######  #     #  #     #   #####    #####
   */
-#  Unfortunately, we can only deal with installation for now, until someone makes a spacemacs overlay for nixos (which I honestly don't care enough to do). `.spacemacs` is already a declarative configuration for emacs, just like home-manager would provide
+  #  Unfortunately, we can only deal with installation for now, until someone makes a spacemacs overlay for nixos (which I honestly don't care enough to do). `.spacemacs` is already a declarative configuration for emacs, just like home-manager would provide
   programs.emacs = {
     enable = true;
     package = pkgs.emacs-pgtk;

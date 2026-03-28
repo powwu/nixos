@@ -8,6 +8,7 @@
 }: {
   # SEE ALSO: extra.nix
   home.packages = with pkgs; [
+    _3llo
     adwaita-icon-theme
     adwaita-icon-theme-legacy
     alacritty
