@@ -13,6 +13,7 @@
     adwaita-icon-theme-legacy
     alacritty
     any-nix-shell
+    brightnessctl
     btop
     custom.archlinux-logout
     eza
