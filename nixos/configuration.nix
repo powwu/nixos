@@ -211,7 +211,7 @@
     package = pkgs.greetd;
     settings = rec {
       initial_session = {
-        command = "ewm-launch";
+        command = "Hyprland";
         user = "james";
       };
       default_session = initial_session;

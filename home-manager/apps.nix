@@ -234,8 +234,8 @@ in {
     source = pkgs.fetchFromGitHub {
       owner = "powwu";
       repo = "alacritty";
-      rev = "da8aac6086f31e1bceb07f1faa05b8bd9e8b29bc";
-      hash = "sha256-8jre3lbWWNNj4e1263o3GPGDWplfHqyq81PGlsp7KdQ=";
+      rev = "0a3f7a72513222fd0d62213a6d1a635e0f5eab26";
+      hash = "sha256-yxG0I5bVevO5SvGDz10q5VgDQqyJYlcxjYJq9pe+Im4=";
     };
   };
   home.activation = {
