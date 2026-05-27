@@ -274,7 +274,7 @@ in {
   # overwriting would be a cause for concern. however, home-manager makes sure that any backups are not overwritten, and will refuse to continue if that's not the case
   home.file.".spacemacs".source = pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/powwu/dotspacemacs/refs/heads/main/.spacemacs";
-    hash = "sha256-3VwARaAQe+ssKMARQjU0zSgzMC/lNFHZ4tfksIo2Yv4=";
+    hash = "sha256-nCaa+PUGFY4XXOJlUiHzupgR+UJzznXiLQlIesjiYFc=";
   };
 
   home.activation = {
