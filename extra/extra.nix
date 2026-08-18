@@ -16,17 +16,19 @@
     anki-bin
     ardour
     awscli2
+    bc
     blender
     bottles
     calibre
     cpulimit
     crc64fast-nvme
     custom.archlinux-logout
-    custom.telegram-desktop
+    telegram-desktop
     custom.toonmux
     easyeffects
     ffmpeg
     flex
+    gamescope
     gcc
     gdb
     gh
@@ -65,6 +67,7 @@
     tesseract
     texliveTeTeX
     unstable.crossmacro
+    pinentry-qt
     moonlight-qt
     unstable.pince
     unstable.slimevr
@@ -79,17 +82,26 @@
     virt-manager
     vital
     vlang
-    wlx-overlay-s
+    wayvr
+    wineWow64Packages.staging
     xclicker
     xorg.xeyes
     yabridge
     yabridgectl
     yt-dlp
     zpaq
-
-    (wineWowPackages.full.override {
-      wineRelease = "staging";
-      mingwSupport = true;
-    })
   ];
+  services.gpg-agent = {
+      enable = true;
+        pinentry.package = pkgs.pinentry-qt;
+          defaultCacheTtl = 3600;       # cache passphrase 1 hour
+            maxCacheTtl = 86400;          # max cache 24 hours
+              enableSshSupport = true;       # optional: use GPG key for SSH
+
+  };
+
+  programs.gpg = {
+      enable = true;
+
+  };
 }

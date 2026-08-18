@@ -339,7 +339,7 @@ in {
   };
   home.activation = {
     installPywalfox = lib.hm.dag.entryAfter ["onFilesChange"] ''
-      $HOME/.nix-profile/bin/pywalfox install --browser firefox
+      $HOME/.nix-profile/bin/pywalfox install
     '';
   };
 }

@@ -41,7 +41,7 @@
     pywal
     pywalfox-native
     rofi
-    swww
+    awww
     thunderbird
     udiskie
     waybar

@@ -11,8 +11,8 @@
     source = pkgs.fetchFromGitHub {
       owner = "powwu";
       repo = "wallpapers";
-      rev = "028c8de3c142806b9498d5cc77285821d5f046e4";
-      hash = "sha256-bI3OtXx+qSL9r3Dlejr5Hs1TQAYUiLiPQ/kkMmbhd4g=";
+      rev = "2383bfdee9547f3657e075080f594ab1c0b41938";
+      hash = "sha256-oasFVxXVRoSJx7VkPoE1kJgfNdk/qesVmExT4Pd1eIg=";
     };
   };
   home.file."Wallpapers/wallpapers.7z.001".source = pkgs.fetchurl {

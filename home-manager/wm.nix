@@ -17,11 +17,10 @@
   */
   wayland.windowManager.hyprland.settings = {
     exec-once = [
-      "sleep 1; swww-daemon & \\"
+      "sleep 1; awww-daemon & \\"
       "sleep 1; waybar & \\"
       "sleep 1; lxpolkit & \\"
       "sleep 2; ~/Wallpapers/bin/wallpaper ~/Wallpapers/wallpapers/favorites & \\"
-      "sleep 2; firefox 'https://trello.com/b/Bnhbg7i0/daily-to-do' & \\"
       "sleep 2; thunderbird & \\"
       "sleep 4; mako --default-timeout=15000 --layer=overlay & \\"
       "pw-metadata -n settings 0 clock.force-quantum 128"
@@ -31,7 +30,7 @@
     monitor = [
       "HDMI-A-1,1920x1080@165,0x0,1"
       "DP-4,1920x1080@120,auto-left,1,vrr,0"
-      "eDP-1,2256x1504@60,auto,1.333333"
+      "eDP-1,2256x1504@60,auto,1.566667"
       "DP-3,1920x1080@60,1920x0,1.3333"
     ];
 
@@ -54,7 +53,7 @@
 
       touchpad.natural_scroll = false;
       touchpad.scroll_factor = 0.5;
-      # disable_while_typing = false;
+      touchpad.disable_while_typing = false;
 
       tablet = {
         # transform = 0;
@@ -106,11 +105,6 @@
       ];
     };
 
-    dwindle = {
-      pseudotile = true;
-      preserve_split = true;
-    };
-
     group = {
       "col.border_active" = "rgba(FFFFFFFF)";
       "col.border_inactive" = "rgba(000000BB)";
@@ -136,85 +130,75 @@
       disable_hyprland_logo = true;
     };
 
-    windowrulev2 = [
-      "noinitialfocus,title:(.*OpenVINO\ Music\ Separation.*)"
-      "move 0 0,title:(.*OpenVINO\ Music\ Separation.*)"
-      "workspace name:stem silent,title:(.*OpenVINO\ Music\ Separation.*)"
+        windowrule = [
+      "match:title .*OpenVINO Music Separation.*, no_initial_focus on, move 0 0, workspace name:stem silent"
 
-      "noanim,class:(flameshot)"
-      "move 0 0,class:(flameshot)"
+      "match:class flameshot, no_anim on, move 0 0"
 
-      "noanim,class:(swww)"
+      "match:title .*Battle[.]net.*, tile on, workspace 6"
+      "match:class wow[.]exe, tile on, fullscreen on, workspace 6"
+      "match:class ^Toontown Rewritten$, tile on, workspace 6"
+      "match:class ^Corporate Clash.*$, tile on, workspace 6"
+      "match:class toonmux, float on, pin on"
 
-      "tile,title:(.*Battle\.net.*)"
-      "tile,class:(wow.exe)"
-      "fullscreen,class:(wow.exe)"
-      "tile,class:(Toontown Rewritten)"
-      "float,class:(toonmux)"
-      "pin,class:(toonmux)"
+      "match:class ^steam_app.*, fullscreen on"
+      "match:title Steam Big Picture Mode, fullscreen on"
+      # "match:class Ryujinx, fullscreen on"
 
-      "fullscreen,class:(^steam_app.*)"
-      "fullscreen,title:(Steam Big Picture Mode)"
-      # "fullscreen,class:(Ryujinx)"
-
-      "fullscreen,class:(^com.moonlight_stream.Moonlight$)"
+      "match:class ^com[.]moonlight_stream[.]Moonlight$, fullscreen on"
 
       # Workspace 6
-      "workspace 6,class:(wow.exe)"
-      "workspace 6,class:(lutris)"
-      "workspace 6,title:(.*Battle\.net.*)"
-      "workspace 6,title:(.*Battle\.net.*)"
-      "workspace 6,class:(Toontown Rewritten)"
-      "workspace 6,title:(Toontown Realms)"
+      "match:class lutris, workspace 6"
+      "match:title ^Toontown Realms$, workspace 6"
 
       # archlinux-logout
-      #"animation slidefadevert,1,10,linear,class:(archlinux-logout.py)" # broken 25.11
-      "move 0 0,class:(archlinux-logout.py)"
-      "float,class:(archlinux-logout.py)"
+      # "match:class archlinux-logout[.]py, animation slidefadevert 1 10 linear" # broken 25.11
+      "match:class archlinux-logout[.]py, float on, move 0 0"
 
       # Workspace 2
-      "workspace 2,class:(firefox)"
+      "match:class firefox, workspace 2"
 
       # Workspace 3
-      "workspace 3,class:(discord)"
-      "workspace 3,class:(vesktop)"
-      "workspace 3,class:(org.telegram.desktop)"
+      "match:class discord, workspace 3"
+      "match:class vesktop, workspace 3"
+      "match:class org[.]telegram[.]desktop, workspace 3"
 
       # Workspace 5
-      "workspace 5,class:(Spotify)"
+      "match:class Spotify, workspace 5"
 
       # Workspace mail
-      "workspace name:mail silent,class:(thunderbird)"
+      "match:class thunderbird, workspace name:mail silent"
 
       # Workspace gpu
-      "workspace name:gpu silent,class:(amdgpu_top)"
+      "match:class amdgpu_top, workspace name:gpu silent"
 
       # glxgears
-      "move onscreen cursor -20% -20%,title:(glxgears)"
+      # New syntax has expression-based move rules; this is the closest replacement
+      # for old: move onscreen cursor -20% -20%
+      "match:title glxgears, move (cursor_x-(window_w*0.2)) (cursor_y-(window_h*0.2))"
 
       # Rofi
-      "stayfocused,class:(Rofi)"
-      "center,class:(Rofi)"
-      "dimaround,class:(Rofi)"
+      "match:class Rofi, stay_focused on, center on, dim_around on"
 
       # MATLAB
-      "move cursor -10% -10%,class:(^MATLAB.*)"
+      "match:class ^MATLAB.*, move (cursor_x-(window_w*0.1)) (cursor_y-(window_h*0.1))"
 
       # osu!
-      "noanim,class:(osu)"
-      "noblur,class:(osu)"
-      "nodim,class:(osu)"
-      "noborder,class:(osu)"
-      "noshadow,class:(osu)"
+      "match:class osu, no_anim on, no_blur on, no_dim on, border_size 0, no_shadow on"
 
       # Ghidra
-      "stayfocused,title:(^win.*),class:(ghidra-Ghidra)"
-      "move onscreen cursor -10% -10%,title:(^win.*),class:(ghidra-Ghidra)"
-      "tile,title:(^Ghidra.*),class:(ghidra-Ghidra)"
-      "tile,title:(^CodeBrowser.*),class:(ghidra-Ghidra)"
-      "tile,title:(^Debugger.*),class:(ghidra-Ghidra)"
-      "tile,title:(^Emulator.*),class:(ghidra-Ghidra)"
-      "tile,title:(^Version Tracking.*),class:(ghidra-Ghidra)"
+      "match:title ^win.*, match:class ghidra-Ghidra, stay_focused on, move (cursor_x-(window_w*0.1)) (cursor_y-(window_h*0.1))"
+      "match:title ^Ghidra.*, match:class ghidra-Ghidra, tile on"
+      "match:title ^CodeBrowser.*, match:class ghidra-Ghidra, tile on"
+      "match:title ^Debugger.*, match:class ghidra-Ghidra, tile on"
+      "match:title ^Emulator.*, match:class ghidra-Ghidra, tile on"
+      "match:title ^Version Tracking.*, match:class ghidra-Ghidra, tile on"
+    ];
+
+    layerrule = [
+      # awww is a layer surface/wallpaper, not a normal app window.
+      # If this doesn't match, check the namespace with: hyprctl layers
+      "match:namespace awww, no_anim on"
     ];
 
     "$mainMod" = "SUPER";
@@ -226,7 +210,8 @@
       ", code:232, exec, sudo xbacklight -dec 5"
       ", code:233, exec, sudo xbacklight -inc 5"
       ", code:255, exec, true" # inhibit XF86RFKill
-      ", code:191, exec, pgrep cpulimit || cpulimit -l 5 -p $(pgrep TTREngine); pgrep cpulimit && pkill cpulimit"
+      ", code:191, exec, pgrep cpulimit || cpulimit -l 5 -p $(pgrep -o TTREngine); pgrep cpulimit && pkill cpulimit"
+      ", code:192, exec, zsh -c 'for pid in $(pgrep TTREngine); do pgrep -P $pid cpulimit || cpulimit -l 5 -p $pid &; done &;'"
       "$mainMod, O, movecurrentworkspacetomonitor, 1"
       "$mainMod, P, movecurrentworkspacetomonitor, 0"
       "$mainMod, RETURN, exec, alacritty"
@@ -241,7 +226,7 @@
       "$mainMod SHIFT, X, exec, hyprctl kill "
       "$mainMod SHIFT ALT CTRL, Q, exit, "
       "$mainMod SHIFT, SPACE, togglefloating, "
-      "$mainMod, SPACE, exec, rofi -show drun"
+      "$mainMod, D, exec, rofi -show drun"
       "$mainMod, F, fullscreen"
       "$mainMod SHIFT, F, fullscreen, 1"
       "$mainMod, W, togglegroup"
@@ -250,7 +235,7 @@
       "$mainMod SHIFT,Tab,exec,grim -g \"$(slurp)\" - | tesseract -l \"eng\" stdin stdout | wl-copy"
       "SHIFT,Print,exec,QT_SCREEN_SCALE_FACTORS=\"0.625\" flameshot gui"
       "$mainMod SHIFT, P, pseudo, # dwindle"
-      "$mainMod, J, togglesplit, # dwindle"
+      "$mainMod, J, layoutmsg, togglesplit, # dwindle"
 
       # Hyprlock (no issues if hyprlock is disabled, the bind will just become a dummy)
       "$mainMod, L, exec, hyprlock"
@@ -321,18 +306,21 @@
   #  #  # #     #    #    #     # #     # #    #
    ## ##  #     #    #    ######  #     # #     #
   */
-   programs.waybar = {
+  programs.waybar = {
     settings = {
       mainBar = {
-        layer = "bottom";
-        position = "bottom";
-        height = 20; # Waybar height
-        mode = "overlay";
+        layer = "top"; # Waybar at top layer
+        position = "top"; # Waybar at the bottom of your screen
+        height = 22; # Waybar height
 
         # Choose the order of the modules
         modules-left = [
+          "hyprland/workspaces"
+          "custom/spotify"
+          "custom/media"
         ];
         modules-center = [
+          "hyprland/window"
         ];
         modules-right = [
           "custom/weather"
@@ -440,13 +428,13 @@
         * {
             border: none;
             border-radius: 0;
-            font-family: "Victor Mono";
-            font-size: 14px;
+            font-family: "Ubuntu Nerd Font";
+            font-size: 12px;
             min-height: 0;
         }
 
         window#waybar {
-            background-color: rgba(0, 0, 0, 0.0);
+            background-color: rgba(0, 0, 0, 0.7);
             color: white;
         }
 
@@ -542,4 +530,4 @@
       ''
     ];
   };
-} 
+}

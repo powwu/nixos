@@ -12,16 +12,23 @@
     inputs.ewm.nixosModules.default
   ];
 
-  programs.ewm.enable = true;
-
+  nixpkgs.config = {
+    problems.handlers = {
+      rtl8852bu.broken = "warn"; # or "ignore"
+    };
+  };
+ programs.ewm.enable = true;
   boot.kernelPackages = pkgs.linuxPackages;
   # boot.extraModulePackages = [inputs.mt7601u-access-point.packages.x86_64-linux.default];
-  boot.extraModulePackages = [config.boot.kernelPackages.rtl8852bu config.boot.kernelPackages.v4l2loopback];
+  # boot.extraModulePackages = [config.boot.kernelPackages.rtl8852bu config.boot.kernelPackages.v4l2loopback];
+  boot.extraModulePackages = [config.boot.kernelPackages.v4l2loopback];
   boot.kernelParams = [
     "quiet"
     "splash"
     "coherent_pool=4M"
+    "usbcore.autosuspend=-1"
   ];
+
 
   boot.loader.systemd-boot.enable = false;
   virtualisation.docker = {
@@ -34,7 +41,8 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.efiSupport = true;
   boot.loader.grub.zfsSupport = true;
-  boot.zfs.devNodes = "/dev/disk/by-partuuid";
+  boot.zfs.forceImportRoot = false;
+    boot.zfs.devNodes = "/dev/disk/by-partuuid";
   boot.loader.grub.device = "nodev"; # seems strange but recommended for EFI setups
   boot.loader.grub.extraConfig = ''
     if keystatus --shift ; then
@@ -59,6 +67,11 @@
     graphics = {
       enable = true;
       enable32Bit = true;
+      extraPackages = with pkgs; [
+        intel-media-driver # For Broadwell (2014) or newer processors. LIBVA_DRIVER_NAME=iHD
+        intel-vaapi-driver
+      ];
+      extraPackages32 = with pkgs.pkgsi686Linux; [ intel-vaapi-driver ];
     };
 
     #   amdgpu.amdvlk = {
@@ -75,6 +88,7 @@
   environment.systemPackages = with pkgs; [
     OVMFFull
     acpilight
+    android-tools
     appimage-run
     bash
     dxvk
@@ -134,8 +148,6 @@
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
   };
 
-  programs.adb.enable = true;
-
   # programs.kdeconnect.enable = true;
 
   virtualisation.libvirtd.enable = true;
@@ -178,8 +190,12 @@
   # networking.firewall.allowedTCPPorts = [21] ++ (lib.range 50000 50100);
 
   # slimevr
-  networking.firewall.allowedTCPPorts = [21110];
+  networking.firewall.allowedTCPPorts = [
+    21110
+    24800
+   ];
   networking.firewall.allowedUDPPorts = [
+    24800
     35903
     6969
     8266
@@ -201,6 +217,7 @@
   programs.dconf.enable = true;
   programs.hyprland.enable = true;
   programs.zsh.enable = true;
+  programs.corectrl.enable = true;
   networking.networkmanager.enable = true;
   services.automatic-timezoned.enable = true;
   services.udisks2.enable = true;
@@ -211,7 +228,7 @@
     package = pkgs.greetd;
     settings = rec {
       initial_session = {
-        command = "Hyprland";
+        command = "start-hyprland";
         user = "james";
       };
       default_session = initial_session;
@@ -260,7 +277,7 @@
         "wheel"
         "audio"
         "games"
-        # "docker"
+        "docker"
         "video"
         "libvirt"
         "adbusers"
@@ -309,7 +326,12 @@
     KERNEL=="rtc0", GROUP="audio"
     KERNEL=="hpet", GROUP="audio"
     KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="5343", ATTRS{idProduct}=="0080", MODE="0666", TAG+="uaccess", TAG+="udev-acl"
+    ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="on"
   '';
+  services.udev.extraHwdb = ''
+  usb:*
+   ID_AUTOSUSPEND=0
+'';
   # services.udev.packages = [
   #   (pkgs.writeTextFile {
   #     name = "50-oculus.rules";
