@@ -15,6 +15,7 @@
   #     #    #    #       #    #  #       #     # #    ## #     #
   #     #    #    #       #     # ####### #     # #     # ######
   */
+  wayland.windowManager.hyprland.configType = "hyprlang";
   wayland.windowManager.hyprland.settings = {
     exec-once = [
       "sleep 1; awww-daemon & \\"
@@ -28,10 +29,12 @@
     # exec-once = "wl-paste -t text -w sh -c 'xclip -selection clipboard -o > /dev/null 2> /dev/null || xclip -selection clipboard'";
 
     monitor = [
-      "HDMI-A-1,1920x1080@165,0x0,1"
-      "DP-4,1920x1080@120,auto-left,1,vrr,0"
+      # tower
+      "DP-1,1920x1080@120,0x0,1,vrr,1"
+      "HDMI-A-1,1920x1080@60,auto-right,1.5"
+
+      # framework
       "eDP-1,2256x1504@60,auto,1.566667"
-      "DP-3,1920x1080@60,1920x0,1.3333"
     ];
 
     render.cm_auto_hdr = false;
@@ -130,7 +133,7 @@
       disable_hyprland_logo = true;
     };
 
-        windowrule = [
+    windowrule = [
       "match:title .*OpenVINO Music Separation.*, no_initial_focus on, move 0 0, workspace name:stem silent"
 
       "match:class flameshot, no_anim on, move 0 0"
@@ -140,6 +143,8 @@
       "match:class ^Toontown Rewritten$, tile on, workspace 6"
       "match:class ^Corporate Clash.*$, tile on, workspace 6"
       "match:class toonmux, float on, pin on"
+      "match:class toonmux-pe, float on, pin on"
+      "match:class xlax, float on, pin on"
 
       "match:class ^steam_app.*, fullscreen on"
       "match:title Steam Big Picture Mode, fullscreen on"

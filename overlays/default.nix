@@ -26,4 +26,6 @@
       config.allowUnfree = true;
     };
   };
+
+  nix-webapp-packages = inputs.nix-webapps.overlays.lib;
 }

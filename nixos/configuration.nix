@@ -9,19 +9,17 @@
 }: {
   imports = [
     ./hardware-configuration.nix
-    inputs.ewm.nixosModules.default
   ];
 
-  nixpkgs.config = {
-    problems.handlers = {
-      rtl8852bu.broken = "warn"; # or "ignore"
-    };
-  };
- programs.ewm.enable = true;
+  # nixpkgs.config = {
+  #   problems.handlers = {
+  #     rtl8852bu.broken = "warn"; # or "ignore"
+  #   };
+  # };
   boot.kernelPackages = pkgs.linuxPackages;
   # boot.extraModulePackages = [inputs.mt7601u-access-point.packages.x86_64-linux.default];
-  # boot.extraModulePackages = [config.boot.kernelPackages.rtl8852bu config.boot.kernelPackages.v4l2loopback];
-  boot.extraModulePackages = [config.boot.kernelPackages.v4l2loopback];
+  boot.extraModulePackages = [config.boot.kernelPackages.rtw88 config.boot.kernelPackages.v4l2loopback];
+  # boot.extraModulePackages = [config.boot.kernelPackages.v4l2loopback];
   boot.kernelParams = [
     "quiet"
     "splash"
@@ -29,6 +27,7 @@
     "usbcore.autosuspend=-1"
   ];
 
+  # hardware.aic8800.enable = true;
 
   boot.loader.systemd-boot.enable = false;
   virtualisation.docker = {
@@ -42,7 +41,8 @@
   boot.loader.grub.efiSupport = true;
   boot.loader.grub.zfsSupport = true;
   boot.zfs.forceImportRoot = false;
-    boot.zfs.devNodes = "/dev/disk/by-partuuid";
+  # boot.zfs.package = pkgs.zfs_cachyos;
+  boot.zfs.devNodes = "/dev/disk/by-partuuid";
   boot.loader.grub.device = "nodev"; # seems strange but recommended for EFI setups
   boot.loader.grub.extraConfig = ''
     if keystatus --shift ; then
@@ -71,7 +71,7 @@
         intel-media-driver # For Broadwell (2014) or newer processors. LIBVA_DRIVER_NAME=iHD
         intel-vaapi-driver
       ];
-      extraPackages32 = with pkgs.pkgsi686Linux; [ intel-vaapi-driver ];
+      extraPackages32 = with pkgs.pkgsi686Linux; [intel-vaapi-driver];
     };
 
     #   amdgpu.amdvlk = {
@@ -193,7 +193,7 @@
   networking.firewall.allowedTCPPorts = [
     21110
     24800
-   ];
+  ];
   networking.firewall.allowedUDPPorts = [
     24800
     35903
@@ -216,6 +216,7 @@
   boot.initrd.kernelModules = ["amdgpu"];
   programs.dconf.enable = true;
   programs.hyprland.enable = true;
+  programs.hyprland.package = pkgs.unstable.hyprland;
   programs.zsh.enable = true;
   programs.corectrl.enable = true;
   networking.networkmanager.enable = true;
@@ -248,10 +249,7 @@
     nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
   };
 
-  services.resolved = {
-    enable = true;
-  };
-
+  services.resolved.enable = true;
   services.flatpak.enable = true;
   services.mullvad-vpn.package = pkgs.mullvad-vpn;
   services.mullvad-vpn.enable = true;
@@ -327,11 +325,12 @@
     KERNEL=="hpet", GROUP="audio"
     KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="5343", ATTRS{idProduct}=="0080", MODE="0666", TAG+="uaccess", TAG+="udev-acl"
     ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="on"
+  ATTR{idVendor}=="0bda", ATTR{idProduct}=="1a2b", RUN+="${pkgs.usb-modeswitch}/bin/usb_modeswitch -v 0bda -p 1a2b -R"
   '';
   services.udev.extraHwdb = ''
-  usb:*
-   ID_AUTOSUSPEND=0
-'';
+    usb:*
+     ID_AUTOSUSPEND=0
+  '';
   # services.udev.packages = [
   #   (pkgs.writeTextFile {
   #     name = "50-oculus.rules";
@@ -350,5 +349,5 @@
   # ];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "25.11";
+  system.stateVersion = "26.05";
 }

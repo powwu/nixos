@@ -148,8 +148,8 @@ in {
     source = pkgs.fetchFromGitHub {
       owner = "powwu";
       repo = "wal";
-      rev = "99c30689dffc6ba8f8c1f06ea22e726064c6f17e";
-      sha256 = "sha256-SgpInaY4BCSViAaZg+KLbyCV2pYBY3QjGGNLqmL77KY=";
+      rev = "9c293a552b021c5e26adaa5c96c2c9d471fc919a";
+      hash = "sha256-NyiiOdKrqsaNKchx3HeGARsSXndI2o5iM852TKCUPFE=";
     };
   };
 

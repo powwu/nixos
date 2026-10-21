@@ -50,7 +50,7 @@
     wlroots
     wtype
     xhost
-    xorg.xrdb
+    xrdb
     xwayland-satellite
     zip
   ];

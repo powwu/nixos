@@ -12,7 +12,7 @@
     alsa-lib
     amazon-q-cli
     amdgpu_top
-    android-studio
+    # android-studio
     anki-bin
     ardour
     awscli2
@@ -23,8 +23,9 @@
     cpulimit
     crc64fast-nvme
     custom.archlinux-logout
-    telegram-desktop
     custom.toonmux
+    custom.tt-multiclick-linux
+    custom.tunetoon
     easyeffects
     ffmpeg
     flex
@@ -41,17 +42,21 @@
     inkscape
     inputs.themecord.packages.x86_64-linux.default
     kdePackages.kleopatra
+    kdePackages.okular
     kicad
     krita
     libqalculate
+    moonlight-qt
     nix-index
     nix-search-cli
     njq
     nurl
     obs-studio
+    obsidian
     odin2
     openscad
     openvr
+    pinentry-qt
     qbittorrent
     qdirstat
     reaper
@@ -63,12 +68,11 @@
     songrec
     steam
     steam-run
-    surge-XT
+    surge-xt
+    telegram-desktop
     tesseract
     texliveTeTeX
     unstable.crossmacro
-    pinentry-qt
-    moonlight-qt
     unstable.pince
     unstable.slimevr
     unstable.slimevr-server
@@ -85,23 +89,37 @@
     wayvr
     wineWow64Packages.staging
     xclicker
-    xorg.xeyes
+    xeyes
     yabridge
     yabridgectl
     yt-dlp
     zpaq
+    (nix-webapps-lib.mkChromiumApp {
+      appName = "trello";
+      desktopName = "Trello";
+      url = "https://trello.com";
+    })
   ];
-  services.gpg-agent = {
-      enable = true;
-        pinentry.package = pkgs.pinentry-qt;
-          defaultCacheTtl = 3600;       # cache passphrase 1 hour
-            maxCacheTtl = 86400;          # max cache 24 hours
-              enableSshSupport = true;       # optional: use GPG key for SSH
 
+  xdg.desktopEntries.bcp = {
+    name = "Book of Common Prayer";
+    genericName = "BCP";
+    exec = "okular \"/home/james/Books/Church Publishing Incorporated/The Book of Common Prayer (63)/The Book of Common Prayer - Church Publishing Incorporated.pdf\"";
+    icon = "x-office-address-book";
+    comment = "The Episcopal Church BCP";
+    categories = [ "Education" ];
+    terminal = false;
+  };
+
+  services.gpg-agent = {
+    enable = true;
+    pinentry.package = pkgs.pinentry-qt;
+    defaultCacheTtl = 3600; # cache passphrase 1 hour
+    maxCacheTtl = 86400; # max cache 24 hours
+    enableSshSupport = true; # optional: use GPG key for SSH
   };
 
   programs.gpg = {
-      enable = true;
-
+    enable = true;
   };
 }

@@ -12,9 +12,9 @@
     themecord.url = "github:danihek/themecord";
     themecord.inputs.nixpkgs.follows = "nixpkgs";
 
-    ewm.url = "https://codeberg.org/ezemtsov/ewm/archive/master.tar.gz";
+    # ewm.url = "https://codeberg.org/ezemtsov/ewm/archive/master.tar.gz";
 
-    # mt7601u-access-point.url = "github:powwu/nixos-mt7601u-access-point";
+    nix-webapps.url = "github:TLATER/nix-webapps";
   };
 
   outputs = {
@@ -23,6 +23,7 @@
     nixpkgs-unstable,
     nixpkgs-custom,
     home-manager,
+      nix-webapps,
     # mt7601u-access-point,
     ...
   } @ inputs: let
@@ -59,8 +60,8 @@
           ./nixos/sudo.nix
          #  ./extra/sunshine.nix
          #  ./extra/zerotier.nix
-          #  ./extra/jellyfin.nix
-         #  ./extra/laptop.nix
+         #  ./extra/jellyfin.nix
+           # ./extra/laptop.nix
         ];
       };
     };
@@ -71,14 +72,19 @@
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [
+          {
+            nixpkgs.overlays = [
+              outputs.overlays.nix-webapp-packages
+            ];
+          }
           ./home-manager/home.nix
           ./home-manager/pkgs.nix
           ./home-manager/wm.nix
           ./home-manager/apps.nix
           ./home-manager/wallpapers.nix
-         #  ./home-manager/lock.nix
+          #  ./home-manager/lock.nix
          #  ./extra/extra.nix
-          #  ./extra/torzu.nix
+         #  ./extra/torzu.nix
         ];
       };
     };

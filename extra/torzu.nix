@@ -8,6 +8,6 @@
   ...
 }: {
   home.packages = with pkgs; [
-    custom.not-torzu
+    # custom.not-torzu
   ];
 }
