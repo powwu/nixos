@@ -19,6 +19,7 @@
     bc
     blender
     bottles
+    cavasik
     calibre
     cpulimit
     crc64fast-nvme
